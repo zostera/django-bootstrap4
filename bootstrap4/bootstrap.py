@@ -28,14 +28,14 @@ BOOTSTRAP3_DEFAULTS = {
     'error_css_class': 'has-error',
     'success_css_class': 'has-success',
     'formset_renderers': {
-        'default': 'bootstrap3.renderers.FormsetRenderer',
+        'default': 'bootstrap4.renderers.FormsetRenderer',
     },
     'form_renderers': {
-        'default': 'bootstrap3.renderers.FormRenderer',
+        'default': 'bootstrap4.renderers.FormRenderer',
     },
     'field_renderers': {
-        'default': 'bootstrap3.renderers.FieldRenderer',
-        'inline': 'bootstrap3.renderers.InlineFieldRenderer',
+        'default': 'bootstrap4.renderers.FieldRenderer',
+        'inline': 'bootstrap4.renderers.InlineFieldRenderer',
     },
 }
 

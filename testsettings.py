@@ -20,7 +20,7 @@ INSTALLED_APPS = (
     'django.contrib.gis',
 
     # We test this one
-    'bootstrap3',
+    'bootstrap4',
 )
 
 MIDDLEWARE_CLASSES = DEFAULT_SETTINGS.MIDDLEWARE_CLASSES
@@ -48,7 +48,7 @@ STATIC_URL = '/static/'
 BOOTSTRAP3 = {
     'theme_url': '//example.com/theme.css',
     'javascript_in_head': True,
-    'required_css_class': 'bootstrap3-req',
-    'error_css_class': 'bootstrap3-err',
-    'success_css_class': 'bootstrap3-bound',
+    'required_css_class': 'bootstrap4-req',
+    'error_css_class': 'bootstrap4-err',
+    'success_css_class': 'bootstrap4-bound',
 }

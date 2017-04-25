@@ -34,22 +34,22 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read().replace('.. :changelog:', '')
 
 setup(
-    name='django-bootstrap3',
+    name='django-bootstrap4',
     version=version,
     description="""Bootstrap support for Django projects""",
     long_description=readme + '\n\n' + history,
     author='Dylan Verheul',
     author_email='dylan@dyve.net',
-    url='https://github.com/dyve/django-bootstrap3',
+    url='https://github.com/dyve/django-bootstrap4',
     packages=[
-        'bootstrap3',
+        'bootstrap4',
     ],
     include_package_data=True,
     install_requires=[
     ],
     license="Apache License 2.0",
     zip_safe=False,
-    keywords='django-bootstrap3',
+    keywords='django-bootstrap4',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',

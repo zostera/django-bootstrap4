@@ -43,7 +43,7 @@ MEDIA_CHOICES = (
 
 class TestForm(forms.Form):
     """
-    Form with a variety of widgets to test bootstrap3 rendering.
+    Form with a variety of widgets to test bootstrap4 rendering.
     """
     date = forms.DateField(required=False)
     datetime = forms.SplitDateTimeField(widget=AdminSplitDateTime(), required=False)
@@ -92,7 +92,7 @@ class TestForm(forms.Form):
     )
     polygon = gisforms.PointField()
 
-    required_css_class = 'bootstrap3-req'
+    required_css_class = 'bootstrap4-req'
 
     # Set this to allow tests to work properly in Django 1.10+
     # More information, see issue #337
@@ -111,7 +111,7 @@ class TestFormWithoutRequiredClass(TestForm):
 
 def render_template(text, context=None):
     """
-    Create a template ``text`` that first loads bootstrap3.
+    Create a template ``text`` that first loads bootstrap4.
     """
     template = engines['django'].from_string(text)
     if not context:
@@ -121,16 +121,16 @@ def render_template(text, context=None):
 
 def render_template_with_bootstrap(text, context=None):
     """
-    Create a template ``text`` that first loads bootstrap3.
+    Create a template ``text`` that first loads bootstrap4.
     """
     if not context:
         context = {}
-    return render_template("{% load bootstrap3 %}" + text, context)
+    return render_template("{% load bootstrap4 %}" + text, context)
 
 
 def render_template_with_form(text, context=None):
     """
-    Create a template ``text`` that first loads bootstrap3.
+    Create a template ``text`` that first loads bootstrap4.
     """
     if not context:
         context = {}
@@ -221,7 +221,7 @@ class SettingsTest(TestCase):
 
 def test_settings_filter(self):
     res = render_template_with_form('{{ "required_css_class"|bootstrap_setting }}')
-    self.assertEqual(res.strip(), 'bootstrap3-req')
+    self.assertEqual(res.strip(), 'bootstrap4-req')
     res = render_template_with_form('{% if "javascript_in_head"|bootstrap_setting %}head{% else %}body{% endif %}')
     self.assertEqual(res.strip(), 'head')
 
@@ -229,19 +229,19 @@ def test_settings_filter(self):
 def test_required_class(self):
     form = TestForm()
     res = render_template_with_form('{% bootstrap_form form %}', {'form': form})
-    self.assertIn('bootstrap3-req', res)
+    self.assertIn('bootstrap4-req', res)
 
 
 def test_error_class(self):
     form = TestForm({})
     res = render_template_with_form('{% bootstrap_form form %}', {'form': form})
-    self.assertIn('bootstrap3-err', res)
+    self.assertIn('bootstrap4-err', res)
 
 
 def test_bound_class(self):
     form = TestForm({'sender': 'sender'})
     res = render_template_with_form('{% bootstrap_form form %}', {'form': form})
-    self.assertIn('bootstrap3-bound', res)
+    self.assertIn('bootstrap4-bound', res)
 
 
 class TemplateTest(TestCase):
@@ -255,7 +255,7 @@ class TemplateTest(TestCase):
 
     def test_bootstrap_template(self):
         res = render_template(
-            '{% extends "bootstrap3/bootstrap3.html" %}' +
+            '{% extends "bootstrap4/bootstrap4.html" %}' +
             '{% block bootstrap3_content %}' +
             'test_bootstrap3_content' +
             '{% endblock %}'
@@ -332,7 +332,7 @@ class FormTest(TestCase):
     def test_error_class(self):
         form = TestForm({'sender': 'sender'})
         res = render_template_with_form('{% bootstrap_form form %}', {'form': form})
-        self.assertIn('bootstrap3-err', res)
+        self.assertIn('bootstrap4-err', res)
 
         res = render_template_with_form(
             '{% bootstrap_form form error_css_class="successful-test" %}',
@@ -342,12 +342,12 @@ class FormTest(TestCase):
 
         res = render_template_with_form('{% bootstrap_form form error_css_class="" %}',
                                         {'form': form})
-        self.assertNotIn('bootstrap3-err', res)
+        self.assertNotIn('bootstrap4-err', res)
 
     def test_required_class(self):
         form = TestForm({'sender': 'sender'})
         res = render_template_with_form('{% bootstrap_form form %}', {'form': form})
-        self.assertIn('bootstrap3-req', res)
+        self.assertIn('bootstrap4-req', res)
 
         res = render_template_with_form(
             '{% bootstrap_form form required_css_class="successful-test" %}',
@@ -357,13 +357,13 @@ class FormTest(TestCase):
 
         res = render_template_with_form('{% bootstrap_form form required_css_class="" %}',
                                         {'form': form})
-        self.assertNotIn('bootstrap3-req', res)
+        self.assertNotIn('bootstrap4-req', res)
 
     def test_bound_class(self):
         form = TestForm({'sender': 'sender'})
 
         res = render_template_with_form('{% bootstrap_form form %}', {'form': form})
-        self.assertIn('bootstrap3-bound', res)
+        self.assertIn('bootstrap4-bound', res)
 
         res = render_template_with_form(
             '{% bootstrap_form form bound_css_class="successful-test" %}',
@@ -375,7 +375,7 @@ class FormTest(TestCase):
             '{% bootstrap_form form bound_css_class="" %}',
             {'form': form}
         )
-        self.assertNotIn('bootstrap3-bound', res)
+        self.assertNotIn('bootstrap4-bound', res)
 
 
 class FieldTest(TestCase):
@@ -411,7 +411,7 @@ class FieldTest(TestCase):
         if DBS3_SET_REQUIRED_SET_DISABLED:
             required_field = render_form_field('subject')
             self.assertIn('required', required_field)
-            self.assertIn('bootstrap3-req', required_field)
+            self.assertIn('bootstrap4-req', required_field)
             not_required_field = render_form_field('message')
             self.assertNotIn('required', not_required_field)
             # Required field with required=0
@@ -419,7 +419,7 @@ class FieldTest(TestCase):
             rendered = render_template_with_form('{% bootstrap_field ' + form_field + ' set_required=0 %}')
             self.assertNotIn('required', rendered)
         else:
-            required_css_class = 'bootstrap3-req'
+            required_css_class = 'bootstrap4-req'
             required_field = render_form_field('subject')
             self.assertIn(required_css_class, required_field)
             not_required_field = render_form_field('message')
@@ -437,7 +437,7 @@ class FieldTest(TestCase):
         Django <= 1.8, also check `required` attribute.
         """
         if DBS3_SET_REQUIRED_SET_DISABLED:
-            required_css_class = 'bootstrap3-req'
+            required_css_class = 'bootstrap4-req'
             form = TestForm()
             res = render_form_field('subject', {'form': form})
             self.assertIn(required_css_class, res)
@@ -445,7 +445,7 @@ class FieldTest(TestCase):
             res = render_form_field('subject', {'form': form})
             self.assertNotIn(required_css_class, res)
         else:
-            required_css_class = 'bootstrap3-req'
+            required_css_class = 'bootstrap4-req'
             form = TestForm()
             res = render_form_field('subject', {'form': form})
             self.assertIn(required_css_class, res)

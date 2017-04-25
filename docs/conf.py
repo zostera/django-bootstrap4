@@ -47,7 +47,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'django-bootstrap3'
+project = u'django-bootstrap4'
 copyright = u'2014, Dylan Verheul'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -193,7 +193,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'django-bootstrap3.tex', u'django-bootstrap3 Documentation',
+  ('index', 'django-bootstrap4.tex', u'django-bootstrap4 Documentation',
    u'Dylan Verheul', 'manual'),
 ]
 
@@ -223,7 +223,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'django-bootstrap3', u'django-bootstrap3 Documentation',
+    ('index', 'django-bootstrap4', u'django-bootstrap4 Documentation',
      [u'Dylan Verheul'], 1)
 ]
 
@@ -237,8 +237,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'django-bootstrap3', u'django-bootstrap3 Documentation',
-   u'Dylan Verheul', 'django-bootstrap3', 'One line description of project.',
+  ('index', 'django-bootstrap4', u'django-bootstrap4 Documentation',
+   u'Dylan Verheul', 'django-bootstrap4', 'One line description of project.',
    'Miscellaneous'),
 ]
 

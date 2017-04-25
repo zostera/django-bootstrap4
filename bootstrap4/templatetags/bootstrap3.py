@@ -286,7 +286,7 @@ def bootstrap_formset_errors(*args, **kwargs):
             The formset that is being rendered
 
         layout
-            Context value that is available in the template ``bootstrap3/form_errors.html`` as ``layout``.
+            Context value that is available in the template ``bootstrap4/form_errors.html`` as ``layout``.
 
     **Usage**::
 
@@ -356,7 +356,7 @@ def bootstrap_form_errors(*args, **kwargs):
             :default: ``'all'``
 
         layout
-            Context value that is available in the template ``bootstrap3/form_errors.html`` as ``layout``.
+            Context value that is available in the template ``bootstrap4/form_errors.html`` as ``layout``.
 
     **Usage**::
 
@@ -749,7 +749,7 @@ def bootstrap_messages(context, *args, **kwargs):
     we have to set the jquery parameter too when using the
     bootstrap_javascript tag.
 
-    Uses the template ``bootstrap3/messages.html``.
+    Uses the template ``bootstrap4/messages.html``.
 
     **Tag name**::
 
@@ -775,10 +775,10 @@ def bootstrap_messages(context, *args, **kwargs):
     if Context and isinstance(context, Context):
         context = context.flatten()
     context.update({'message_constants': message_constants})
-    return render_template_file('bootstrap3/messages.html', context=context)
+    return render_template_file('bootstrap4/messages.html', context=context)
 
 
-@register.inclusion_tag('bootstrap3/pagination.html')
+@register.inclusion_tag('bootstrap4/pagination.html')
 def bootstrap_pagination(page, **kwargs):
     """
     Render pagination for a page
