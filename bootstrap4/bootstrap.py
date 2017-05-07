@@ -9,7 +9,7 @@ from django.conf import settings
 # Do we support set_required and set_disabled?
 # See GitHub issues 337 and 345
 # TODO: Get rid of this after support for Django 1.8 LTS ends
-DBS3_SET_REQUIRED_SET_DISABLED = DJANGO_VERSION[0] < 2 and DJANGO_VERSION[1] < 10
+DBS4_SET_REQUIRED_SET_DISABLED = DJANGO_VERSION[0] < 2 and DJANGO_VERSION[1] < 10
 
 # Default settings
 BOOTSTRAP4_DEFAULTS = {
@@ -39,7 +39,7 @@ BOOTSTRAP4_DEFAULTS = {
     },
 }
 
-if DBS3_SET_REQUIRED_SET_DISABLED:
+if DBS4_SET_REQUIRED_SET_DISABLED:
     BOOTSTRAP4_DEFAULTS.update({
         'set_required': True,
         'set_disabled': False,
