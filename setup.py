@@ -40,7 +40,7 @@ setup(
     long_description=readme + '\n\n' + history,
     author='Dylan Verheul',
     author_email='dylan@dyve.net',
-    url='https://github.com/dyve/django-bootstrap4',
+    url='https://github.com/zostera/django-bootstrap4',
     packages=[
         'bootstrap4',
     ],
