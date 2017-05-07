@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.forms.utils import flatatt
 from django.utils.safestring import mark_safe
-from bootstrap3.utils import render_tag, add_css_class
+from bootstrap4.utils import render_tag, add_css_class
 
 from .text import text_value
 

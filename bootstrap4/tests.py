@@ -197,8 +197,8 @@ def get_title_from_html(html):
 
 class SettingsTest(TestCase):
     def test_settings(self):
-        from .bootstrap import BOOTSTRAP3
-        self.assertTrue(BOOTSTRAP3)
+        from .bootstrap import BOOTSTRAP4
+        self.assertTrue(BOOTSTRAP4)
 
     def test_bootstrap_javascript_tag(self):
         res = render_template_with_form('{% bootstrap_javascript %}')
@@ -256,11 +256,11 @@ class TemplateTest(TestCase):
     def test_bootstrap_template(self):
         res = render_template(
             '{% extends "bootstrap4/bootstrap4.html" %}' +
-            '{% block bootstrap3_content %}' +
-            'test_bootstrap3_content' +
+            '{% block bootstrap4_content %}' +
+            'test_bootstrap4_content' +
             '{% endblock %}'
         )
-        self.assertIn('test_bootstrap3_content', res)
+        self.assertIn('test_bootstrap4_content', res)
 
     def test_javascript_without_jquery(self):
         res = render_template_with_form('{% bootstrap_javascript jquery=0 %}')

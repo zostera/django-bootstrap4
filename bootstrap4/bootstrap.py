@@ -12,7 +12,7 @@ from django.conf import settings
 DBS3_SET_REQUIRED_SET_DISABLED = DJANGO_VERSION[0] < 2 and DJANGO_VERSION[1] < 10
 
 # Default settings
-BOOTSTRAP3_DEFAULTS = {
+BOOTSTRAP4_DEFAULTS = {
     'jquery_url': '//code.jquery.com/jquery.min.js',
     'base_url': '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/',
     'css_url': None,
@@ -40,23 +40,23 @@ BOOTSTRAP3_DEFAULTS = {
 }
 
 if DBS3_SET_REQUIRED_SET_DISABLED:
-    BOOTSTRAP3_DEFAULTS.update({
+    BOOTSTRAP4_DEFAULTS.update({
         'set_required': True,
         'set_disabled': False,
     })
 
 # Start with a copy of default settings
-BOOTSTRAP3 = BOOTSTRAP3_DEFAULTS.copy()
+BOOTSTRAP4 = BOOTSTRAP4_DEFAULTS.copy()
 
 # Override with user settings from settings.py
-BOOTSTRAP3.update(getattr(settings, 'BOOTSTRAP3', {}))
+BOOTSTRAP4.update(getattr(settings, 'BOOTSTRAP4', {}))
 
 
 def get_bootstrap_setting(setting, default=None):
     """
     Read a setting
     """
-    return BOOTSTRAP3.get(setting, default)
+    return BOOTSTRAP4.get(setting, default)
 
 
 def bootstrap_url(postfix):

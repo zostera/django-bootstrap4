@@ -1,7 +1,7 @@
 .. code:: django
 
   {# Load the tag library #}
-  {% load bootstrap3 %}
+  {% load bootstrap4 %}
 
   {# Load CSS and JavaScript #}
   {% bootstrap_css %}

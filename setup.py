@@ -4,14 +4,14 @@
 import os
 import sys
 
-import bootstrap3
+import bootstrap4
 
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
 
-version = bootstrap3.__version__
+version = bootstrap4.__version__
 
 if sys.argv[-1] == 'publish':
     os.system('cd docs && make html')
@@ -51,7 +51,7 @@ setup(
     zip_safe=False,
     keywords='django-bootstrap4',
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python :: 2',
