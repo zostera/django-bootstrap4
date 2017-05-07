@@ -13,8 +13,8 @@ DBS4_SET_REQUIRED_SET_DISABLED = DJANGO_VERSION[0] < 2 and DJANGO_VERSION[1] < 1
 
 # Default settings
 BOOTSTRAP4_DEFAULTS = {
-    'jquery_url': '//code.jquery.com/jquery.min.js',
-    'base_url': '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/',
+    'jquery_url': '//code.jquery.com/jquery-3.1.1.min.js',
+    'base_url': '//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/',
     'css_url': None,
     'theme_url': None,
     'javascript_url': None,
@@ -78,7 +78,7 @@ def javascript_url():
     Return the full url to the Bootstrap JavaScript file
     """
     return get_bootstrap_setting('javascript_url') or \
-           bootstrap_url('js/bootstrap.min.js')
+        bootstrap_url('js/bootstrap.min.js')
 
 
 def css_url():
@@ -86,7 +86,7 @@ def css_url():
     Return the full url to the Bootstrap CSS file
     """
     return get_bootstrap_setting('css_url') or \
-           bootstrap_url('css/bootstrap.min.css')
+        bootstrap_url('css/bootstrap.min.css')
 
 
 def theme_url():

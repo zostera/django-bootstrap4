@@ -168,9 +168,11 @@ def is_widget_required_attribute(widget):
     if not widget.is_required:
         return False
     if isinstance(
-            widget, (
-                    AdminFileWidget, HiddenInput, FileInput,
-                    CheckboxInput, CheckboxSelectMultiple)):
+        widget, (
+            AdminFileWidget, HiddenInput, FileInput,
+            CheckboxInput, CheckboxSelectMultiple
+        )
+    ):
         return False
     return True
 
