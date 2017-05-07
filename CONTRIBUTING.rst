@@ -13,7 +13,7 @@ Types of Contributions
 Report Bugs
 ~~~~~~~~~~~
 
-Report bugs at https://github.com/dyve/django-bootstrap4/issues.
+Report bugs at https://github.com/zostera/django-bootstrap4/issues.
 
 If you are reporting a bug, please include:
 
@@ -43,7 +43,7 @@ articles, and such.
 Submit Feedback
 ~~~~~~~~~~~~~~~
 
-The best way to send feedback is to file an issue at https://github.com/dyve/django-bootstrap4/issues.
+The best way to send feedback is to file an issue at https://github.com/zostera/django-bootstrap4/issues.
 
 If you are proposing a feature:
 
