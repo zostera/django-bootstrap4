@@ -81,7 +81,7 @@ https://github.com/zostera/django-bootstrap4/issues
 License
 -------
 
-You can use this under Apache 2.0. See `LICENSE
+You can use this under BSD-3-Clause. See `LICENSE
 <LICENSE>`_ file for details.
 
 
