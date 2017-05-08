@@ -1,6 +1,6 @@
 import django.conf.global_settings as DEFAULT_SETTINGS
 
-SECRET_KEY = 'bootstrap3isawesome'
+SECRET_KEY = 'bootstrap4isawesome'
 
 DATABASES = {
     'default': {
@@ -45,7 +45,7 @@ ROOT_URLCONF = None
 
 STATIC_URL = '/static/'
 
-BOOTSTRAP3 = {
+BOOTSTRAP4 = {
     'theme_url': '//example.com/theme.css',
     'javascript_in_head': True,
     'required_css_class': 'bootstrap4-req',

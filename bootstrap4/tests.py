@@ -11,7 +11,7 @@ from django.forms.formsets import formset_factory
 from django.template import engines
 from django.test import TestCase
 
-from .bootstrap import DBS3_SET_REQUIRED_SET_DISABLED
+from .bootstrap import DBS4_SET_REQUIRED_SET_DISABLED
 from .exceptions import BootstrapError
 from .text import text_value, text_concat
 from .utils import add_css_class, render_tag
@@ -27,16 +27,18 @@ RADIO_CHOICES = (
 )
 
 MEDIA_CHOICES = (
-    ('Audio', (
-        ('vinyl', 'Vinyl'),
-        ('cd', 'CD'),
-    )
-     ),
-    ('Video', (
-        ('vhs', 'VHS Tape'),
-        ('dvd', 'DVD'),
-    )
-     ),
+    (
+        'Audio', (
+            ('vinyl', 'Vinyl'),
+            ('cd', 'CD'),
+        )
+    ),
+    (
+        'Video', (
+            ('vhs', 'VHS Tape'),
+            ('dvd', 'DVD'),
+        )
+    ),
     ('unknown', 'Unknown'),
 )
 
@@ -197,8 +199,8 @@ def get_title_from_html(html):
 
 class SettingsTest(TestCase):
     def test_settings(self):
-        from .bootstrap import BOOTSTRAP3
-        self.assertTrue(BOOTSTRAP3)
+        from .bootstrap import BOOTSTRAP4
+        self.assertTrue(BOOTSTRAP4)
 
     def test_bootstrap_javascript_tag(self):
         res = render_template_with_form('{% bootstrap_javascript %}')
@@ -256,11 +258,11 @@ class TemplateTest(TestCase):
     def test_bootstrap_template(self):
         res = render_template(
             '{% extends "bootstrap4/bootstrap4.html" %}' +
-            '{% block bootstrap3_content %}' +
-            'test_bootstrap3_content' +
+            '{% block bootstrap4_content %}' +
+            'test_bootstrap4_content' +
             '{% endblock %}'
         )
-        self.assertIn('test_bootstrap3_content', res)
+        self.assertIn('test_bootstrap4_content', res)
 
     def test_javascript_without_jquery(self):
         res = render_template_with_form('{% bootstrap_javascript jquery=0 %}')
@@ -408,7 +410,7 @@ class FieldTest(TestCase):
         self.assertIn('placeholder="Password"', res)
 
     def test_required_field(self):
-        if DBS3_SET_REQUIRED_SET_DISABLED:
+        if DBS4_SET_REQUIRED_SET_DISABLED:
             required_field = render_form_field('subject')
             self.assertIn('required', required_field)
             self.assertIn('bootstrap4-req', required_field)
@@ -436,7 +438,7 @@ class FieldTest(TestCase):
         If a form has empty_permitted, no fields should get the CSS class for required.
         Django <= 1.8, also check `required` attribute.
         """
-        if DBS3_SET_REQUIRED_SET_DISABLED:
+        if DBS4_SET_REQUIRED_SET_DISABLED:
             required_css_class = 'bootstrap4-req'
             form = TestForm()
             res = render_form_field('subject', {'form': form})

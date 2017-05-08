@@ -6,10 +6,10 @@ import sys
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
-# Include BOOTSTRAP3_FOLDER in path
-BOOTSTRAP3_FOLDER = os.path.abspath(os.path.join(BASE_DIR, '..', 'bootstrap4'))
-if BOOTSTRAP3_FOLDER not in sys.path:
-    sys.path.insert(0, BOOTSTRAP3_FOLDER)
+# Include BOOTSTRAP4_FOLDER in path
+BOOTSTRAP4_FOLDER = os.path.abspath(os.path.join(BASE_DIR, '..', 'bootstrap4'))
+if BOOTSTRAP4_FOLDER not in sys.path:
+    sys.path.insert(0, BOOTSTRAP4_FOLDER)
 
 DEBUG = True
 
@@ -151,7 +151,7 @@ LOGGING = {
 }
 
 # Settings for django-bootstrap4
-BOOTSTRAP3 = {
+BOOTSTRAP4 = {
     'set_required': False,  # For Django <= 1.8 only
     'error_css_class': 'bootstrap4-error',
     'required_css_class': 'bootstrap4-required',

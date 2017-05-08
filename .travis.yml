@@ -28,7 +28,7 @@ install:
 
 # Command to run tests, e.g. python setup.py test
 script:
-  - coverage run --source=bootstrap3 manage.py test
+  - coverage run --source=bootstrap4 manage.py test
 
 matrix:
   exclude:
