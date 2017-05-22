@@ -2,7 +2,7 @@
 Bootstrap 4 for Django
 ======================
 
-Write Django as usual, and let ``django-bootstrap4`` make template output into Bootstrap 3 code.
+Write Django as usual, and let ``django-bootstrap4`` make template output into Bootstrap 4 code.
 
 
 .. image:: https://img.shields.io/travis/dyve/django-bootstrap4/master.svg
