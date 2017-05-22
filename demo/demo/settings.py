@@ -152,7 +152,6 @@ LOGGING = {
 
 # Settings for django-bootstrap4
 BOOTSTRAP4 = {
-    'set_required': False,  # For Django <= 1.8 only
     'error_css_class': 'bootstrap4-error',
     'required_css_class': 'bootstrap4-required',
     'javascript_in_head': True,

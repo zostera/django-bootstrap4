@@ -11,7 +11,6 @@ from django.forms.formsets import formset_factory
 from django.template import engines
 from django.test import TestCase
 
-from .bootstrap import DBS4_SET_REQUIRED_SET_DISABLED
 from .exceptions import BootstrapError
 from .text import text_value, text_concat
 from .utils import add_css_class, render_tag
@@ -410,22 +409,11 @@ class FieldTest(TestCase):
         self.assertIn('placeholder="Password"', res)
 
     def test_required_field(self):
-        if DBS4_SET_REQUIRED_SET_DISABLED:
-            required_field = render_form_field('subject')
-            self.assertIn('required', required_field)
-            self.assertIn('bootstrap4-req', required_field)
-            not_required_field = render_form_field('message')
-            self.assertNotIn('required', not_required_field)
-            # Required field with required=0
-            form_field = 'form.subject'
-            rendered = render_template_with_form('{% bootstrap_field ' + form_field + ' set_required=0 %}')
-            self.assertNotIn('required', rendered)
-        else:
-            required_css_class = 'bootstrap4-req'
-            required_field = render_form_field('subject')
-            self.assertIn(required_css_class, required_field)
-            not_required_field = render_form_field('message')
-            self.assertNotIn(required_css_class, not_required_field)
+        required_css_class = 'bootstrap4-req'
+        required_field = render_form_field('subject')
+        self.assertIn(required_css_class, required_field)
+        not_required_field = render_form_field('message')
+        self.assertNotIn(required_css_class, not_required_field)
         # Required settings in field
         form_field = 'form.subject'
         rendered = render_template_with_form(
@@ -438,22 +426,13 @@ class FieldTest(TestCase):
         If a form has empty_permitted, no fields should get the CSS class for required.
         Django <= 1.8, also check `required` attribute.
         """
-        if DBS4_SET_REQUIRED_SET_DISABLED:
-            required_css_class = 'bootstrap4-req'
-            form = TestForm()
-            res = render_form_field('subject', {'form': form})
-            self.assertIn(required_css_class, res)
-            form.empty_permitted = True
-            res = render_form_field('subject', {'form': form})
-            self.assertNotIn(required_css_class, res)
-        else:
-            required_css_class = 'bootstrap4-req'
-            form = TestForm()
-            res = render_form_field('subject', {'form': form})
-            self.assertIn(required_css_class, res)
-            form.empty_permitted = True
-            res = render_form_field('subject', {'form': form})
-            self.assertNotIn(required_css_class, res)
+        required_css_class = 'bootstrap4-req'
+        form = TestForm()
+        res = render_form_field('subject', {'form': form})
+        self.assertIn(required_css_class, res)
+        form.empty_permitted = True
+        res = render_form_field('subject', {'form': form})
+        self.assertNotIn(required_css_class, res)
 
     def test_input_group(self):
         res = render_template_with_form('{% bootstrap_field form.subject addon_before="$"  addon_after=".00" %}')
