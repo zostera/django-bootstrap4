@@ -13,6 +13,7 @@ Contents:
 
    installation
    quickstart
+   migrate
    templatetags
    settings
    templates
