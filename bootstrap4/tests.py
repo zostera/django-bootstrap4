@@ -201,23 +201,23 @@ class SettingsTest(TestCase):
         from .bootstrap import BOOTSTRAP4
         self.assertTrue(BOOTSTRAP4)
 
-    # def test_bootstrap_javascript_tag(self):
-    #     res = render_template_with_form('{% bootstrap_javascript %}')
-    #     self.assertEqual(
-    #         res.strip(),
-    #         '<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>'
-    #     )
-    #
-    # def test_bootstrap_css_tag(self):
-    #     res = render_template_with_form('{% bootstrap_css %}').strip()
-    #     self.assertIn(
-    #         '<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">',
-    #         res
-    #     )
-    #     self.assertIn(
-    #         '<link href="//example.com/theme.css" rel="stylesheet">',
-    #         res
-    #     )
+        # def test_bootstrap_javascript_tag(self):
+        #     res = render_template_with_form('{% bootstrap_javascript %}')
+        #     self.assertEqual(
+        #         res.strip(),
+        #         '<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>'
+        #     )
+        #
+        # def test_bootstrap_css_tag(self):
+        #     res = render_template_with_form('{% bootstrap_css %}').strip()
+        #     self.assertIn(
+        #         '<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">',
+        #         res
+        #     )
+        #     self.assertIn(
+        #         '<link href="//example.com/theme.css" rel="stylesheet">',
+        #         res
+        #     )
 
 
 def test_settings_filter(self):
@@ -442,7 +442,7 @@ class FieldTest(TestCase):
 
     def test_input_group_addon_button(self):
         res = render_template_with_form(
-            '{% bootstrap_field form.subject addon_before="$" addon_before_class="input-group-btn" addon_after=".00" addon_after_class="input-group-btn" %}')
+            '{% bootstrap_field form.subject addon_before="$" addon_before_class="input-group-btn" addon_after=".00" addon_after_class="input-group-btn" %}')  # noqa
         self.assertIn('class="input-group"', res)
         self.assertIn('class="input-group-btn">$', res)
         self.assertIn('class="input-group-btn">.00', res)
@@ -484,8 +484,6 @@ class FieldTest(TestCase):
     def test_attributes_consistency(self):
         form = TestForm()
         attrs = form.fields['addon'].widget.attrs.copy()
-        context = dict(form=form)
-        field_alone = render_form_field("addon", context)
         self.assertEqual(attrs, form.fields['addon'].widget.attrs)
 
 
@@ -685,5 +683,7 @@ class ShowLabelTest(TestCase):
         )
         self.assertEqual(
             res.strip(),
-            '<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-info-sign"></span> test</button>'
+            '<button class="btn btn-default" type="submit">'
+            '<span class="glyphicon glyphicon-info-sign"></span>'
+            ' test</button>'
         )
