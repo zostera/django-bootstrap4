@@ -7,7 +7,6 @@ from django.forms.widgets import CheckboxInput
 from django.utils.safestring import mark_safe
 
 from .bootstrap import get_bootstrap_setting, get_form_renderer, get_field_renderer, get_formset_renderer
-from .components import render_icon
 from .exceptions import BootstrapError
 from .text import text_concat, text_value
 from .utils import add_css_class, render_tag
@@ -70,7 +69,7 @@ def render_label(content, label_for=None, label_class=None, label_title=''):
 
 
 def render_button(
-        content, button_type=None, icon=None, button_class='btn-default', size='',
+        content, button_type=None, button_class='btn-default', size='',
         href='', name=None, value=None, title=None, extra_classes='', id=''):
     """
     Render a button with content
@@ -98,7 +97,6 @@ def render_button(
         attrs['type'] = button_type
     classes = add_css_class(classes, extra_classes)
     attrs['class'] = classes
-    icon_content = render_icon(icon) if icon else ''
     if href:
         attrs['href'] = href
         tag = 'a'
@@ -115,7 +113,7 @@ def render_button(
     return render_tag(
         tag,
         attrs=attrs,
-        content=mark_safe(text_concat(icon_content, content, separator=' ')),
+        content=mark_safe(content),
     )
 
 

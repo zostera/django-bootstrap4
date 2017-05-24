@@ -57,9 +57,7 @@ Example template
         {% csrf_token %}
         {% bootstrap_form form %}
         {% buttons %}
-            <button type="submit" class="btn btn-primary">
-                {% bootstrap_icon "star" %} Submit
-            </button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         {% endbuttons %}
     </form>
 

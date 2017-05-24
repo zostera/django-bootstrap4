@@ -7,22 +7,6 @@ from bootstrap4.utils import render_tag, add_css_class
 from .text import text_value
 
 
-def render_icon(icon, **kwargs):
-    """
-    Render a Bootstrap glyphicon icon
-    """
-    attrs = {
-        'class': add_css_class(
-            'glyphicon glyphicon-{icon}'.format(icon=icon),
-            kwargs.get('extra_classes', ''),
-        )
-    }
-    title = kwargs.get('title')
-    if title:
-        attrs['title'] = title
-    return render_tag('span', attrs=attrs)
-
-
 def render_alert(content, alert_type=None, dismissable=True):
     """
     Render a Bootstrap alert

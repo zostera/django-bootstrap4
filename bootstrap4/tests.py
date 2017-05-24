@@ -513,16 +513,6 @@ class FieldTest(TestCase):
 
 
 class ComponentsTest(TestCase):
-    def test_icon(self):
-        res = render_template_with_form('{% bootstrap_icon "star" %}')
-        self.assertEqual(
-            res.strip(), '<span class="glyphicon glyphicon-star"></span>')
-        res = render_template_with_form('{% bootstrap_icon "star" title="alpha centauri" %}')
-        self.assertIn(res.strip(), [
-            '<span class="glyphicon glyphicon-star" title="alpha centauri"></span>',
-            '<span title="alpha centauri" class="glyphicon glyphicon-star"></span>',
-        ])
-
     def test_alert(self):
         res = render_template_with_form('{% bootstrap_alert "content" alert_type="danger" %}')
         self.assertEqual(
@@ -687,28 +677,3 @@ class ShowLabelTest(TestCase):
             {'formset': test_formset}
         )
         self.assertIn('sr-only', res)
-
-    def test_button_with_icon(self):
-        res = render_template_with_form(
-            "{% bootstrap_button 'test' icon='info-sign' %}"
-        )
-        self.assertEqual(
-            res.strip(),
-            '<button class="btn btn-default"><span class="glyphicon glyphicon-info-sign"></span> test</button>'
-        )
-        res = render_template_with_form(
-            "{% bootstrap_button 'test' icon='info-sign' button_class='btn-primary' %}"
-        )
-        self.assertEqual(
-            res.strip(),
-            '<button class="btn btn-primary"><span class="glyphicon glyphicon-info-sign"></span> test</button>'
-        )
-        res = render_template_with_form(
-            "{% bootstrap_button 'test' icon='info-sign' button_type='submit' %}"
-        )
-        self.assertEqual(
-            res.strip(),
-            '<button class="btn btn-default" type="submit">'
-            '<span class="glyphicon glyphicon-info-sign"></span>'
-            ' test</button>'
-        )

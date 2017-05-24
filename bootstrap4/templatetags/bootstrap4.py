@@ -12,7 +12,7 @@ from django.utils import six
 from django.utils.safestring import mark_safe
 
 from ..bootstrap import css_url, javascript_url, jquery_url, theme_url, get_bootstrap_setting, tether_url
-from ..components import render_icon, render_alert
+from ..components import render_alert
 from ..forms import (
     render_button, render_field, render_field_and_label, render_form,
     render_form_group, render_formset,
@@ -609,8 +609,6 @@ def bootstrap_button(*args, **kwargs):
                 * ``'reset'``
                 * ``'button'``
                 * ``'link'``
-        icon
-            Name of an icon to render in the button's visible content. See bootstrap_icon_ for acceptable values.
 
         button_class
             The class of button to use. If none is given, btn-default will be used.
@@ -650,38 +648,6 @@ def bootstrap_button(*args, **kwargs):
         {% bootstrap_button "Save" button_type="submit" button_class="btn-primary" %}
     """
     return render_button(*args, **kwargs)
-
-
-@register.simple_tag
-def bootstrap_icon(icon, **kwargs):
-    """
-    Render an icon
-
-    **Tag name**::
-
-        bootstrap_icon
-
-    **Parameters**:
-
-        icon
-            Icon name. See the `Bootstrap docs <http://getbootstrap.com/components/#glyphicons>`_ for all icons.
-
-        extra_classes
-            Extra CSS classes to add to the icon HTML
-
-        title
-            A title for the icon (HTML title attrivute)
-
-    **Usage**::
-
-        {% bootstrap_icon icon %}
-
-    **Example**::
-
-        {% bootstrap_icon "star" %}
-
-    """
-    return render_icon(icon, **kwargs)
 
 
 @register.simple_tag
