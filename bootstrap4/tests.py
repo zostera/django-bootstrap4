@@ -10,15 +10,11 @@ from django.contrib.messages import constants as DEFAULT_MESSAGE_LEVELS
 from django.forms.formsets import formset_factory
 from django.template import engines
 from django.test import TestCase
+from django.utils.html_parser import HTMLParser
 
 from .exceptions import BootstrapError
 from .text import text_value, text_concat
 from .utils import add_css_class, render_tag
-
-try:
-    from html.parser import HTMLParser
-except ImportError:
-    from HTMLParser import HTMLParser
 
 RADIO_CHOICES = (
     ('1', 'Radio 1'),
