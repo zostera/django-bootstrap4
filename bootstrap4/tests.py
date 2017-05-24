@@ -208,49 +208,66 @@ class MediaTest(TestCase):
             )
 
     def test_bootstrap_javascript_tag(self):
-        res = render_template_with_form('{% bootstrap_javascript %}')
-        # self.assertEqual(
-        #     res.strip(),
-        #     '<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"'
-        #     ' integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"'
-        #     ' crossorigin="anonymous"></script>'
-        # )
+        res = render_template_with_form('{% bootstrap_javascript jquery=True %}')
+        # jQuery
+        self.assertInHTML(
+            '<script'
+            ' src="https://code.jquery.com/jquery-3.1.1.slim.min.js"'
+            ' integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"'
+            ' crossorigin="anonymous"'
+            '></script>',
+            res
+        )
+        # Tether
+        self.assertInHTML(
+            '<script'
+            ' src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"'
+            ' integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"'
+            ' crossorigin="anonymous"'
+            '></script>',
+            res
+        )
+        # Bootstrap
+        self.assertInHTML(
+            '<script'
+            ' src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"'
+            ' integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"'
+            ' crossorigin="anonymous"'
+            '></script>',
+            res
+        )
 
     def test_bootstrap_css_tag(self):
         res = render_template_with_form('{% bootstrap_css %}').strip()
-        # self.assertIn(
-        #     '<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">',
-        #     res
-        # )
-        # self.assertIn(
-        #     '<link href="//example.com/theme.css" rel="stylesheet">',
-        #     res
-        # )
+        self.assertInHTML(
+            '<link crossorigin="anonymous"'
+            ' href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"'
+            ' integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"'
+            ' rel="stylesheet">',
+            res
+        )
 
+    def test_settings_filter(self):
+        res = render_template_with_form('{{ "required_css_class"|bootstrap_setting }}')
+        self.assertEqual(res.strip(), 'bootstrap4-req')
+        res = render_template_with_form(
+            '{% if "javascript_in_head"|bootstrap_setting %}head{% else %}body{% endif %}')
+        self.assertEqual(res.strip(), 'head')
 
-def test_settings_filter(self):
-    res = render_template_with_form('{{ "required_css_class"|bootstrap_setting }}')
-    self.assertEqual(res.strip(), 'bootstrap4-req')
-    res = render_template_with_form('{% if "javascript_in_head"|bootstrap_setting %}head{% else %}body{% endif %}')
-    self.assertEqual(res.strip(), 'head')
+    def test_required_class(self):
+        form = TestForm()
+        res = render_template_with_form('{% bootstrap_form form %}', {'form': form})
+        self.assertIn('bootstrap4-req', res)
 
+    def test_error_class(self):
+        form = TestForm({})
+        res = render_template_with_form('{% bootstrap_form form %}', {'form': form})
+        self.assertIn('bootstrap4-err', res)
 
-def test_required_class(self):
-    form = TestForm()
-    res = render_template_with_form('{% bootstrap_form form %}', {'form': form})
-    self.assertIn('bootstrap4-req', res)
-
-
-def test_error_class(self):
-    form = TestForm({})
-    res = render_template_with_form('{% bootstrap_form form %}', {'form': form})
-    self.assertIn('bootstrap4-err', res)
-
-
-def test_bound_class(self):
-    form = TestForm({'sender': 'sender'})
-    res = render_template_with_form('{% bootstrap_form form %}', {'form': form})
-    self.assertIn('bootstrap4-bound', res)
+    def test_bound_class(self):
+        form = TestForm({'sender': 'sender'})
+        res = render_template_with_form('{% bootstrap_form form %}', {'form': form})
+        self.assertIn('bootstrap4-bound', res)
 
 
 class TemplateTest(TestCase):

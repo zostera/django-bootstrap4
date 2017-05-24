@@ -131,7 +131,7 @@ def render_link_tag(url, rel='stylesheet', media=None):
     """
     url_dict = sanitize_url_dict(url)
     url_dict.setdefault('href', url_dict.pop('url', None))
-    url_dict['rel']=rel
+    url_dict['rel'] = rel
     if media:
         url_dict['media'] = media
     return render_tag('link', attrs=url_dict, close=False)
