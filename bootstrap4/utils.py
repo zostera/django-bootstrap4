@@ -4,29 +4,15 @@ from __future__ import unicode_literals
 import re
 from collections import Mapping
 
-from django.utils import six
-
-try:
-    from urllib import urlencode
-except ImportError:
-    from urllib.parse import urlencode
-
-try:
-    from urlparse import urlparse, parse_qs, urlunparse
-except ImportError:
-    from urllib.parse import urlparse, parse_qs, urlunparse
-
 from django.forms.utils import flatatt
 from django.template import Variable, VariableDoesNotExist
-from django.template.base import FilterExpression, kwarg_re, TemplateSyntaxError
+from django.template.base import FilterExpression, TemplateSyntaxError, kwarg_re
 from django.template.loader import get_template
-from django.utils.encoding import force_str, force_text
+from django.utils import six
+from django.utils.encoding import force_str
+from django.utils.html import format_html
 from django.utils.safestring import mark_safe
-
-try:
-    from django.utils.html import format_html
-except ImportError:
-    from .legacy import format_html_pre_18 as format_html
+from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 from .text import text_value
 
@@ -166,15 +152,20 @@ def url_replace_param(url, name, value):
     Replace a GET parameter in an URL
     """
     url_components = urlparse(force_str(url))
-    query_params = parse_qs(url_components.query)
-    query_params[name] = value
-    query = urlencode(query_params, doseq=True)
-    return force_text(urlunparse([
+
+    params = parse_qs(url_components.query)
+
+    if value is None:
+        del params[name]
+    else:
+        params[name] = value
+
+    return mark_safe(urlunparse([
         url_components.scheme,
         url_components.netloc,
         url_components.path,
         url_components.params,
-        query,
+        urlencode(params, doseq=True),
         url_components.fragment,
     ]))
 

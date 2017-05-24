@@ -1,33 +1,29 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import re
 from math import floor
 
 from django import template
-from django.contrib.messages import constants as DEFAULT_MESSAGE_LEVELS
 from django.contrib.messages import constants as message_constants
 from django.template import Context
 from django.utils import six
 from django.utils.safestring import mark_safe
+from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
-from ..bootstrap import css_url, javascript_url, jquery_url, theme_url, get_bootstrap_setting, tether_url
+from ..bootstrap import css_url, get_bootstrap_setting, javascript_url, jquery_url, tether_url, theme_url
 from ..components import render_alert
-from ..forms import (
-    render_button, render_field, render_field_and_label, render_form,
-    render_form_group, render_formset,
-    render_label, render_form_errors, render_formset_errors
-)
+from ..forms import (render_button, render_field, render_field_and_label, render_form, render_form_errors,
+                     render_form_group, render_formset, render_formset_errors, render_label)
 from ..text import force_text
-from ..utils import handle_var, parse_token_contents, url_replace_param, sanitize_url_dict, render_script_tag
-from ..utils import render_link_tag, render_tag, render_template_file
+from ..utils import (handle_var, parse_token_contents, render_link_tag, render_script_tag, render_tag,
+                     render_template_file, sanitize_url_dict, url_replace_param)
 
 MESSAGE_LEVEL_CLASSES = {
-    DEFAULT_MESSAGE_LEVELS.DEBUG: "alert alert-warning",
-    DEFAULT_MESSAGE_LEVELS.INFO: "alert alert-info",
-    DEFAULT_MESSAGE_LEVELS.SUCCESS: "alert alert-success",
-    DEFAULT_MESSAGE_LEVELS.WARNING: "alert alert-warning",
-    DEFAULT_MESSAGE_LEVELS.ERROR: "alert alert-danger",
+    message_constants.DEBUG: "alert alert-warning",
+    message_constants.INFO: "alert alert-info",
+    message_constants.SUCCESS: "alert alert-success",
+    message_constants.WARNING: "alert alert-warning",
+    message_constants.ERROR: "alert alert-danger",
 }
 
 register = template.Library()
@@ -900,31 +896,32 @@ def get_pagination_context(page, pages_to_show=11,
     pages_shown = []
     for i in range(first_page, last_page + 1):
         pages_shown.append(i)
-        # Append proper character to url
-    if url:
-        # Remove existing page GET parameters
-        url = force_text(url)
-        url = re.sub(r'\?{0}\=[^\&]+'.format(parameter_name), '?', url)
-        url = re.sub(r'\&{0}\=[^\&]+'.format(parameter_name), '', url)
-        # Append proper separator
-        if '?' in url:
-            url += '&'
-        else:
-            url += '?'
-            # Append extra string to url
+
+    # parse the url
+    parts = urlparse(url or '')
+    params = parse_qs(parts.query)
+
+    # append extra querystring parameters to the url.
     if extra:
-        if not url:
-            url = '?'
-        url += force_text(extra) + '&'
-    if url:
-        url = url.replace('?&', '?')
+        params.update(parse_qs(extra))
+
+    # build url again.
+    url = urlunparse([
+        parts.scheme,
+        parts.netloc,
+        parts.path,
+        parts.params,
+        urlencode(params, doseq=True),
+        parts.fragment
+    ])
+
     # Set CSS classes, see http://getbootstrap.com/components/#pagination
     pagination_css_classes = ['pagination']
     if size == 'small':
         pagination_css_classes.append('pagination-sm')
     elif size == 'large':
         pagination_css_classes.append('pagination-lg')
-        # Build context object
+
     return {
         'bootstrap_pagination_url': url,
         'num_pages': num_pages,
