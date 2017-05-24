@@ -1,0 +1,6 @@
+[run]
+source =
+    bootstrap4
+
+[html]
+directory = reports/htmlcov

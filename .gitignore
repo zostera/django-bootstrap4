@@ -51,3 +51,4 @@ local_settings.py
 
 # pyenv
 .python-version
+reports
