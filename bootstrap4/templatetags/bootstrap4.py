@@ -8,11 +8,11 @@ from django import template
 from django.contrib.messages import constants as DEFAULT_MESSAGE_LEVELS
 from django.contrib.messages import constants as message_constants
 from django.template import Context
+from django.utils import six
 from django.utils.safestring import mark_safe
 
 from ..bootstrap import (
-    css_url, javascript_url, jquery_url, theme_url, get_bootstrap_setting
-)
+    css_url, javascript_url, jquery_url, theme_url, get_bootstrap_setting)
 from ..components import render_icon, render_alert
 from ..forms import (
     render_button, render_field, render_field_and_label, render_form,
@@ -196,6 +196,43 @@ def bootstrap_css():
 
 
 @register.simple_tag
+def bootstrap_jquery():
+    """
+    Return HTML for jQuery tag.
+
+    Adjust url in settings. If no url is returned, we don't want this
+    statement to return any HTML.
+    This is intended behavior.
+
+    Default value: ``None``
+
+    This value is configurable, see Settings section
+
+    **Tag name**::
+
+        bootstrap_javascript
+
+    **Parameters**:
+
+        :jquery: Truthy to include jQuery as well as Bootstrap
+
+    **Usage**::
+
+        {% bootstrap_javascript %}
+
+    **Example**::
+
+        {% bootstrap_javascript jquery=1 %}
+    """
+    jquery = get_bootstrap_setting('jquery_url')
+    if isinstance(jquery, six.string_types):
+        jquery = dict(src=jquery)
+    else:
+        jquery.setdefault('src', jquery.pop('url', None))
+    return render_tag('script', jquery)
+
+
+@register.simple_tag
 def bootstrap_javascript(jquery=None):
     """
     Return HTML for Bootstrap JavaScript.
@@ -231,9 +268,7 @@ def bootstrap_javascript(jquery=None):
         jquery = get_bootstrap_setting('include_jquery', False)
     # NOTE: No async on scripts, not mature enough. See issue #52 and #56
     if jquery:
-        url = bootstrap_jquery_url()
-        if url:
-            javascript += render_tag('script', attrs={'src': url})
+        javascript += bootstrap_jquery()
     url = bootstrap_javascript_url()
     if url:
         attrs = {'src': url}

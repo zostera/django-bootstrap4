@@ -10,7 +10,7 @@ from django.contrib.messages import constants as DEFAULT_MESSAGE_LEVELS
 from django.forms.formsets import formset_factory
 from django.template import engines
 from django.test import TestCase
-from django.utils.html_parser import HTMLParser
+from django.utils.html import escape
 
 from .exceptions import BootstrapError
 from .text import text_value, text_concat
@@ -175,23 +175,6 @@ def render_field(field, context=None):
     return render_template_with_form('{% bootstrap_field field %}', context)
 
 
-def get_title_from_html(html):
-    class GetTitleParser(HTMLParser):
-        def __init__(self):
-            HTMLParser.__init__(self)
-            self.title = None
-
-        def handle_starttag(self, tag, attrs):
-            for attr, value in attrs:
-                if attr == 'title':
-                    self.title = value
-
-    parser = GetTitleParser()
-    parser.feed(html)
-
-    return parser.title
-
-
 class SettingsTest(TestCase):
     def test_settings(self):
         from .bootstrap import get_bootstrap_setting
@@ -201,11 +184,36 @@ class SettingsTest(TestCase):
         with self.settings(BOOTSTRAP4={'SETTING_DOES_NOT_EXIST': 'exists now'}):
             self.assertEqual(get_bootstrap_setting('SETTING_DOES_NOT_EXIST'), 'exists now')
 
+
+class MediaTest(TestCase):
+    def test_bootstrap_jquery(self):
+        res = render_template_with_form('{% bootstrap_jquery %}')
+        self.assertHTMLEqual(
+            res,
+            '<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"'
+            ' integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"'
+            ' crossorigin="anonymous"></script>'
+        )
+        with self.settings(BOOTSTRAP4={'jquery_url': {'url': 'foo'}}):
+            res = render_template_with_form('{% bootstrap_jquery %}')
+            self.assertHTMLEqual(
+                res,
+                '<script src="foo"></script>'
+            )
+        with self.settings(BOOTSTRAP4={'jquery_url': 'foo'}):
+            res = render_template_with_form('{% bootstrap_jquery %}')
+            self.assertHTMLEqual(
+                res,
+                '<script src="foo"></script>'
+            )
+
     def test_bootstrap_javascript_tag(self):
         res = render_template_with_form('{% bootstrap_javascript %}')
         # self.assertEqual(
         #     res.strip(),
-        #     '<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>'
+        #     '<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"'
+        #     ' integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"'
+        #     ' crossorigin="anonymous"></script>'
         # )
 
     def test_bootstrap_css_tag(self):
@@ -394,9 +402,9 @@ class FieldTest(TestCase):
     def test_help_with_quotes(self):
         # Checkboxes get special handling, so test a checkbox and something else
         res = render_form_field('sender')
-        self.assertEqual(get_title_from_html(res), TestForm.base_fields['sender'].help_text)
+        self.assertIn('title="{}"'.format(escape(TestForm.base_fields['sender'].help_text)), res)
         res = render_form_field('cc_myself')
-        self.assertEqual(get_title_from_html(res), TestForm.base_fields['cc_myself'].help_text)
+        self.assertIn('title="{}"'.format(escape(TestForm.base_fields['cc_myself'].help_text)), res)
 
     def test_subject(self):
         res = render_form_field('subject')

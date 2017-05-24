@@ -4,10 +4,15 @@ from __future__ import unicode_literals
 from importlib import import_module
 
 from django.conf import settings
-
 # Default settings
+from django.utils import six
+
 BOOTSTRAP4_DEFAULTS = {
-    'jquery_url': '//code.jquery.com/jquery-3.1.1.min.js',
+    'jquery_url': {
+        'src': 'https://code.jquery.com/jquery-3.1.1.slim.min.js',
+        'integrity': 'sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n',
+        'crossorigin': 'anonymous',
+    },
     'base_url': '//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/',
     'css_url': None,
     'theme_url': None,
@@ -34,7 +39,7 @@ BOOTSTRAP4_DEFAULTS = {
 }
 
 
-def get_bootstrap_setting(setting, default=None):
+def get_bootstrap_setting(name, default=None):
     """
     Read a setting
     """
@@ -44,7 +49,7 @@ def get_bootstrap_setting(setting, default=None):
     # Override with user settings from settings.py
     BOOTSTRAP4.update(getattr(settings, 'BOOTSTRAP4', {}))
 
-    return BOOTSTRAP4.get(setting, default)
+    return BOOTSTRAP4.get(name, default)
 
 
 def bootstrap_url(postfix):
