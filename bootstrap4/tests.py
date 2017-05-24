@@ -725,3 +725,9 @@ class PaginatorTest(TestCase):
 
         res = self.bootstrap_pagination(p.page(2), extra='url="/projects/?page=3#id"')
         self.assertTrue('/projects/?page=1#id' in res)
+
+        res = self.bootstrap_pagination(p.page(2), extra='url="/projects/?page=3" extra="id=20"')
+        self.assertTrue(
+            '/projects/?page=1&id=20' in res or
+            '/projects/?id=20&page=1' in res
+        )
