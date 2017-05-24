@@ -194,26 +194,30 @@ def get_title_from_html(html):
 
 class SettingsTest(TestCase):
     def test_settings(self):
-        from .bootstrap import BOOTSTRAP4
-        self.assertTrue(BOOTSTRAP4)
+        from .bootstrap import get_bootstrap_setting
+        self.assertIsNone(get_bootstrap_setting('SETTING_DOES_NOT_EXIST'))
+        self.assertEqual('not none', get_bootstrap_setting('SETTING_DOES_NOT_EXIST', 'not none'))
+        # Override a setting
+        with self.settings(BOOTSTRAP4={'SETTING_DOES_NOT_EXIST': 'exists now'}):
+            self.assertEqual(get_bootstrap_setting('SETTING_DOES_NOT_EXIST'), 'exists now')
 
-        # def test_bootstrap_javascript_tag(self):
-        #     res = render_template_with_form('{% bootstrap_javascript %}')
-        #     self.assertEqual(
-        #         res.strip(),
-        #         '<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>'
-        #     )
-        #
-        # def test_bootstrap_css_tag(self):
-        #     res = render_template_with_form('{% bootstrap_css %}').strip()
-        #     self.assertIn(
-        #         '<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">',
-        #         res
-        #     )
-        #     self.assertIn(
-        #         '<link href="//example.com/theme.css" rel="stylesheet">',
-        #         res
-        #     )
+    def test_bootstrap_javascript_tag(self):
+        res = render_template_with_form('{% bootstrap_javascript %}')
+        # self.assertEqual(
+        #     res.strip(),
+        #     '<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>'
+        # )
+
+    def test_bootstrap_css_tag(self):
+        res = render_template_with_form('{% bootstrap_css %}').strip()
+        # self.assertIn(
+        #     '<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">',
+        #     res
+        # )
+        # self.assertIn(
+        #     '<link href="//example.com/theme.css" rel="stylesheet">',
+        #     res
+        # )
 
 
 def test_settings_filter(self):

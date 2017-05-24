@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 from importlib import import_module
 
-from django import VERSION as DJANGO_VERSION
 from django.conf import settings
 
 # Default settings
@@ -34,17 +33,17 @@ BOOTSTRAP4_DEFAULTS = {
     },
 }
 
-# Start with a copy of default settings
-BOOTSTRAP4 = BOOTSTRAP4_DEFAULTS.copy()
-
-# Override with user settings from settings.py
-BOOTSTRAP4.update(getattr(settings, 'BOOTSTRAP4', {}))
-
 
 def get_bootstrap_setting(setting, default=None):
     """
     Read a setting
     """
+    # Start with a copy of default settings
+    BOOTSTRAP4 = BOOTSTRAP4_DEFAULTS.copy()
+
+    # Override with user settings from settings.py
+    BOOTSTRAP4.update(getattr(settings, 'BOOTSTRAP4', {}))
+
     return BOOTSTRAP4.get(setting, default)
 
 
@@ -67,7 +66,7 @@ def javascript_url():
     Return the full url to the Bootstrap JavaScript file
     """
     return get_bootstrap_setting('javascript_url') or \
-        bootstrap_url('js/bootstrap.min.js')
+           bootstrap_url('js/bootstrap.min.js')
 
 
 def css_url():
@@ -75,7 +74,7 @@ def css_url():
     Return the full url to the Bootstrap CSS file
     """
     return get_bootstrap_setting('css_url') or \
-        bootstrap_url('css/bootstrap.min.css')
+           bootstrap_url('css/bootstrap.min.css')
 
 
 def theme_url():
