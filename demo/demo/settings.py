@@ -157,4 +157,5 @@ BOOTSTRAP4 = {
     'error_css_class': 'bootstrap4-error',
     'required_css_class': 'bootstrap4-required',
     'javascript_in_head': True,
+    'include_jquery': True,
 }

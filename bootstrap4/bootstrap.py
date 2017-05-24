@@ -4,19 +4,33 @@ from __future__ import unicode_literals
 from importlib import import_module
 
 from django.conf import settings
+
 # Default settings
-from django.utils import six
 
 BOOTSTRAP4_DEFAULTS = {
+    'base_url': None,  # '//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/'
+    'css_url': {
+        'href': "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css",
+        'integrity': "sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ",
+        'crossorigin': "anonymous",
+    },
+    'theme_url': None,
     'jquery_url': {
-        'src': 'https://code.jquery.com/jquery-3.1.1.slim.min.js',
+        'url': 'https://code.jquery.com/jquery-3.1.1.slim.min.js',
         'integrity': 'sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n',
         'crossorigin': 'anonymous',
     },
-    'base_url': '//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/',
-    'css_url': None,
-    'theme_url': None,
-    'javascript_url': None,
+    'tether_url': {
+        'url': "https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js",
+        'integrity': "sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb",
+        'crossorigin': "anonymous",
+
+    },
+    'javascript_url': {
+        'url': "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js",
+        'integrity': "sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn",
+        'crossorigin': "anonymous",
+    },
     'javascript_in_head': False,
     'include_jquery': False,
     'horizontal_label_class': 'col-md-3',
@@ -66,20 +80,27 @@ def jquery_url():
     return get_bootstrap_setting('jquery_url')
 
 
+def tether_url():
+    """
+    Return the full url to the Bootstrap JavaScript file
+    """
+    return get_bootstrap_setting('tether_url')
+
+
 def javascript_url():
     """
     Return the full url to the Bootstrap JavaScript file
     """
-    return get_bootstrap_setting('javascript_url') or \
-           bootstrap_url('js/bootstrap.min.js')
+    url = get_bootstrap_setting('javascript_url')
+    return url if url else bootstrap_url('js/bootstrap.min.js')
 
 
 def css_url():
     """
     Return the full url to the Bootstrap CSS file
     """
-    return get_bootstrap_setting('css_url') or \
-           bootstrap_url('css/bootstrap.min.css')
+    url = get_bootstrap_setting('css_url')
+    return url if url else bootstrap_url('css/bootstrap.min.css')
 
 
 def theme_url():

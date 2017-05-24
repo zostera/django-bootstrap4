@@ -11,8 +11,7 @@ from django.template import Context
 from django.utils import six
 from django.utils.safestring import mark_safe
 
-from ..bootstrap import (
-    css_url, javascript_url, jquery_url, theme_url, get_bootstrap_setting)
+from ..bootstrap import css_url, javascript_url, jquery_url, theme_url, get_bootstrap_setting, tether_url
 from ..components import render_icon, render_alert
 from ..forms import (
     render_button, render_field, render_field_and_label, render_form,
@@ -20,7 +19,7 @@ from ..forms import (
     render_label, render_form_errors, render_formset_errors
 )
 from ..text import force_text
-from ..utils import handle_var, parse_token_contents, url_replace_param
+from ..utils import handle_var, parse_token_contents, url_replace_param, sanitize_url_dict, render_script_tag
 from ..utils import render_link_tag, render_tag, render_template_file
 
 MESSAGE_LEVEL_CLASSES = {
@@ -76,7 +75,7 @@ def bootstrap_jquery_url():
 
         bootstrap_jquery_url
 
-    Return the full url to jQuery file to use
+    Return the full url to jQuery plugin to use
 
     Default value: ``//code.jquery.com/jquery.min.js``
 
@@ -91,6 +90,30 @@ def bootstrap_jquery_url():
         {% bootstrap_jquery_url %}
     """
     return jquery_url()
+
+
+@register.simple_tag
+def bootstrap_tether_url():
+    """
+    Return the full url to the Tether plugin to use
+
+    Default value: ``None``
+
+    This value is configurable, see Settings section
+
+    **Tag name**::
+
+        bootstrap_tether_url
+
+    **Usage**::
+
+        {% bootstrap_tether_url %}
+
+    **Example**::
+
+        {% bootstrap_tether_url %}
+    """
+    return tether_url()
 
 
 @register.simple_tag
@@ -229,7 +252,7 @@ def bootstrap_jquery():
         jquery = dict(src=jquery)
     else:
         jquery.setdefault('src', jquery.pop('url', None))
-    return render_tag('script', jquery)
+    return render_tag('script', attrs=jquery)
 
 
 @register.simple_tag
@@ -262,18 +285,19 @@ def bootstrap_javascript(jquery=None):
         {% bootstrap_javascript jquery=1 %}
     """
 
-    javascript = ''
+    javascript_tags = []
     # See if we have to include jQuery
     if jquery is None:
         jquery = get_bootstrap_setting('include_jquery', False)
-    # NOTE: No async on scripts, not mature enough. See issue #52 and #56
     if jquery:
-        javascript += bootstrap_jquery()
-    url = bootstrap_javascript_url()
-    if url:
-        attrs = {'src': url}
-        javascript += render_tag('script', attrs=attrs)
-    return mark_safe(javascript)
+        javascript_tags.append(bootstrap_jquery())
+    tether = bootstrap_tether_url()
+    if tether:
+        javascript_tags.append(render_script_tag(tether))
+    js = bootstrap_javascript_url()
+    if js:
+        javascript_tags.append(render_script_tag(js))
+    return mark_safe(u"\n".join(javascript_tags))
 
 
 @register.simple_tag
@@ -787,7 +811,7 @@ def bootstrap_messages(context, *args, **kwargs):
 
     **Example**::
 
-        {% bootstrap_javascript jquery=1 %}
+        {% bootstrap_javascript jquery=True %}
         {% bootstrap_messages %}
 
     """

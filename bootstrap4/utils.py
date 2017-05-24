@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 import re
 from collections import Mapping
 
+from django.utils import six
+
 try:
     from urllib import urlencode
 except ImportError:
@@ -114,17 +116,25 @@ def remove_css_class(css_classes, css_class):
     return ' '.join(classes_list)
 
 
+def render_script_tag(url):
+    """
+    Build a script tag
+    """
+    url_dict = sanitize_url_dict(url)
+    url_dict.setdefault('src', url_dict.pop('url', None))
+    return render_tag('script', url_dict)
+
+
 def render_link_tag(url, rel='stylesheet', media=None):
     """
     Build a link tag
     """
-    attrs = {
-        'href': url,
-        'rel': rel,
-    }
+    url_dict = sanitize_url_dict(url)
+    url_dict.setdefault('href', url_dict.pop('url', None))
+    url_dict['rel']=rel
     if media:
-        attrs['media'] = media
-    return render_tag('link', attrs=attrs, close=False)
+        url_dict['media'] = media
+    return render_tag('link', attrs=url_dict, close=False)
 
 
 def render_tag(tag, attrs=None, content=None, close=True):
@@ -167,3 +177,12 @@ def url_replace_param(url, name, value):
         query,
         url_components.fragment,
     ]))
+
+
+def sanitize_url_dict(url):
+    """
+    Sanitize url dict as used in django-bootstrap4 settings
+    """
+    if isinstance(url, six.string_types):
+        return dict(src=url)
+    return url
