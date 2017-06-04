@@ -65,7 +65,7 @@ Example template
 Documentation
 -------------
 
-The full documentation is at http://django-bootstrap4.readthedocs.org/.
+The full documentation is at http://django-bootstrap.readthedocs.org/.
 
 
 Bugs and suggestions
