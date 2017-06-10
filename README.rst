@@ -5,11 +5,11 @@ Bootstrap 4 for Django
 Write Django as usual, and let ``django-bootstrap4`` make template output into Bootstrap 4 code.
 
 
-.. image:: https://img.shields.io/travis/dyve/django-bootstrap4/master.svg
-    :target: https://travis-ci.org/dyve/django-bootstrap4
+.. image:: https://img.shields.io/travis/zostera/django-bootstrap4/master.svg
+    :target: https://travis-ci.org/zostera/django-bootstrap4
 
-.. image:: https://img.shields.io/coveralls/dyve/django-bootstrap4/master.svg
-  :target: https://coveralls.io/r/dyve/django-bootstrap4?branch=master
+.. image:: https://img.shields.io/coveralls/dzostera/django-bootstrap4/master.svg
+  :target: https://coveralls.io/r/zostera/django-bootstrap4?branch=master
 
 .. image:: https://img.shields.io/pypi/v/django-bootstrap4.svg
     :target: https://pypi.python.org/pypi/django-bootstrap4
@@ -65,7 +65,7 @@ Example template
 Documentation
 -------------
 
-The full documentation is at http://django-bootstrap4.readthedocs.org/.
+The full documentation is at http://django-bootstrap.readthedocs.org/.
 
 
 Bugs and suggestions
