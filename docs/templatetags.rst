@@ -53,11 +53,6 @@ bootstrap_button
 .. autofunction:: bootstrap4.templatetags.bootstrap4.bootstrap_button
 
 
-bootstrap_icon
-~~~~~~~~~~~~~~
-
-.. autofunction:: bootstrap4.templatetags.bootstrap4.bootstrap_icon
-
 bootstrap_alert
 ~~~~~~~~~~~~~~~
 
