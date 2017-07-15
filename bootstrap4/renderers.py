@@ -411,21 +411,26 @@ class FieldRenderer(BaseRenderer):
         return html
 
     def append_to_field(self, html):
-        help_text_and_errors = []
-        if self.field_help:
-            help_text_and_errors.append(self.field_help)
-        help_text_and_errors += self.field_errors
-        if help_text_and_errors:
-            help_html = render_template_file(
-                'bootstrap4/field_help_text_and_errors.html',
+        if self.field_errors:
+            html += render_template_file(
+                'bootstrap4/field_errors.html',
                 context={
                     'field': self.field,
-                    'help_text_and_errors': help_text_and_errors,
+                    'errors': self.field_errors,
                     'layout': self.layout,
                     'show_help': self.show_help,
                 }
             )
-            html += help_html
+        if self.field_help:
+            html += render_template_file(
+                'bootstrap4/field_help_text.html',
+                context={
+                    'field': self.field,
+                    'help_text': self.field_help,
+                    'layout': self.layout,
+                    'show_help': self.show_help,
+                }
+            )
         return html
 
     def get_field_class(self):

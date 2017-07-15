@@ -524,7 +524,7 @@ def bootstrap_field(*args, **kwargs):
         error_css_class
             CSS class used when the field has an error
 
-            :default: ``'has-error'``. Can be changed :doc:`settings`
+            :default: ``'has-danger'``. Can be changed :doc:`settings`
 
         required_css_class
             CSS class used on the ``div.form-group`` to indicate a field is required

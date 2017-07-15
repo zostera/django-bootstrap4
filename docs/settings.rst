@@ -48,7 +48,7 @@ The ``BOOTSTRAP4`` dict variable contains these settings and defaults:
         'required_css_class': '',
 
         # Class to indicate error (better to set this in your Django form)
-        'error_css_class': 'has-error',
+        'error_css_class': 'has-danger',
 
         # Class to indicate success, meaning the field has valid input (better to set this in your Django form)
         'success_css_class': 'has-success',
