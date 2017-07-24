@@ -12,18 +12,14 @@ RADIO_CHOICES = (
 )
 
 MEDIA_CHOICES = (
-    (
-        'Audio', (
-            ('vinyl', 'Vinyl'),
-            ('cd', 'CD'),
-        )
-    ),
-    (
-        'Video', (
-            ('vhs', 'VHS Tape'),
-            ('dvd', 'DVD'),
-        )
-    ),
+    ('Audio', (
+        ('vinyl', 'Vinyl'),
+        ('cd', 'CD'),
+    )),
+    ('Video', (
+        ('vhs', 'VHS Tape'),
+        ('dvd', 'DVD'),
+    )),
     ('unknown', 'Unknown'),
 )
 
