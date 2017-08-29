@@ -16,8 +16,7 @@ BOOTSTRAP4_DEFAULTS = {
     },
     'theme_url': None,
     'jquery_url': {
-        'url': 'https://code.jquery.com/jquery-3.1.1.slim.min.js',
-        'integrity': 'sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n',
+        'url': 'https://code.jquery.com/jquery-3.2.1.slim.min.js',
         'crossorigin': 'anonymous',
     },
     'tether_url': {
