@@ -191,8 +191,7 @@ class MediaTest(TestCase):
         res = render_template_with_form('{% bootstrap_jquery %}')
         self.assertHTMLEqual(
             res,
-            '<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"'
-            ' integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"'
+            '<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"'
             ' crossorigin="anonymous"></script>'
         )
         with self.settings(BOOTSTRAP4={'jquery_url': {'url': 'foo'}}):
@@ -213,8 +212,7 @@ class MediaTest(TestCase):
         # jQuery
         self.assertInHTML(
             '<script'
-            ' src="https://code.jquery.com/jquery-3.1.1.slim.min.js"'
-            ' integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"'
+            ' src="https://code.jquery.com/jquery-3.2.1.slim.min.js"'
             ' crossorigin="anonymous"'
             '></script>',
             res
