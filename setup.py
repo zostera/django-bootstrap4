@@ -15,10 +15,14 @@ version = bootstrap4.__version__
 
 if sys.argv[-1] == 'publish':
     os.system('cd docs && make html')
-    os.system('python setup.py sdist upload')
-    print("You probably want to also tag the version now:")
-    print("  git tag -a %s -m 'version %s'" % (version, version))
-    print("  git push --tags")
+    os.system('python setup.py sdist')
+    os.system('twine upload dist/django-bootstrap4-{}.tar.gz')
+    message = '\nreleased [{version}](https://pypi.python.org/pypi/django-bootstrap4/{version})'
+    print(message.format(version=VERSION))
+
+if sys.argv[-1] == 'tag':
+    os.system("git tag -a %s -m 'tagging version %s'" % (version, version))
+    os.system('git push --tags')
     sys.exit()
 
 if sys.argv[-1] == 'test':
