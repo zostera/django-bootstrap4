@@ -11,7 +11,7 @@ try:
 except ImportError:
     from distutils.core import setup
 
-version = bootstrap4.__version__
+VERSION = bootstrap4.__version__
 
 if sys.argv[-1] == 'publish':
     os.system('cd docs && make html')
@@ -21,7 +21,7 @@ if sys.argv[-1] == 'publish':
     print(message.format(version=VERSION))
 
 if sys.argv[-1] == 'tag':
-    os.system("git tag -a %s -m 'tagging version %s'" % (version, version))
+    os.system("git tag -a %s -m 'tagging version %s'" % (VERSION, VERSION))
     os.system('git push --tags')
     sys.exit()
 
@@ -39,7 +39,7 @@ with open('HISTORY.rst') as history_file:
 
 setup(
     name='django-bootstrap4',
-    version=version,
+    version=VERSION,
     description="""Bootstrap support for Django projects""",
     long_description=readme + '\n\n' + history,
     author='Dylan Verheul',
