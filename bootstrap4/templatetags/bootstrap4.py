@@ -830,6 +830,16 @@ def bootstrap_pagination(page, **kwargs):
 
             :default: ``'page'``
 
+        align
+            Change the alignment of pagination components with flexbox utilities. Defaults being left aligned.
+
+            One of the following:
+
+                * ``'center'``
+                * ``'end'``
+
+            :default: ``None``
+
     **Usage**::
 
         {% bootstrap_pagination page %}
@@ -852,7 +862,7 @@ def bootstrap_url_replace_param(url, name, value):
 
 def get_pagination_context(page, pages_to_show=11,
                            url=None, size=None, extra=None,
-                           parameter_name='page'):
+                           parameter_name='page', align=None):
     """
     Generate Bootstrap pagination context from a page object
     """
@@ -921,6 +931,11 @@ def get_pagination_context(page, pages_to_show=11,
         pagination_css_classes.append('pagination-sm')
     elif size == 'large':
         pagination_css_classes.append('pagination-lg')
+
+    if align == 'center':
+        pagination_css_classes.append('justify-content-center')
+    elif align == 'end':
+        pagination_css_classes.append('justify-content-end')
 
     return {
         'bootstrap_pagination_url': url,
