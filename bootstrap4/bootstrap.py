@@ -25,6 +25,12 @@ BOOTSTRAP4_DEFAULTS = {
         'crossorigin': "anonymous",
 
     },
+    'popper_url': {
+        'url': "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js",
+        'integrity': "sha256-jpW4gXAhFvqGDD5B7366rIPD7PDbAmqq4CO0ZnHbdM4=",
+        'crossorigin': "anonymous",
+
+    },
     'javascript_url': {
         'url': "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js",
         'integrity': "sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1",
@@ -84,6 +90,13 @@ def tether_url():
     Return the full url to the Bootstrap JavaScript file
     """
     return get_bootstrap_setting('tether_url')
+
+
+def popper_url():
+    """
+    Return the full url to Popper file
+    """
+    return get_bootstrap_setting('popper_url')
 
 
 def javascript_url():

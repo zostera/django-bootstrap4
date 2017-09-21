@@ -226,6 +226,17 @@ class MediaTest(TestCase):
             '></script>',
             res
         )
+
+        # Popper
+        self.assertInHTML(
+            '<script'
+            ' src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js"'
+            ' integrity="sha256-jpW4gXAhFvqGDD5B7366rIPD7PDbAmqq4CO0ZnHbdM4="'
+            ' crossorigin="anonymous"'
+            '></script>',
+            res
+        )
+
         # Bootstrap
         self.assertInHTML(
             '<script'

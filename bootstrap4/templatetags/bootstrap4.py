@@ -10,7 +10,7 @@ from django.utils import six
 from django.utils.safestring import mark_safe
 from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
-from ..bootstrap import css_url, get_bootstrap_setting, javascript_url, jquery_url, tether_url, theme_url
+from ..bootstrap import css_url, get_bootstrap_setting, javascript_url, jquery_url, popper_url, tether_url, theme_url
 from ..components import render_alert
 from ..forms import (render_button, render_field, render_field_and_label, render_form, render_form_errors,
                      render_form_group, render_formset, render_formset_errors, render_label)
@@ -110,6 +110,30 @@ def bootstrap_tether_url():
         {% bootstrap_tether_url %}
     """
     return tether_url()
+
+
+@register.simple_tag
+def bootstrap_popper_url():
+    """
+    Return the full url to the Popper plugin to use
+
+    Default value: ``None``
+
+    This value is configurable, see Settings section
+
+    **Tag name**::
+
+        bootstrap_popper_url
+
+    **Usage**::
+
+        {% bootstrap_popper_url %}
+
+    **Example**::
+
+        {% bootstrap_popper_url %}
+    """
+    return popper_url()
 
 
 @register.simple_tag
@@ -290,6 +314,9 @@ def bootstrap_javascript(jquery=None):
     tether = bootstrap_tether_url()
     if tether:
         javascript_tags.append(render_script_tag(tether))
+    popper = bootstrap_popper_url()
+    if popper:
+        javascript_tags.append(render_script_tag(popper))
     js = bootstrap_javascript_url()
     if js:
         javascript_tags.append(render_script_tag(js))
