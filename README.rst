@@ -5,7 +5,7 @@ Bootstrap 4 for Django
 Write Django as usual, and let ``django-bootstrap4`` make template output into Bootstrap 4 code.
 
 
-.. image:: https://img.shields.io/travis/zostera/django-bootstrap4/master.svg
+.. image:: https://travis-ci.org/zostera/django-bootstrap4.svg?branch=develop
     :target: https://travis-ci.org/zostera/django-bootstrap4
 
 .. image:: https://img.shields.io/coveralls/dzostera/django-bootstrap4/master.svg
