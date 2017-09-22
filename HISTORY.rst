@@ -3,6 +3,10 @@
 History
 -------
 
+0.0.3 (2017-09-22)
+++++++++++++++++++
+ - Upgraded bootstrap4 to the beta version
+
 0.0.2 (2017-09-06)
 ++++++++++++++++++
  - Upgraded jQuery version from CDN to 3.2.1 (#17)
