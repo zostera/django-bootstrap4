@@ -115,7 +115,7 @@ def render_link_tag(url, rel='stylesheet', media=None):
     """
     Build a link tag
     """
-    url_dict = sanitize_url_dict(url)
+    url_dict = sanitize_url_dict(url, url_attr='href')
     url_dict.setdefault('href', url_dict.pop('url', None))
     url_dict['rel'] = rel
     if media:
@@ -170,10 +170,10 @@ def url_replace_param(url, name, value):
     ]))
 
 
-def sanitize_url_dict(url):
+def sanitize_url_dict(url, url_attr='src'):
     """
     Sanitize url dict as used in django-bootstrap4 settings
     """
     if isinstance(url, six.string_types):
-        return dict(src=url)
+        return {url_attr: url}
     return url

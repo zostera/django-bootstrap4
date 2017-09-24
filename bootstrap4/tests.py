@@ -256,6 +256,23 @@ class MediaTest(TestCase):
             ' rel="stylesheet">',
             res
         )
+        # Theme
+        self.assertInHTML(
+            '<link rel="stylesheet" href="//example.com/theme.css">',
+            res
+        )
+
+    def test_bootstrap_css_from_base_url(self):
+        with self.settings(BOOTSTRAP4={'base_url': '//example.com/', 'css_url': None}):
+            res = render_template_with_form('{% bootstrap_css_url %}').strip()
+            self.assertEqual(res, '//example.com/css/bootstrap.min.css')
+            res = render_template_with_form('{% bootstrap_css %}').strip()
+            self.assertInHTML(
+                '<link'
+                ' href="//example.com/css/bootstrap.min.css"'
+                ' rel="stylesheet">',
+                res
+            )
 
     def test_settings_filter(self):
         res = render_template_with_form('{{ "required_css_class"|bootstrap_setting }}')
