@@ -15,15 +15,11 @@ Write Django as usual, and let ``django-bootstrap4`` make template output into B
     :target: https://pypi.python.org/pypi/django-bootstrap4
     :alt: Latest PyPI version
 
-.. image:: https://img.shields.io/pypi/dm/django-bootstrap4.svg
-    :target: https://pypi.python.org/pypi/django-bootstrap4
-    :alt: Number of PyPI downloads per month
-
 
 Requirements
 ------------
 
-- Django >= 1.11 (and compatible Python version)
+- Django >= 1.11 (and `compatible Python versions <https://docs.djangoproject.com/en/1.11/faq/install/#what-python-version-can-i-use-with-django>`_)
 
 
 Installation
@@ -35,13 +31,11 @@ Installation
 
    Alternatively, you can install download or clone this repo and call ``pip install -e .``.
 
-2. Add to INSTALLED_APPS in your ``settings.py``:
+2. Add to ``INSTALLED_APPS`` in your ``settings.py``:
 
    ``'bootstrap4',``
 
 3. In your templates, load the ``bootstrap4`` library and use the ``bootstrap_*`` tags:
-
-This app will soon require Django 1.8+, python 2.7+. Thanks for understanding.
 
 
 Example template
@@ -65,7 +59,7 @@ Example template
 Documentation
 -------------
 
-The full documentation is at https://django-bootstrap.readthedocs.org/.
+The full documentation is at http://django-bootstrap4.readthedocs.io/
 
 
 Bugs and suggestions
