@@ -1,6 +1,4 @@
-sudo: false
 language: python
-
 python:
     - "2.7"
     - "3.4"
@@ -9,10 +7,15 @@ python:
 
 install:
     - sudo apt-get install libgdal-dev
-    - pip install tox-travis coveralls
+    - pip install tox-travis python-coveralls
 
 script:
     - tox
 
+matrix:
+  allow_failures:
+    - env: TOXENV=py35-djangomaster
+    - env: TOXENV=py36-djangomaster
+
 after_success:
-    - coveralls
+    coveralls
