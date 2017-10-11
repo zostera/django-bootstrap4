@@ -2,7 +2,8 @@
 from __future__ import unicode_literals
 
 from django.contrib.admin.widgets import AdminFileWidget
-from django.forms import HiddenInput, FileInput, CheckboxSelectMultiple, Textarea, TextInput, PasswordInput
+from django.forms import HiddenInput, FileInput, CheckboxSelectMultiple,\
+    TextInput, Textarea, NumberInput, EmailInput, URLInput, PasswordInput
 from django.forms.widgets import CheckboxInput
 from django.utils.safestring import mark_safe
 
@@ -170,4 +171,5 @@ def is_widget_with_placeholder(widget):
     """
     # PasswordInput inherits from Input in Django 1.4.
     # It was changed to inherit from TextInput in 1.5.
-    return isinstance(widget, (TextInput, Textarea, PasswordInput))
+    # NumberInput, EmailInput, URLInput, PasswordInput switch from TextInput inheritance to Input inheritance in 1.11.
+    return isinstance(widget, (TextInput, Textarea, NumberInput, EmailInput, URLInput, PasswordInput))
