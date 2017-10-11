@@ -2,7 +2,8 @@
 from __future__ import unicode_literals
 
 from django.contrib.admin.widgets import AdminFileWidget
-from django.forms import HiddenInput, FileInput, CheckboxSelectMultiple, Textarea, TextInput, PasswordInput
+from django.forms import HiddenInput, FileInput, CheckboxSelectMultiple,\
+    TextInput, Textarea, NumberInput, EmailInput, URLInput, PasswordInput
 from django.forms.widgets import CheckboxInput
 from django.utils.safestring import mark_safe
 
