@@ -10,7 +10,7 @@ from django.conf import settings
 BOOTSTRAP4_DEFAULTS = {
     'base_url': None,  # '//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/'
     'css_url': {
-        'href': "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css",
+        'href': "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css",
         'integrity': "sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M",
         'crossorigin': "anonymous",
     },
@@ -32,7 +32,7 @@ BOOTSTRAP4_DEFAULTS = {
 
     },
     'javascript_url': {
-        'url': "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js",
+        'url': "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js",
         'integrity': "sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1",
         'crossorigin': "anonymous",
     },
