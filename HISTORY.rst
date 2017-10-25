@@ -3,18 +3,23 @@
 History
 -------
 
+0.0.4 (2017-10-25)
+++++++++++++++++++
+- Upgrade Bootstrap to 4.0.0-beta.2
+- Fix settings, tags and tests for remote JS and CSS
+
 0.0.3 (2017-09-22)
 ++++++++++++++++++
- - Upgraded bootstrap4 to the beta version
+- Upgraded bootstrap4 to the beta version
 
 0.0.2 (2017-09-06)
 ++++++++++++++++++
- - Upgraded jQuery version from CDN to 3.2.1 (#17)
- - Added proper pagination layout classes (#19)
+- Upgraded jQuery version from CDN to 3.2.1 (#17)
+- Added proper pagination layout classes (#19)
 
 0.0.1 (2017-06-04)
 ++++++++++++++++++
- - TODO
+- TODO
 
 Unreleased (2017-04-25)
 +++++++++++++++++++++++
