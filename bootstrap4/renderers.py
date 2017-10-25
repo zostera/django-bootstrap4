@@ -64,7 +64,7 @@ class BaseRenderer(object):
             return 'medium'
         raise BootstrapError('Invalid value "%s" for parameter "size" (expected "sm", "md", "lg" or "").' % size)
 
-    def get_size_class(self, prefix='input'):
+    def get_size_class(self, prefix='form-control'):
         if self.size == 'small':
             return prefix + '-sm'
         if self.size == 'large':

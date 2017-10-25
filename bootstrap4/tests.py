@@ -505,14 +505,14 @@ class FieldTest(TestCase):
 
         def _test_size_medium(param):
             res = render_template_with_form('{% bootstrap_field form.subject size="' + param + '" %}')
-            self.assertNotIn('input-lg', res)
-            self.assertNotIn('input-sm', res)
-            self.assertNotIn('input-md', res)
+            self.assertNotIn('form-control-lg', res)
+            self.assertNotIn('form-control-sm', res)
+            self.assertNotIn('form-control-md', res)
 
-        _test_size('sm', 'input-sm')
-        _test_size('small', 'input-sm')
-        _test_size('lg', 'input-lg')
-        _test_size('large', 'input-lg')
+        _test_size('sm', 'form-control-sm')
+        _test_size('small', 'form-control-sm')
+        _test_size('lg', 'form-control-lg')
+        _test_size('large', 'form-control-lg')
         _test_size_medium('md')
         _test_size_medium('medium')
         _test_size_medium('')
