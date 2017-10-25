@@ -187,12 +187,17 @@ class SettingsTest(TestCase):
 
 
 class MediaTest(TestCase):
+    JQUERY_TAG = '<script' \
+                 ' src="https://code.jquery.com/jquery-3.2.1.slim.min.js"' \
+                 ' integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"' \
+                 ' crossorigin="anonymous"' \
+                 '></script>'
+
     def test_bootstrap_jquery(self):
         res = render_template_with_form('{% bootstrap_jquery %}')
         self.assertHTMLEqual(
             res,
-            '<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"'
-            ' crossorigin="anonymous"></script>'
+            self.JQUERY_TAG
         )
         with self.settings(BOOTSTRAP4={'jquery_url': {'url': 'foo'}}):
             res = render_template_with_form('{% bootstrap_jquery %}')
@@ -211,37 +216,23 @@ class MediaTest(TestCase):
         res = render_template_with_form('{% bootstrap_javascript jquery=True %}')
         # jQuery
         self.assertInHTML(
-            '<script'
-            ' src="https://code.jquery.com/jquery-3.2.1.slim.min.js"'
-            ' crossorigin="anonymous"'
-            '></script>',
+            self.JQUERY_TAG,
             res
         )
-        # Tether
-        self.assertInHTML(
-            '<script'
-            ' src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"'
-            ' integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"'
-            ' crossorigin="anonymous"'
-            '></script>',
-            res
-        )
-
         # Popper
         self.assertInHTML(
             '<script'
-            ' src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js"'
-            ' integrity="sha256-jpW4gXAhFvqGDD5B7366rIPD7PDbAmqq4CO0ZnHbdM4="'
+            ' src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"'
+            ' integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"'
             ' crossorigin="anonymous"'
             '></script>',
             res
         )
-
         # Bootstrap
         self.assertInHTML(
             '<script'
             ' src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"'
-            ' integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"'
+            ' integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"'
             ' crossorigin="anonymous"'
             '></script>',
             res
@@ -250,9 +241,10 @@ class MediaTest(TestCase):
     def test_bootstrap_css_tag(self):
         res = render_template_with_form('{% bootstrap_css %}').strip()
         self.assertInHTML(
-            '<link crossorigin="anonymous"'
+            '<link '
             ' href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"'
-            ' integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" '
+            ' integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" '
+            ' crossorigin="anonymous"'
             ' rel="stylesheet">',
             res
         )

@@ -10,31 +10,26 @@ from django.conf import settings
 BOOTSTRAP4_DEFAULTS = {
     'base_url': None,  # '//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/'
     'css_url': {
-        'href': "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css",
-        'integrity': "sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M",
-        'crossorigin': "anonymous",
+        'href': 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css',
+        'integrity': 'sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb',
+        'crossorigin': 'anonymous',
     },
     'theme_url': None,
     'jquery_url': {
         'url': 'https://code.jquery.com/jquery-3.2.1.slim.min.js',
+        'integrity': 'sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN',
         'crossorigin': 'anonymous',
     },
-    'tether_url': {
-        'url': "https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js",
-        'integrity': "sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb",
-        'crossorigin': "anonymous",
-
-    },
     'popper_url': {
-        'url': "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js",
-        'integrity': "sha256-jpW4gXAhFvqGDD5B7366rIPD7PDbAmqq4CO0ZnHbdM4=",
-        'crossorigin': "anonymous",
+        'url': 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js',
+        'integrity': 'sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh',
+        'crossorigin': 'anonymous',
 
     },
     'javascript_url': {
-        'url': "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js",
-        'integrity': "sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1",
-        'crossorigin': "anonymous",
+        'url': 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js',
+        'integrity': 'sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ',
+        'crossorigin': 'anonymous',
     },
     'javascript_in_head': False,
     'include_jquery': False,
@@ -83,13 +78,6 @@ def jquery_url():
     Return the full url to jQuery file to use
     """
     return get_bootstrap_setting('jquery_url')
-
-
-def tether_url():
-    """
-    Return the full url to the Bootstrap JavaScript file
-    """
-    return get_bootstrap_setting('tether_url')
 
 
 def popper_url():

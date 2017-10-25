@@ -10,13 +10,12 @@ from django.utils import six
 from django.utils.safestring import mark_safe
 from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
-from ..bootstrap import css_url, get_bootstrap_setting, javascript_url, jquery_url, popper_url, tether_url, theme_url
+from ..bootstrap import css_url, get_bootstrap_setting, javascript_url, jquery_url, popper_url, theme_url
 from ..components import render_alert
 from ..forms import (render_button, render_field, render_field_and_label, render_form, render_form_errors,
                      render_form_group, render_formset, render_formset_errors, render_label)
-from ..text import force_text
 from ..utils import (handle_var, parse_token_contents, render_link_tag, render_script_tag, render_tag,
-                     render_template_file, sanitize_url_dict, url_replace_param)
+                     render_template_file, url_replace_param)
 
 MESSAGE_LEVEL_CLASSES = {
     message_constants.DEBUG: "alert alert-warning",
@@ -86,30 +85,6 @@ def bootstrap_jquery_url():
         {% bootstrap_jquery_url %}
     """
     return jquery_url()
-
-
-@register.simple_tag
-def bootstrap_tether_url():
-    """
-    Return the full url to the Tether plugin to use
-
-    Default value: ``None``
-
-    This value is configurable, see Settings section
-
-    **Tag name**::
-
-        bootstrap_tether_url
-
-    **Usage**::
-
-        {% bootstrap_tether_url %}
-
-    **Example**::
-
-        {% bootstrap_tether_url %}
-    """
-    return tether_url()
 
 
 @register.simple_tag
@@ -305,21 +280,25 @@ def bootstrap_javascript(jquery=None):
         {% bootstrap_javascript jquery=1 %}
     """
 
+    # List of JS tags to include
     javascript_tags = []
-    # See if we have to include jQuery
-    if jquery is None:
-        jquery = get_bootstrap_setting('include_jquery', False)
-    if jquery:
-        javascript_tags.append(bootstrap_jquery())
-    tether = bootstrap_tether_url()
-    if tether:
-        javascript_tags.append(render_script_tag(tether))
-    popper = bootstrap_popper_url()
-    if popper:
-        javascript_tags.append(render_script_tag(popper))
-    js = bootstrap_javascript_url()
-    if js:
-        javascript_tags.append(render_script_tag(js))
+
+    # jQuery library (optional)
+    if jquery or get_bootstrap_setting('include_jquery', False):
+        jquery_url = bootstrap_jquery_url()
+        javascript_tags.append(render_script_tag(jquery_url))
+
+    # Popper.js library
+    popper_url = bootstrap_popper_url()
+    if popper_url:
+        javascript_tags.append(render_script_tag(popper_url))
+
+    # Bootstrap 4 JavaScript
+    bootstrap_js_url = bootstrap_javascript_url()
+    if bootstrap_js_url:
+        javascript_tags.append(render_script_tag(bootstrap_js_url))
+
+    # Join and return
     return mark_safe(u"\n".join(javascript_tags))
 
 
