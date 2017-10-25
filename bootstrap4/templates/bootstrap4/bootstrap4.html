@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% load bootstrap4 %}
+<html{% if LANGUAGE_CODE %} lang="{{ LANGUAGE_CODE }}"{% endif %}>
+
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    {% bootstrap_css %}
+
+    {% if 'javascript_in_head'|bootstrap_setting %}
+        <!-- Bootstrap JavaScript if it is in head -->
+        {% bootstrap_javascript %}
+    {% endif %}
+
+    {% block bootstrap4_extra_head %}{% endblock %}
+
+</head>
+
+<body>
+{% block bootstrap4_before_content %}{% endblock %}
+{% block bootstrap4_content %} CONTENT {% endblock %}
+{% block bootstrap4_after_content %}{% endblock %}
+{% if not 'javascript_in_head'|bootstrap_setting %}
+    <!-- Bootstrap JavaScript if it is in body -->
+    {% bootstrap_javascript %}
+{% endif %}
+{% block bootstrap4_extra_script %}{% endblock %}
+</body>
+
+</html>

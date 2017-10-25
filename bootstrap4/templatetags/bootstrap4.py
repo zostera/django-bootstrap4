@@ -1,34 +1,28 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import re
 from math import floor
 
 from django import template
-from django.contrib.messages import constants as DEFAULT_MESSAGE_LEVELS
 from django.contrib.messages import constants as message_constants
 from django.template import Context
+from django.utils import six
 from django.utils.safestring import mark_safe
+from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
-from ..bootstrap import (
-    css_url, javascript_url, jquery_url, theme_url, get_bootstrap_setting
-)
-from ..components import render_icon, render_alert
-from ..forms import (
-    render_button, render_field, render_field_and_label, render_form,
-    render_form_group, render_formset,
-    render_label, render_form_errors, render_formset_errors
-)
-from ..text import force_text
-from ..utils import handle_var, parse_token_contents, url_replace_param
-from ..utils import render_link_tag, render_tag, render_template_file
+from ..bootstrap import css_url, get_bootstrap_setting, javascript_url, jquery_url, popper_url, theme_url
+from ..components import render_alert
+from ..forms import (render_button, render_field, render_field_and_label, render_form, render_form_errors,
+                     render_form_group, render_formset, render_formset_errors, render_label)
+from ..utils import (handle_var, parse_token_contents, render_link_tag, render_script_tag, render_tag,
+                     render_template_file, url_replace_param)
 
 MESSAGE_LEVEL_CLASSES = {
-    DEFAULT_MESSAGE_LEVELS.DEBUG: "alert alert-warning",
-    DEFAULT_MESSAGE_LEVELS.INFO: "alert alert-info",
-    DEFAULT_MESSAGE_LEVELS.SUCCESS: "alert alert-success",
-    DEFAULT_MESSAGE_LEVELS.WARNING: "alert alert-warning",
-    DEFAULT_MESSAGE_LEVELS.ERROR: "alert alert-danger",
+    message_constants.DEBUG: "alert alert-warning",
+    message_constants.INFO: "alert alert-info",
+    message_constants.SUCCESS: "alert alert-success",
+    message_constants.WARNING: "alert alert-warning",
+    message_constants.ERROR: "alert alert-danger",
 }
 
 register = template.Library()
@@ -76,7 +70,7 @@ def bootstrap_jquery_url():
 
         bootstrap_jquery_url
 
-    Return the full url to jQuery file to use
+    Return the full url to jQuery plugin to use
 
     Default value: ``//code.jquery.com/jquery.min.js``
 
@@ -91,6 +85,30 @@ def bootstrap_jquery_url():
         {% bootstrap_jquery_url %}
     """
     return jquery_url()
+
+
+@register.simple_tag
+def bootstrap_popper_url():
+    """
+    Return the full url to the Popper plugin to use
+
+    Default value: ``None``
+
+    This value is configurable, see Settings section
+
+    **Tag name**::
+
+        bootstrap_popper_url
+
+    **Usage**::
+
+        {% bootstrap_popper_url %}
+
+    **Example**::
+
+        {% bootstrap_popper_url %}
+    """
+    return popper_url()
 
 
 @register.simple_tag
@@ -196,6 +214,43 @@ def bootstrap_css():
 
 
 @register.simple_tag
+def bootstrap_jquery():
+    """
+    Return HTML for jQuery tag.
+
+    Adjust url in settings. If no url is returned, we don't want this
+    statement to return any HTML.
+    This is intended behavior.
+
+    Default value: ``None``
+
+    This value is configurable, see Settings section
+
+    **Tag name**::
+
+        bootstrap_javascript
+
+    **Parameters**:
+
+        :jquery: Truthy to include jQuery as well as Bootstrap
+
+    **Usage**::
+
+        {% bootstrap_javascript %}
+
+    **Example**::
+
+        {% bootstrap_javascript jquery=1 %}
+    """
+    jquery = get_bootstrap_setting('jquery_url')
+    if isinstance(jquery, six.string_types):
+        jquery = dict(src=jquery)
+    else:
+        jquery.setdefault('src', jquery.pop('url', None))
+    return render_tag('script', attrs=jquery)
+
+
+@register.simple_tag
 def bootstrap_javascript(jquery=None):
     """
     Return HTML for Bootstrap JavaScript.
@@ -225,20 +280,26 @@ def bootstrap_javascript(jquery=None):
         {% bootstrap_javascript jquery=1 %}
     """
 
-    javascript = ''
-    # See if we have to include jQuery
-    if jquery is None:
-        jquery = get_bootstrap_setting('include_jquery', False)
-    # NOTE: No async on scripts, not mature enough. See issue #52 and #56
-    if jquery:
-        url = bootstrap_jquery_url()
-        if url:
-            javascript += render_tag('script', attrs={'src': url})
-    url = bootstrap_javascript_url()
-    if url:
-        attrs = {'src': url}
-        javascript += render_tag('script', attrs=attrs)
-    return mark_safe(javascript)
+    # List of JS tags to include
+    javascript_tags = []
+
+    # jQuery library (optional)
+    if jquery or get_bootstrap_setting('include_jquery', False):
+        jquery_url = bootstrap_jquery_url()
+        javascript_tags.append(render_script_tag(jquery_url))
+
+    # Popper.js library
+    popper_url = bootstrap_popper_url()
+    if popper_url:
+        javascript_tags.append(render_script_tag(popper_url))
+
+    # Bootstrap 4 JavaScript
+    bootstrap_js_url = bootstrap_javascript_url()
+    if bootstrap_js_url:
+        javascript_tags.append(render_script_tag(bootstrap_js_url))
+
+    # Join and return
+    return mark_safe(u"\n".join(javascript_tags))
 
 
 @register.simple_tag
@@ -286,7 +347,7 @@ def bootstrap_formset_errors(*args, **kwargs):
             The formset that is being rendered
 
         layout
-            Context value that is available in the template ``bootstrap3/form_errors.html`` as ``layout``.
+            Context value that is available in the template ``bootstrap4/form_errors.html`` as ``layout``.
 
     **Usage**::
 
@@ -356,7 +417,7 @@ def bootstrap_form_errors(*args, **kwargs):
             :default: ``'all'``
 
         layout
-            Context value that is available in the template ``bootstrap3/form_errors.html`` as ``layout``.
+            Context value that is available in the template ``bootstrap4/form_errors.html`` as ``layout``.
 
     **Usage**::
 
@@ -412,19 +473,6 @@ def bootstrap_field(*args, **kwargs):
         exclude
             A list of field names that should not be rendered
 
-        set_required
-            When set to ``True`` and the field is required then the ``required`` attribute is set on the
-            rendered field. This only works up to Django 1.8. Higher Django versions handle ``required``
-            natively.
-
-            :default: ``True``
-
-        set_disabled
-            When set to ``True`` then the ``disabled`` attribute is set on the rendered field. This only
-            works up to Django 1.8.  Higher Django versions handle ``disabled`` natively.
-
-            :default: ``False``
-
         size
             Controls the size of the rendered ``div.form-group`` through the use of CSS classes.
 
@@ -450,20 +498,20 @@ def bootstrap_field(*args, **kwargs):
         addon_before
             Text that should be prepended to the form field. Can also be an icon, e.g.
             ``'<span class="glyphicon glyphicon-calendar"></span>'``
-            
+
             See the `Bootstrap docs <http://getbootstrap.com/components/#input-groups-basic>` for more examples.
 
         addon_after
             Text that should be appended to the form field. Can also be an icon, e.g.
             ``'<span class="glyphicon glyphicon-calendar"></span>'``
-            
+
             See the `Bootstrap docs <http://getbootstrap.com/components/#input-groups-basic>` for more examples.
 
         addon_before_class
             Class used on the span when ``addon_before`` is used.
 
             One of the following values:
-                
+
                 * ``'input-group-addon'``
                 * ``'input-group-btn'``
 
@@ -473,7 +521,7 @@ def bootstrap_field(*args, **kwargs):
             Class used on the span when ``addon_after`` is used.
 
             One of the following values:
-                
+
                 * ``'input-group-addon'``
                 * ``'input-group-btn'``
 
@@ -563,8 +611,6 @@ def bootstrap_button(*args, **kwargs):
                 * ``'reset'``
                 * ``'button'``
                 * ``'link'``
-        icon
-            Name of an icon to render in the button's visible content. See bootstrap_icon_ for acceptable values.
 
         button_class
             The class of button to use. If none is given, btn-default will be used.
@@ -604,38 +650,6 @@ def bootstrap_button(*args, **kwargs):
         {% bootstrap_button "Save" button_type="submit" button_class="btn-primary" %}
     """
     return render_button(*args, **kwargs)
-
-
-@register.simple_tag
-def bootstrap_icon(icon, **kwargs):
-    """
-    Render an icon
-
-    **Tag name**::
-
-        bootstrap_icon
-
-    **Parameters**:
-
-        icon
-            Icon name. See the `Bootstrap docs <http://getbootstrap.com/components/#glyphicons>`_ for all icons.
-
-        extra_classes
-            Extra CSS classes to add to the icon HTML
-
-        title
-            A title for the icon (HTML title attrivute)
-
-    **Usage**::
-
-        {% bootstrap_icon icon %}
-
-    **Example**::
-
-        {% bootstrap_icon "star" %}
-
-    """
-    return render_icon(icon, **kwargs)
 
 
 @register.simple_tag
@@ -749,7 +763,7 @@ def bootstrap_messages(context, *args, **kwargs):
     we have to set the jquery parameter too when using the
     bootstrap_javascript tag.
 
-    Uses the template ``bootstrap3/messages.html``.
+    Uses the template ``bootstrap4/messages.html``.
 
     **Tag name**::
 
@@ -765,7 +779,7 @@ def bootstrap_messages(context, *args, **kwargs):
 
     **Example**::
 
-        {% bootstrap_javascript jquery=1 %}
+        {% bootstrap_javascript jquery=True %}
         {% bootstrap_messages %}
 
     """
@@ -775,10 +789,10 @@ def bootstrap_messages(context, *args, **kwargs):
     if Context and isinstance(context, Context):
         context = context.flatten()
     context.update({'message_constants': message_constants})
-    return render_template_file('bootstrap3/messages.html', context=context)
+    return render_template_file('bootstrap4/messages.html', context=context)
 
 
-@register.inclusion_tag('bootstrap3/pagination.html')
+@register.inclusion_tag('bootstrap4/pagination.html')
 def bootstrap_pagination(page, **kwargs):
     """
     Render pagination for a page
@@ -888,31 +902,32 @@ def get_pagination_context(page, pages_to_show=11,
     pages_shown = []
     for i in range(first_page, last_page + 1):
         pages_shown.append(i)
-        # Append proper character to url
-    if url:
-        # Remove existing page GET parameters
-        url = force_text(url)
-        url = re.sub(r'\?{0}\=[^\&]+'.format(parameter_name), '?', url)
-        url = re.sub(r'\&{0}\=[^\&]+'.format(parameter_name), '', url)
-        # Append proper separator
-        if '?' in url:
-            url += '&'
-        else:
-            url += '?'
-            # Append extra string to url
+
+    # parse the url
+    parts = urlparse(url or '')
+    params = parse_qs(parts.query)
+
+    # append extra querystring parameters to the url.
     if extra:
-        if not url:
-            url = '?'
-        url += force_text(extra) + '&'
-    if url:
-        url = url.replace('?&', '?')
+        params.update(parse_qs(extra))
+
+    # build url again.
+    url = urlunparse([
+        parts.scheme,
+        parts.netloc,
+        parts.path,
+        parts.params,
+        urlencode(params, doseq=True),
+        parts.fragment
+    ])
+
     # Set CSS classes, see http://getbootstrap.com/components/#pagination
     pagination_css_classes = ['pagination']
     if size == 'small':
         pagination_css_classes.append('pagination-sm')
     elif size == 'large':
         pagination_css_classes.append('pagination-lg')
-        # Build context object
+
     return {
         'bootstrap_pagination_url': url,
         'num_pages': num_pages,

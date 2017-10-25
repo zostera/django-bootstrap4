@@ -8,26 +8,20 @@ except RuntimeError:
     ReadOnlyPasswordHashWidget = None
 
 from django.forms import (
-    TextInput, DateInput, FileInput, CheckboxInput, MultiWidget,
+    TextInput, DateInput, FileInput, NumberInput, CheckboxInput, MultiWidget,
     ClearableFileInput, Select, RadioSelect, CheckboxSelectMultiple
 )
-# Django 1.9 moved SelectDateWidget to django.forms.widget from
-# django.forms.extras. Django 2.0 will remove the old import location.
-try:
-    from django.forms.widgets import SelectDateWidget
-except ImportError:
-    from django.forms.extras import SelectDateWidget
+from django.forms.widgets import SelectDateWidget
 from django.forms.forms import BaseForm, BoundField
 from django.forms.formsets import BaseFormSet
 from django.utils.html import conditional_escape, escape, strip_tags
 from django.utils.safestring import mark_safe
 
-from .bootstrap import get_bootstrap_setting, DBS3_SET_REQUIRED_SET_DISABLED
+from .bootstrap import get_bootstrap_setting
 from .exceptions import BootstrapError
 from .forms import (
     render_form, render_field, render_label, render_form_group,
-    is_widget_with_placeholder, FORM_GROUP_CLASS,
-    is_widget_required_attribute
+    is_widget_with_placeholder, FORM_GROUP_CLASS
 )
 from .text import text_value
 from .utils import add_css_class, render_template_file
@@ -47,10 +41,6 @@ class BaseRenderer(object):
         self.show_help = kwargs.get('show_help', True)
         self.show_label = kwargs.get('show_label', True)
         self.exclude = kwargs.get('exclude', '')
-
-        # Only relevant if DBS3_SET_REQUIRED_SET_DISABLED
-        self.set_required = kwargs.get('set_required', True)
-        self.set_disabled = kwargs.get('set_disabled', False)
 
         self.set_placeholder = kwargs.get('set_placeholder', True)
         self.size = self.parse_size(kwargs.get('size', ''))
@@ -73,7 +63,7 @@ class BaseRenderer(object):
             return 'medium'
         raise BootstrapError('Invalid value "%s" for parameter "size" (expected "sm", "md", "lg" or "").' % size)
 
-    def get_size_class(self, prefix='input'):
+    def get_size_class(self, prefix='form-control'):
         if self.size == 'small':
             return prefix + '-sm'
         if self.size == 'large':
@@ -117,8 +107,6 @@ class FormsetRenderer(BaseRenderer):
                 show_label=self.show_label,
                 show_help=self.show_help,
                 exclude=self.exclude,
-                set_required=self.set_required,  # Only relevant if DBS3_SET_REQUIRED_SET_DISABLED
-                set_disabled=self.set_disabled,  # Only relevant if DBS3_SET_REQUIRED_SET_DISABLED
                 set_placeholder=self.set_placeholder,
                 size=self.size,
                 horizontal_label_class=self.horizontal_label_class,
@@ -133,7 +121,7 @@ class FormsetRenderer(BaseRenderer):
         formset_errors = self.get_formset_errors()
         if formset_errors:
             return render_template_file(
-                'bootstrap3/form_errors.html',
+                'bootstrap4/form_errors.html',
                 context={
                     'errors': formset_errors,
                     'form': self.formset,
@@ -161,11 +149,6 @@ class FormRenderer(BaseRenderer):
                 'Parameter "form" should contain a valid Django Form.')
         self.form = form
         super(FormRenderer, self).__init__(*args, **kwargs)
-
-        # Handle form.empty_permitted
-        if DBS3_SET_REQUIRED_SET_DISABLED and self.form.empty_permitted:
-            self.set_required = False
-
         self.error_css_class = kwargs.get('error_css_class', None)
         self.required_css_class = kwargs.get('required_css_class', None)
         self.bound_css_class = kwargs.get('bound_css_class', None)
@@ -182,8 +165,6 @@ class FormRenderer(BaseRenderer):
                 show_label=self.show_label,
                 show_help=self.show_help,
                 exclude=self.exclude,
-                set_required=self.set_required,  # Only relevant if DBS3_SET_REQUIRED_SET_DISABLED
-                set_disabled=self.set_disabled,  # Only relevant if DBS3_SET_REQUIRED_SET_DISABLED
                 set_placeholder=self.set_placeholder,
                 size=self.size,
                 horizontal_label_class=self.horizontal_label_class,
@@ -212,7 +193,7 @@ class FormRenderer(BaseRenderer):
 
         if form_errors:
             return render_template_file(
-                'bootstrap3/form_errors.html',
+                'bootstrap4/form_errors.html',
                 context={
                     'errors': form_errors,
                     'form': self.form,
@@ -271,7 +252,7 @@ class FieldRenderer(BaseRenderer):
         self.addon_after_class = kwargs.get('addon_after_class',
                                             self.widget.attrs.pop('addon_after_class', 'input-group-addon'))
 
-        # These are set in Django or in the global BOOTSTRAP3 settings, and
+        # These are set in Django or in the global BOOTSTRAP4 settings, and
         # they can be overwritten in the template
         error_css_class = kwargs.get('error_css_class', None)
         required_css_class = kwargs.get('required_css_class', None)
@@ -301,12 +282,6 @@ class FieldRenderer(BaseRenderer):
         # If the form is marked as form.empty_permitted, do not set required class
         if self.field.form.empty_permitted:
             self.required_css_class = ''
-
-        # Special case to support Django 1.8 required / disabled
-        if DBS3_SET_REQUIRED_SET_DISABLED:
-            if self.field.form.empty_permitted:
-                self.set_required = False
-            self.set_disabled = kwargs.get('set_disabled', False)
 
     def restore_widget_attrs(self):
         self.widget.attrs = self.initial_attrs.copy()
@@ -341,24 +316,6 @@ class FieldRenderer(BaseRenderer):
                 escape(strip_tags(self.field_help))
             )
 
-    def add_required_attrs(self, widget=None):
-        """
-        Only relevant if DBS3_SET_REQUIRED_SET_DISABLED
-        """
-        if widget is None:
-            widget = self.widget
-        if self.set_required and is_widget_required_attribute(widget):
-            widget.attrs['required'] = 'required'
-
-    def add_disabled_attrs(self, widget=None):
-        """
-        Only relevant if DBS3_SET_REQUIRED_SET_DISABLED
-        """
-        if widget is None:
-            widget = self.widget
-        if self.set_disabled:
-            widget.attrs['disabled'] = 'disabled'
-
     def add_widget_attrs(self):
         if self.is_multi_widget:
             widgets = self.widget.widgets
@@ -368,9 +325,6 @@ class FieldRenderer(BaseRenderer):
             self.add_class_attrs(widget)
             self.add_placeholder_attrs(widget)
             self.add_help_attrs(widget)
-            if DBS3_SET_REQUIRED_SET_DISABLED:
-                self.add_required_attrs(widget)
-                self.add_disabled_attrs(widget)
 
     def list_to_class(self, html, klass):
         classes = add_css_class(klass, self.get_size_class())
@@ -400,7 +354,7 @@ class FieldRenderer(BaseRenderer):
         div2 = '</div>'
         html = html.replace('<select', div1 + '<select')
         html = html.replace('</select>', '</select>' + div2)
-        return '<div class="row bootstrap3-multi-input">' + html + '</div>'
+        return '<div class="row bootstrap4-multi-input">' + html + '</div>'
 
     def fix_clearable_file_input(self, html):
         """
@@ -418,7 +372,7 @@ class FieldRenderer(BaseRenderer):
 
         """
         # TODO This needs improvement
-        return '<div class="row bootstrap3-multi-input"><div class="col-xs-12">{html}</div></div>'.format(
+        return '<div class="row bootstrap4-multi-input"><div class="col-xs-12">{html}</div></div>'.format(
             html=html
         )
 
@@ -443,7 +397,8 @@ class FieldRenderer(BaseRenderer):
         return html
 
     def make_input_group(self, html):
-        if (self.addon_before or self.addon_after) and isinstance(self.widget, (TextInput, DateInput, Select)):
+        allowed_widget_types = (TextInput, DateInput, NumberInput, Select)
+        if (self.addon_before or self.addon_after) and isinstance(self.widget, allowed_widget_types):
             before = '<span class="{input_class}">{addon}</span>'.format(
                 input_class=self.addon_before_class, addon=self.addon_before) if self.addon_before else ''
             after = '<span class="{input_class}">{addon}</span>'.format(
@@ -462,7 +417,7 @@ class FieldRenderer(BaseRenderer):
         help_text_and_errors += self.field_errors
         if help_text_and_errors:
             help_html = render_template_file(
-                'bootstrap3/field_help_text_and_errors.html',
+                'bootstrap4/field_help_text_and_errors.html',
                 context={
                     'field': self.field,
                     'help_text_and_errors': help_text_and_errors,
@@ -490,10 +445,11 @@ class FieldRenderer(BaseRenderer):
         label_class = self.label_class
         if not label_class and self.layout == 'horizontal':
             label_class = self.horizontal_label_class
+            label_class = add_css_class(label_class, 'col-form-label')
         label_class = text_value(label_class)
         if not self.show_label:
             label_class = add_css_class(label_class, 'sr-only')
-        return add_css_class(label_class, 'control-label')
+        return label_class
 
     def get_label(self):
         if isinstance(self.widget, CheckboxInput):
@@ -526,7 +482,7 @@ class FieldRenderer(BaseRenderer):
         if self.layout == 'horizontal':
             form_group_class = add_css_class(
                 form_group_class,
-                self.get_size_class(prefix='form-group')
+                'row'
             )
         return form_group_class
 

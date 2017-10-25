@@ -1,32 +1,25 @@
 ======================
-Bootstrap 3 for Django
+Bootstrap 4 for Django
 ======================
 
-Write Django as usual, and let ``django-bootstrap3`` make template output into Bootstrap 3 code.
+Write Django as usual, and let ``django-bootstrap4`` make template output into Bootstrap 4 code.
 
 
-.. image:: https://img.shields.io/travis/dyve/django-bootstrap3/master.svg
-    :target: https://travis-ci.org/dyve/django-bootstrap3
+.. image:: https://travis-ci.org/zostera/django-bootstrap4.svg?branch=develop
+    :target: https://travis-ci.org/zostera/django-bootstrap4
 
-.. image:: https://img.shields.io/coveralls/dyve/django-bootstrap3/master.svg
-  :target: https://coveralls.io/r/dyve/django-bootstrap3?branch=master
+.. image:: https://img.shields.io/coveralls/dzostera/django-bootstrap4/master.svg
+  :target: https://coveralls.io/r/zostera/django-bootstrap4?branch=master
 
-.. image:: https://img.shields.io/pypi/v/django-bootstrap3.svg
-    :target: https://pypi.python.org/pypi/django-bootstrap3
+.. image:: https://img.shields.io/pypi/v/django-bootstrap4.svg
+    :target: https://pypi.python.org/pypi/django-bootstrap4
     :alt: Latest PyPI version
-
-.. image:: https://img.shields.io/pypi/dm/django-bootstrap3.svg
-    :target: https://pypi.python.org/pypi/django-bootstrap3
-    :alt: Number of PyPI downloads per month
 
 
 Requirements
 ------------
 
-- Python 2.7, 3.2, 3.3, 3.4, or 3.5
-- Django >= 1.8
-
-*The latest version supporting Python 2.6 and Django < 1.8 is the 6.x.x branch.*
+- Django >= 1.11 (and `compatible Python versions <https://docs.djangoproject.com/en/1.11/faq/install/#what-python-version-can-i-use-with-django>`_)
 
 
 Installation
@@ -34,17 +27,15 @@ Installation
 
 1. Install using pip:
 
-   ``pip install django-bootstrap3``
+   ``pip install django-bootstrap4``
 
    Alternatively, you can install download or clone this repo and call ``pip install -e .``.
 
-2. Add to INSTALLED_APPS in your ``settings.py``:
+2. Add to ``INSTALLED_APPS`` in your ``settings.py``:
 
-   ``'bootstrap3',``
+   ``'bootstrap4',``
 
-3. In your templates, load the ``bootstrap3`` library and use the ``bootstrap_*`` tags:
-
-This app will soon require Django 1.8+, python 2.7+. Thanks for understanding.
+3. In your templates, load the ``bootstrap4`` library and use the ``bootstrap_*`` tags:
 
 
 Example template
@@ -52,7 +43,7 @@ Example template
 
    .. code:: Django
 
-    {% load bootstrap3 %}
+    {% load bootstrap4 %}
 
     {# Display a form #}
 
@@ -60,9 +51,7 @@ Example template
         {% csrf_token %}
         {% bootstrap_form form %}
         {% buttons %}
-            <button type="submit" class="btn btn-primary">
-                {% bootstrap_icon "star" %} Submit
-            </button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         {% endbuttons %}
     </form>
 
@@ -70,7 +59,7 @@ Example template
 Documentation
 -------------
 
-The full documentation is at http://django-bootstrap3.readthedocs.org/.
+The full documentation is at http://django-bootstrap4.readthedocs.io/
 
 
 Bugs and suggestions
@@ -78,13 +67,13 @@ Bugs and suggestions
 
 If you have found a bug or if you have a request for additional functionality, please use the issue tracker on GitHub.
 
-https://github.com/dyve/django-bootstrap3/issues
+https://github.com/zostera/django-bootstrap4/issues
 
 
 License
 -------
 
-You can use this under Apache 2.0. See `LICENSE
+You can use this under BSD-3-Clause. See `LICENSE
 <LICENSE>`_ file for details.
 
 

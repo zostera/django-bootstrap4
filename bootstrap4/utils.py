@@ -4,27 +4,15 @@ from __future__ import unicode_literals
 import re
 from collections import Mapping
 
-try:
-    from urllib import urlencode
-except ImportError:
-    from urllib.parse import urlencode
-
-try:
-    from urlparse import urlparse, parse_qs, urlunparse
-except ImportError:
-    from urllib.parse import urlparse, parse_qs, urlunparse
-
 from django.forms.utils import flatatt
 from django.template import Variable, VariableDoesNotExist
-from django.template.base import FilterExpression, kwarg_re, TemplateSyntaxError
+from django.template.base import FilterExpression, TemplateSyntaxError, kwarg_re
 from django.template.loader import get_template
-from django.utils.encoding import force_str, force_text
+from django.utils import six
+from django.utils.encoding import force_str
+from django.utils.html import format_html
 from django.utils.safestring import mark_safe
-
-try:
-    from django.utils.html import format_html
-except ImportError:
-    from .legacy import format_html_pre_18 as format_html
+from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 from .text import text_value
 
@@ -114,17 +102,25 @@ def remove_css_class(css_classes, css_class):
     return ' '.join(classes_list)
 
 
+def render_script_tag(url):
+    """
+    Build a script tag
+    """
+    url_dict = sanitize_url_dict(url)
+    url_dict.setdefault('src', url_dict.pop('url', None))
+    return render_tag('script', url_dict)
+
+
 def render_link_tag(url, rel='stylesheet', media=None):
     """
     Build a link tag
     """
-    attrs = {
-        'href': url,
-        'rel': rel,
-    }
+    url_dict = sanitize_url_dict(url, url_attr='href')
+    url_dict.setdefault('href', url_dict.pop('url', None))
+    url_dict['rel'] = rel
     if media:
-        attrs['media'] = media
-    return render_tag('link', attrs=attrs, close=False)
+        url_dict['media'] = media
+    return render_tag('link', attrs=url_dict, close=False)
 
 
 def render_tag(tag, attrs=None, content=None, close=True):
@@ -156,14 +152,28 @@ def url_replace_param(url, name, value):
     Replace a GET parameter in an URL
     """
     url_components = urlparse(force_str(url))
-    query_params = parse_qs(url_components.query)
-    query_params[name] = value
-    query = urlencode(query_params, doseq=True)
-    return force_text(urlunparse([
+
+    params = parse_qs(url_components.query)
+
+    if value is None:
+        del params[name]
+    else:
+        params[name] = value
+
+    return mark_safe(urlunparse([
         url_components.scheme,
         url_components.netloc,
         url_components.path,
         url_components.params,
-        query,
+        urlencode(params, doseq=True),
         url_components.fragment,
     ]))
+
+
+def sanitize_url_dict(url, url_attr='src'):
+    """
+    Sanitize url dict as used in django-bootstrap4 settings
+    """
+    if isinstance(url, six.string_types):
+        return {url_attr: url}
+    return url

@@ -2,9 +2,9 @@
 Quickstart
 ==========
 
-After :doc:`installation`, you can use ``django-bootstrap3`` in your templates.:
+After :doc:`installation`, you can use ``django-bootstrap4`` in your templates.:
 
-Load the ``bootstrap3`` library and use the ``bootstrap_*`` tags:
+Load the ``bootstrap4`` library and use the ``bootstrap_*`` tags:
 
 
 Example template
@@ -22,7 +22,7 @@ Refer to :doc:`templatetags` for more information.
 Settings
 --------
 
-You can set defaults for ``django-bootstrap3`` in your settings file. Refer to :doc:`settings` for more information.
+You can set defaults for ``django-bootstrap4`` in your settings file. Refer to :doc:`settings` for more information.
 
 
 Demo application
@@ -30,5 +30,5 @@ Demo application
 
 The demo application provides a number of useful examples.
 
-https://github.com/dyve/django-bootstrap3/tree/develop/demo
+https://github.com/dyve/django-bootstrap4/tree/develop/demo
 
