@@ -21,8 +21,7 @@ from .bootstrap import get_bootstrap_setting
 from .exceptions import BootstrapError
 from .forms import (
     render_form, render_field, render_label, render_form_group,
-    is_widget_with_placeholder, FORM_GROUP_CLASS,
-    is_widget_required_attribute
+    is_widget_with_placeholder, FORM_GROUP_CLASS
 )
 from .text import text_value
 from .utils import add_css_class, render_template_file
@@ -446,10 +445,11 @@ class FieldRenderer(BaseRenderer):
         label_class = self.label_class
         if not label_class and self.layout == 'horizontal':
             label_class = self.horizontal_label_class
+            label_class = add_css_class(label_class, 'col-form-label')
         label_class = text_value(label_class)
         if not self.show_label:
             label_class = add_css_class(label_class, 'sr-only')
-        return add_css_class(label_class, 'control-label')
+        return label_class
 
     def get_label(self):
         if isinstance(self.widget, CheckboxInput):
@@ -482,7 +482,7 @@ class FieldRenderer(BaseRenderer):
         if self.layout == 'horizontal':
             form_group_class = add_css_class(
                 form_group_class,
-                self.get_size_class(prefix='form-group')
+                'row'
             )
         return form_group_class
 
