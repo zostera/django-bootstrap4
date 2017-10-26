@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
-
 import os
 import sys
-
-import bootstrap4
 
 # complexity documentation build configuration file, created by
 # sphinx-quickstart on Tue Jul  9 22:26:36 2013.
@@ -25,6 +22,9 @@ import bootstrap4
 sys.path.insert(0, os.path.abspath('..'))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__))))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'testsettings'
+
+# This import can only be done after the sys.path has been changed
+import bootstrap4  # noqa
 
 # -- General configuration -----------------------------------------------------
 
