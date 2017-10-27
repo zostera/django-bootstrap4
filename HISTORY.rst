@@ -3,6 +3,11 @@
 History
 -------
 
+In progress
++++++++++++
+- Drop develop branch, work with master and feature branches
+- Clean up history file
+
 0.0.4 (2017-10-25)
 ++++++++++++++++++
 - Upgrade Bootstrap to 4.0.0-beta.2
@@ -19,11 +24,10 @@ History
 
 0.0.1 (2017-06-04)
 ++++++++++++++++++
-- TODO
+- First release
 
 Unreleased (2017-04-25)
 +++++++++++++++++++++++
--
 - Remove `bootstrap_icon`, BS4 no longer has default icons.
 - Various changes to get from 3 to 4, started MIGRATE.rst.
 - Started `django-bootstrap4` based on `django-bootstrap3`.
