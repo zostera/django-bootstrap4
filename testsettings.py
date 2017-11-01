@@ -1,5 +1,3 @@
-import django.conf.global_settings as DEFAULT_SETTINGS
-
 SECRET_KEY = 'bootstrap4isawesome'
 
 DATABASES = {
@@ -22,8 +20,6 @@ INSTALLED_APPS = (
     # We test this one
     'bootstrap4',
 )
-
-MIDDLEWARE_CLASSES = DEFAULT_SETTINGS.MIDDLEWARE_CLASSES
 
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',

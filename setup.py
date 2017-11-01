@@ -11,14 +11,20 @@ try:
 except ImportError:
     from distutils.core import setup
 
-version = bootstrap4.__version__
+VERSION = bootstrap4.__version__
 
 if sys.argv[-1] == 'publish':
     os.system('cd docs && make html')
-    os.system('python setup.py sdist upload')
-    print("You probably want to also tag the version now:")
-    print("  git tag -a %s -m 'version %s'" % (version, version))
-    print("  git push --tags")
+    os.system('python setup.py sdist')
+    os.system('twine upload dist/django-bootstrap4-{}.tar.gz'.format(VERSION))
+
+    message = '\nreleased [{version}](https://pypi.python.org/pypi/django-bootstrap4/{version})'
+    print(message.format(version=VERSION))
+    sys.exit()
+
+if sys.argv[-1] == 'tag':
+    os.system("git tag -a %s -m 'tagging version %s'" % (VERSION, VERSION))
+    os.system('git push --tags')
     sys.exit()
 
 if sys.argv[-1] == 'test':
@@ -35,7 +41,7 @@ with open('HISTORY.rst') as history_file:
 
 setup(
     name='django-bootstrap4',
-    version=version,
+    version=VERSION,
     description="""Bootstrap support for Django projects""",
     long_description=readme + '\n\n' + history,
     author='Dylan Verheul',
@@ -57,9 +63,9 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'Operating System :: OS Independent',
         'Topic :: Software Development :: Libraries',
         'Topic :: Utilities',

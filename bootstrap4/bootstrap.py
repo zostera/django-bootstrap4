@@ -3,16 +3,34 @@ from __future__ import unicode_literals
 
 from importlib import import_module
 
-from django import VERSION as DJANGO_VERSION
 from django.conf import settings
 
 # Default settings
+
 BOOTSTRAP4_DEFAULTS = {
-    'jquery_url': '//code.jquery.com/jquery-3.1.1.min.js',
-    'base_url': '//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/',
-    'css_url': None,
+    'base_url': None,  # '//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/'
+    'css_url': {
+        'href': 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css',
+        'integrity': 'sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb',
+        'crossorigin': 'anonymous',
+    },
     'theme_url': None,
-    'javascript_url': None,
+    'jquery_url': {
+        'url': 'https://code.jquery.com/jquery-3.2.1.slim.min.js',
+        'integrity': 'sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN',
+        'crossorigin': 'anonymous',
+    },
+    'popper_url': {
+        'url': 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js',
+        'integrity': 'sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh',
+        'crossorigin': 'anonymous',
+
+    },
+    'javascript_url': {
+        'url': 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js',
+        'integrity': 'sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ',
+        'crossorigin': 'anonymous',
+    },
     'javascript_in_head': False,
     'include_jquery': False,
     'horizontal_label_class': 'col-md-3',
@@ -34,18 +52,18 @@ BOOTSTRAP4_DEFAULTS = {
     },
 }
 
-# Start with a copy of default settings
-BOOTSTRAP4 = BOOTSTRAP4_DEFAULTS.copy()
 
-# Override with user settings from settings.py
-BOOTSTRAP4.update(getattr(settings, 'BOOTSTRAP4', {}))
-
-
-def get_bootstrap_setting(setting, default=None):
+def get_bootstrap_setting(name, default=None):
     """
     Read a setting
     """
-    return BOOTSTRAP4.get(setting, default)
+    # Start with a copy of default settings
+    BOOTSTRAP4 = BOOTSTRAP4_DEFAULTS.copy()
+
+    # Override with user settings from settings.py
+    BOOTSTRAP4.update(getattr(settings, 'BOOTSTRAP4', {}))
+
+    return BOOTSTRAP4.get(name, default)
 
 
 def bootstrap_url(postfix):
@@ -62,20 +80,27 @@ def jquery_url():
     return get_bootstrap_setting('jquery_url')
 
 
+def popper_url():
+    """
+    Return the full url to Popper file
+    """
+    return get_bootstrap_setting('popper_url')
+
+
 def javascript_url():
     """
     Return the full url to the Bootstrap JavaScript file
     """
-    return get_bootstrap_setting('javascript_url') or \
-        bootstrap_url('js/bootstrap.min.js')
+    url = get_bootstrap_setting('javascript_url')
+    return url if url else bootstrap_url('js/bootstrap.min.js')
 
 
 def css_url():
     """
     Return the full url to the Bootstrap CSS file
     """
-    return get_bootstrap_setting('css_url') or \
-        bootstrap_url('css/bootstrap.min.css')
+    url = get_bootstrap_setting('css_url')
+    return url if url else bootstrap_url('css/bootstrap.min.css')
 
 
 def theme_url():

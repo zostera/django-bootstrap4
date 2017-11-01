@@ -7,18 +7,15 @@ from django import forms
 from django.contrib.admin.widgets import AdminSplitDateTime
 from django.contrib.gis import forms as gisforms
 from django.contrib.messages import constants as DEFAULT_MESSAGE_LEVELS
+from django.core.paginator import Paginator
 from django.forms.formsets import formset_factory
 from django.template import engines
 from django.test import TestCase
+from django.utils.html import escape
 
 from .exceptions import BootstrapError
-from .text import text_value, text_concat
-from .utils import add_css_class, render_tag
-
-try:
-    from html.parser import HTMLParser
-except ImportError:
-    from HTMLParser import HTMLParser
+from .text import text_concat, text_value
+from .utils import add_css_class, render_tag, url_replace_param
 
 RADIO_CHOICES = (
     ('1', 'Radio 1'),
@@ -179,70 +176,117 @@ def render_field(field, context=None):
     return render_template_with_form('{% bootstrap_field field %}', context)
 
 
-def get_title_from_html(html):
-    class GetTitleParser(HTMLParser):
-        def __init__(self):
-            HTMLParser.__init__(self)
-            self.title = None
-
-        def handle_starttag(self, tag, attrs):
-            for attr, value in attrs:
-                if attr == 'title':
-                    self.title = value
-
-    parser = GetTitleParser()
-    parser.feed(html)
-
-    return parser.title
-
-
 class SettingsTest(TestCase):
     def test_settings(self):
-        from .bootstrap import BOOTSTRAP4
-        self.assertTrue(BOOTSTRAP4)
-
-    # def test_bootstrap_javascript_tag(self):
-    #     res = render_template_with_form('{% bootstrap_javascript %}')
-    #     self.assertEqual(
-    #         res.strip(),
-    #         '<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>'
-    #     )
-    #
-    # def test_bootstrap_css_tag(self):
-    #     res = render_template_with_form('{% bootstrap_css %}').strip()
-    #     self.assertIn(
-    #         '<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">',
-    #         res
-    #     )
-    #     self.assertIn(
-    #         '<link href="//example.com/theme.css" rel="stylesheet">',
-    #         res
-    #     )
+        from .bootstrap import get_bootstrap_setting
+        self.assertIsNone(get_bootstrap_setting('SETTING_DOES_NOT_EXIST'))
+        self.assertEqual('not none', get_bootstrap_setting('SETTING_DOES_NOT_EXIST', 'not none'))
+        # Override a setting
+        with self.settings(BOOTSTRAP4={'SETTING_DOES_NOT_EXIST': 'exists now'}):
+            self.assertEqual(get_bootstrap_setting('SETTING_DOES_NOT_EXIST'), 'exists now')
 
 
-def test_settings_filter(self):
-    res = render_template_with_form('{{ "required_css_class"|bootstrap_setting }}')
-    self.assertEqual(res.strip(), 'bootstrap4-req')
-    res = render_template_with_form('{% if "javascript_in_head"|bootstrap_setting %}head{% else %}body{% endif %}')
-    self.assertEqual(res.strip(), 'head')
+class MediaTest(TestCase):
+    JQUERY_TAG = '<script' \
+                 ' src="https://code.jquery.com/jquery-3.2.1.slim.min.js"' \
+                 ' integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"' \
+                 ' crossorigin="anonymous"' \
+                 '></script>'
 
+    def test_bootstrap_jquery(self):
+        res = render_template_with_form('{% bootstrap_jquery %}')
+        self.assertHTMLEqual(
+            res,
+            self.JQUERY_TAG
+        )
+        with self.settings(BOOTSTRAP4={'jquery_url': {'url': 'foo'}}):
+            res = render_template_with_form('{% bootstrap_jquery %}')
+            self.assertHTMLEqual(
+                res,
+                '<script src="foo"></script>'
+            )
+        with self.settings(BOOTSTRAP4={'jquery_url': 'foo'}):
+            res = render_template_with_form('{% bootstrap_jquery %}')
+            self.assertHTMLEqual(
+                res,
+                '<script src="foo"></script>'
+            )
 
-def test_required_class(self):
-    form = TestForm()
-    res = render_template_with_form('{% bootstrap_form form %}', {'form': form})
-    self.assertIn('bootstrap4-req', res)
+    def test_bootstrap_javascript_tag(self):
+        res = render_template_with_form('{% bootstrap_javascript jquery=True %}')
+        # jQuery
+        self.assertInHTML(
+            self.JQUERY_TAG,
+            res
+        )
+        # Popper
+        self.assertInHTML(
+            '<script'
+            ' src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"'
+            ' integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"'
+            ' crossorigin="anonymous"'
+            '></script>',
+            res
+        )
+        # Bootstrap
+        self.assertInHTML(
+            '<script'
+            ' src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"'
+            ' integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"'
+            ' crossorigin="anonymous"'
+            '></script>',
+            res
+        )
 
+    def test_bootstrap_css_tag(self):
+        res = render_template_with_form('{% bootstrap_css %}').strip()
+        self.assertInHTML(
+            '<link '
+            ' href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"'
+            ' integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" '
+            ' crossorigin="anonymous"'
+            ' rel="stylesheet">',
+            res
+        )
+        # Theme
+        self.assertInHTML(
+            '<link rel="stylesheet" href="//example.com/theme.css">',
+            res
+        )
 
-def test_error_class(self):
-    form = TestForm({})
-    res = render_template_with_form('{% bootstrap_form form %}', {'form': form})
-    self.assertIn('bootstrap4-err', res)
+    def test_bootstrap_css_from_base_url(self):
+        with self.settings(BOOTSTRAP4={'base_url': '//example.com/', 'css_url': None}):
+            res = render_template_with_form('{% bootstrap_css_url %}').strip()
+            self.assertEqual(res, '//example.com/css/bootstrap.min.css')
+            res = render_template_with_form('{% bootstrap_css %}').strip()
+            self.assertInHTML(
+                '<link'
+                ' href="//example.com/css/bootstrap.min.css"'
+                ' rel="stylesheet">',
+                res
+            )
 
+    def test_settings_filter(self):
+        res = render_template_with_form('{{ "required_css_class"|bootstrap_setting }}')
+        self.assertEqual(res.strip(), 'bootstrap4-req')
+        res = render_template_with_form(
+            '{% if "javascript_in_head"|bootstrap_setting %}head{% else %}body{% endif %}')
+        self.assertEqual(res.strip(), 'head')
 
-def test_bound_class(self):
-    form = TestForm({'sender': 'sender'})
-    res = render_template_with_form('{% bootstrap_form form %}', {'form': form})
-    self.assertIn('bootstrap4-bound', res)
+    def test_required_class(self):
+        form = TestForm()
+        res = render_template_with_form('{% bootstrap_form form %}', {'form': form})
+        self.assertIn('bootstrap4-req', res)
+
+    def test_error_class(self):
+        form = TestForm({})
+        res = render_template_with_form('{% bootstrap_form form %}', {'form': form})
+        self.assertIn('bootstrap4-err', res)
+
+    def test_bound_class(self):
+        form = TestForm({'sender': 'sender'})
+        res = render_template_with_form('{% bootstrap_form form %}', {'form': form})
+        self.assertIn('bootstrap4-bound', res)
 
 
 class TemplateTest(TestCase):
@@ -394,9 +438,9 @@ class FieldTest(TestCase):
     def test_help_with_quotes(self):
         # Checkboxes get special handling, so test a checkbox and something else
         res = render_form_field('sender')
-        self.assertEqual(get_title_from_html(res), TestForm.base_fields['sender'].help_text)
+        self.assertIn('title="{}"'.format(escape(TestForm.base_fields['sender'].help_text)), res)
         res = render_form_field('cc_myself')
-        self.assertEqual(get_title_from_html(res), TestForm.base_fields['cc_myself'].help_text)
+        self.assertIn('title="{}"'.format(escape(TestForm.base_fields['cc_myself'].help_text)), res)
 
     def test_subject(self):
         res = render_form_field('subject')
@@ -424,7 +468,6 @@ class FieldTest(TestCase):
     def test_empty_permitted(self):
         """
         If a form has empty_permitted, no fields should get the CSS class for required.
-        Django <= 1.8, also check `required` attribute.
         """
         required_css_class = 'bootstrap4-req'
         form = TestForm()
@@ -442,7 +485,7 @@ class FieldTest(TestCase):
 
     def test_input_group_addon_button(self):
         res = render_template_with_form(
-            '{% bootstrap_field form.subject addon_before="$" addon_before_class="input-group-btn" addon_after=".00" addon_after_class="input-group-btn" %}')
+            '{% bootstrap_field form.subject addon_before="$" addon_before_class="input-group-btn" addon_after=".00" addon_after_class="input-group-btn" %}')  # noqa
         self.assertIn('class="input-group"', res)
         self.assertIn('class="input-group-btn">$', res)
         self.assertIn('class="input-group-btn">.00', res)
@@ -454,14 +497,14 @@ class FieldTest(TestCase):
 
         def _test_size_medium(param):
             res = render_template_with_form('{% bootstrap_field form.subject size="' + param + '" %}')
-            self.assertNotIn('input-lg', res)
-            self.assertNotIn('input-sm', res)
-            self.assertNotIn('input-md', res)
+            self.assertNotIn('form-control-lg', res)
+            self.assertNotIn('form-control-sm', res)
+            self.assertNotIn('form-control-md', res)
 
-        _test_size('sm', 'input-sm')
-        _test_size('small', 'input-sm')
-        _test_size('lg', 'input-lg')
-        _test_size('large', 'input-lg')
+        _test_size('sm', 'form-control-sm')
+        _test_size('small', 'form-control-sm')
+        _test_size('lg', 'form-control-lg')
+        _test_size('large', 'form-control-lg')
         _test_size_medium('md')
         _test_size_medium('medium')
         _test_size_medium('')
@@ -484,22 +527,10 @@ class FieldTest(TestCase):
     def test_attributes_consistency(self):
         form = TestForm()
         attrs = form.fields['addon'].widget.attrs.copy()
-        context = dict(form=form)
-        field_alone = render_form_field("addon", context)
         self.assertEqual(attrs, form.fields['addon'].widget.attrs)
 
 
 class ComponentsTest(TestCase):
-    def test_icon(self):
-        res = render_template_with_form('{% bootstrap_icon "star" %}')
-        self.assertEqual(
-            res.strip(), '<span class="glyphicon glyphicon-star"></span>')
-        res = render_template_with_form('{% bootstrap_icon "star" title="alpha centauri" %}')
-        self.assertIn(res.strip(), [
-            '<span class="glyphicon glyphicon-star" title="alpha centauri"></span>',
-            '<span title="alpha centauri" class="glyphicon glyphicon-star"></span>',
-        ])
-
     def test_alert(self):
         res = render_template_with_form('{% bootstrap_alert "content" alert_type="danger" %}')
         self.assertEqual(
@@ -665,25 +696,55 @@ class ShowLabelTest(TestCase):
         )
         self.assertIn('sr-only', res)
 
-    def test_button_with_icon(self):
-        res = render_template_with_form(
-            "{% bootstrap_button 'test' icon='info-sign' %}"
+
+class PaginatorTest(TestCase):
+    def test_url_replace_param(self):
+        self.assertEquals(
+            url_replace_param('/foo/bar?baz=foo', 'baz', 'yohoo'),
+            '/foo/bar?baz=yohoo'
         )
-        self.assertEqual(
-            res.strip(),
-            '<button class="btn btn-default"><span class="glyphicon glyphicon-info-sign"></span> test</button>'
+        self.assertEquals(
+            url_replace_param('/foo/bar?baz=foo', 'baz', None),
+            '/foo/bar'
         )
-        res = render_template_with_form(
-            "{% bootstrap_button 'test' icon='info-sign' button_class='btn-primary' %}"
+        self.assertEquals(
+            url_replace_param('/foo/bar#id', 'baz', 'foo'),
+            '/foo/bar?baz=foo#id'
         )
-        self.assertEqual(
-            res.strip(),
-            '<button class="btn btn-primary"><span class="glyphicon glyphicon-info-sign"></span> test</button>'
+
+    def bootstrap_pagination(self, page, extra=''):
+        """Helper to test bootstrap_pagination tag"""
+        template = '''
+            {% load bootstrap4 %}
+            {% bootstrap_pagination page {extra} %}
+        '''.replace('{extra}', extra)
+
+        return render_template(template, {'page': page})
+
+    def test_paginator(self):
+        objects = ['john', 'paul', 'george', 'ringo']
+        p = Paginator(objects, 2)
+
+        res = self.bootstrap_pagination(p.page(2), extra='url="/projects/?foo=bar"')
+        # order in dicts is not guaranteed in some python versions,
+        # so we have to check both options
+        self.assertTrue(
+            '/projects/?foo=bar&page=1' in res or
+            '/projects/?page=1&foo=bar' in res
         )
-        res = render_template_with_form(
-            "{% bootstrap_button 'test' icon='info-sign' button_type='submit' %}"
+        self.assertTrue(
+            '/projects/?foo=bar&page=3' not in res and
+            '/projects/?page=3&foo=bar' not in res
         )
-        self.assertEqual(
-            res.strip(),
-            '<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-info-sign"></span> test</button>'
+
+        res = self.bootstrap_pagination(p.page(2), extra='url="/projects/#id"')
+        self.assertTrue('/projects/?page=1#id' in res)
+
+        res = self.bootstrap_pagination(p.page(2), extra='url="/projects/?page=3#id"')
+        self.assertTrue('/projects/?page=1#id' in res)
+
+        res = self.bootstrap_pagination(p.page(2), extra='url="/projects/?page=3" extra="id=20"')
+        self.assertTrue(
+            '/projects/?page=1&id=20' in res or
+            '/projects/?id=20&page=1' in res
         )

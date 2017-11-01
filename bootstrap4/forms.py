@@ -2,12 +2,12 @@
 from __future__ import unicode_literals
 
 from django.contrib.admin.widgets import AdminFileWidget
-from django.forms import HiddenInput, FileInput, CheckboxSelectMultiple, Textarea, TextInput, PasswordInput
+from django.forms import HiddenInput, FileInput, CheckboxSelectMultiple,\
+    TextInput, Textarea, NumberInput, EmailInput, URLInput, PasswordInput
 from django.forms.widgets import CheckboxInput
 from django.utils.safestring import mark_safe
 
 from .bootstrap import get_bootstrap_setting, get_form_renderer, get_field_renderer, get_formset_renderer
-from .components import render_icon
 from .exceptions import BootstrapError
 from .text import text_concat, text_value
 from .utils import add_css_class, render_tag
@@ -70,7 +70,7 @@ def render_label(content, label_for=None, label_class=None, label_title=''):
 
 
 def render_button(
-        content, button_type=None, icon=None, button_class='btn-default', size='',
+        content, button_type=None, button_class='btn-default', size='',
         href='', name=None, value=None, title=None, extra_classes='', id=''):
     """
     Render a button with content
@@ -98,7 +98,6 @@ def render_button(
         attrs['type'] = button_type
     classes = add_css_class(classes, extra_classes)
     attrs['class'] = classes
-    icon_content = render_icon(icon) if icon else ''
     if href:
         attrs['href'] = href
         tag = 'a'
@@ -115,7 +114,7 @@ def render_button(
     return render_tag(
         tag,
         attrs=attrs,
-        content=mark_safe(text_concat(icon_content, content, separator=' ')),
+        content=mark_safe(content),
     )
 
 
@@ -159,12 +158,7 @@ def is_widget_required_attribute(widget):
     """
     if not widget.is_required:
         return False
-    if isinstance(
-            widget, (
-                    AdminFileWidget, HiddenInput, FileInput,
-                    CheckboxInput, CheckboxSelectMultiple
-            )
-    ):
+    if isinstance(widget, (AdminFileWidget, HiddenInput, FileInput, CheckboxInput, CheckboxSelectMultiple)):
         return False
     return True
 
@@ -177,4 +171,5 @@ def is_widget_with_placeholder(widget):
     """
     # PasswordInput inherits from Input in Django 1.4.
     # It was changed to inherit from TextInput in 1.5.
-    return isinstance(widget, (TextInput, Textarea, PasswordInput))
+    # NumberInput, EmailInput, URLInput, PasswordInput switch from TextInput inheritance to Input inheritance in 1.11.
+    return isinstance(widget, (TextInput, Textarea, NumberInput, EmailInput, URLInput, PasswordInput))
