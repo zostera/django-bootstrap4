@@ -16,6 +16,11 @@ BOOTSTRAP4_DEFAULTS = {
     },
     'theme_url': None,
     'jquery_url': {
+        'url': 'https://code.jquery.com/jquery-3.2.1.min.js',
+        'integrity': 'sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f',
+        'crossorigin': 'anonymous',
+    },
+    'jquery_slim_url': {
         'url': 'https://code.jquery.com/jquery-3.2.1.slim.min.js',
         'integrity': 'sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN',
         'crossorigin': 'anonymous',
@@ -75,9 +80,16 @@ def bootstrap_url(postfix):
 
 def jquery_url():
     """
-    Return the full url to jQuery file to use
+    Return the full url to jQuery library file to use
     """
     return get_bootstrap_setting('jquery_url')
+
+
+def jquery_slim_url():
+    """
+    Return the full url to slim jQuery library file to use
+    """
+    return get_bootstrap_setting('jquery_slim_url')
 
 
 def popper_url():
