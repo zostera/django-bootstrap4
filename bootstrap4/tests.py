@@ -188,7 +188,7 @@ class SettingsTest(TestCase):
 
 class MediaTest(TestCase):
     JQUERY_TAG = '<script' \
-                 ' src="https://code.jquery.com/jquery-3.2.1.slim.min.js"' \
+                 ' src="https://code.jquery.com/jquery-3.2.1.min.js"' \
                  ' integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f"' \
                  ' crossorigin="anonymous"' \
                  '></script>'

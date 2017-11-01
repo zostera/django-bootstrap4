@@ -10,7 +10,8 @@ from django.utils import six
 from django.utils.safestring import mark_safe
 from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
-from ..bootstrap import css_url, get_bootstrap_setting, javascript_url, jquery_url, jquery_slim_url, popper_url, theme_url
+from ..bootstrap import (css_url, get_bootstrap_setting, javascript_url, jquery_url, jquery_slim_url, popper_url,
+                         theme_url)
 from ..components import render_alert
 from ..forms import (render_button, render_field, render_field_and_label, render_form, render_form_errors,
                      render_form_group, render_formset, render_formset_errors, render_label)
@@ -242,11 +243,11 @@ def bootstrap_jquery(jquery='full'):
     """
     Return HTML for jQuery tag.
 
-    Adjust url in settings. If no url is returned, we don't want this
-    statement to return any HTML.
+    Adjust the url dict in settings. If no url is returned, we
+    don't want this statement to return any HTML.
     This is intended behavior.
 
-    Default value: ``None``
+    Default value: ``full``
 
     This value is configurable, see Settings section
 
