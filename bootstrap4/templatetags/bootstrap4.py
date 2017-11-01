@@ -283,7 +283,7 @@ def bootstrap_jquery(jquery='full'):
 
 
 @register.simple_tag
-def bootstrap_javascript(jquery=None):
+def bootstrap_javascript(jquery='falsy'):
     """
     Return HTML for Bootstrap JavaScript.
 
@@ -291,7 +291,7 @@ def bootstrap_javascript(jquery=None):
     statement to return any HTML.
     This is intended behavior.
 
-    Default value: ``None``
+    Default value: ``falsy``
 
     This value is configurable, see Settings section
 
@@ -301,7 +301,7 @@ def bootstrap_javascript(jquery=None):
 
     **Parameters**:
 
-        :jquery: Truthy to include jQuery as well as Bootstrap
+        :jquery: falsy|slim|full (default=falsy)
 
     **Usage**::
 
@@ -309,16 +309,15 @@ def bootstrap_javascript(jquery=None):
 
     **Example**::
 
-        {% bootstrap_javascript jquery=1 %}
+        {% bootstrap_javascript jquery="slim" %}
     """
 
     # List of JS tags to include
     javascript_tags = []
 
-    # jQuery library (optional)
-    if jquery or get_bootstrap_setting('include_jquery', False):
-        jquery_url = bootstrap_jquery_url()
-        javascript_tags.append(render_script_tag(jquery_url))
+    # Include jQuery if the option is passed
+    if jquery != 'falsy':
+        javascript_tags.append(bootstrap_jquery(jquery=jquery))
 
     # Popper.js library
     popper_url = bootstrap_popper_url()

@@ -229,10 +229,16 @@ class MediaTest(TestCase):
             )
 
     def test_bootstrap_javascript_tag(self):
-        res = render_template_with_form('{% bootstrap_javascript jquery=True %}')
+        res = render_template_with_form('{% bootstrap_javascript jquery="full" %}')
         # jQuery
         self.assertInHTML(
             self.JQUERY_TAG,
+            res
+        )
+        res = render_template_with_form('{% bootstrap_javascript jquery="slim" %}')
+        # jQuery
+        self.assertInHTML(
+            self.JQUERY_SLIM_TAG,
             res
         )
         # Popper
@@ -324,12 +330,12 @@ class TemplateTest(TestCase):
         self.assertIn('test_bootstrap4_content', res)
 
     def test_javascript_without_jquery(self):
-        res = render_template_with_form('{% bootstrap_javascript jquery=0 %}')
+        res = render_template_with_form('{% bootstrap_javascript %}')
         self.assertIn('bootstrap', res)
         self.assertNotIn('jquery', res)
 
     def test_javascript_with_jquery(self):
-        res = render_template_with_form('{% bootstrap_javascript jquery=1 %}')
+        res = render_template_with_form('{% bootstrap_javascript jquery="full" %}')
         self.assertIn('bootstrap', res)
         self.assertIn('jquery', res)
 
