@@ -235,12 +235,6 @@ class MediaTest(TestCase):
             self.JQUERY_TAG,
             res
         )
-        res = render_template_with_form('{% bootstrap_javascript jquery="slim" %}')
-        # jQuery
-        self.assertInHTML(
-            self.JQUERY_SLIM_TAG,
-            res
-        )
         # Popper
         self.assertInHTML(
             '<script'
