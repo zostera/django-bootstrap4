@@ -8,8 +8,8 @@ except RuntimeError:
     ReadOnlyPasswordHashWidget = None
 
 from django.forms import (
-    TextInput, DateInput, FileInput, NumberInput, CheckboxInput, MultiWidget,
-    ClearableFileInput, Select, RadioSelect, CheckboxSelectMultiple
+    TextInput, PasswordInput, DateInput, FileInput, NumberInput, CheckboxInput,
+    MultiWidget, ClearableFileInput, Select, RadioSelect, CheckboxSelectMultiple
 )
 from django.forms.widgets import SelectDateWidget
 from django.forms.forms import BaseForm, BoundField
