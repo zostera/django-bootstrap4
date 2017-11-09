@@ -247,9 +247,7 @@ def bootstrap_jquery(jquery='full'):
     don't want this statement to return any HTML.
     This is intended behavior.
 
-    Default value: ``full``
-
-    This value is configurable, see Settings section
+    This value is configurable, see the Settings section.
 
     **Tag name**::
 
