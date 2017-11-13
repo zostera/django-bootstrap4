@@ -10,7 +10,8 @@ from django.utils import six
 from django.utils.safestring import mark_safe
 from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
-from ..bootstrap import css_url, get_bootstrap_setting, javascript_url, jquery_url, popper_url, theme_url
+from ..bootstrap import (css_url, get_bootstrap_setting, javascript_url, jquery_url, jquery_slim_url, popper_url,
+                         theme_url)
 from ..components import render_alert
 from ..forms import (render_button, render_field, render_field_and_label, render_form, render_form_errors,
                      render_form_group, render_formset, render_formset_errors, render_label)
@@ -72,7 +73,7 @@ def bootstrap_jquery_url():
 
     Return the full url to jQuery plugin to use
 
-    Default value: ``//code.jquery.com/jquery.min.js``
+    Default value: ``https://code.jquery.com/jquery-3.2.1.min.js``
 
     This value is configurable, see Settings section
 
@@ -85,6 +86,30 @@ def bootstrap_jquery_url():
         {% bootstrap_jquery_url %}
     """
     return jquery_url()
+
+
+@register.simple_tag
+def bootstrap_jquery_slim_url():
+    """
+    **Tag name**::
+
+        bootstrap_jquery_slim_url
+
+    Return the full url to slim jQuery plugin to use
+
+    Default value: ``https://code.jquery.com/jquery-3.2.1.slim.min.js``
+
+    This value is configurable, see Settings section
+
+    **Usage**::
+
+        {% bootstrap_jquery_slim_url %}
+
+    **Example**::
+
+        {% bootstrap_jquery_slim_url %}
+    """
+    return jquery_slim_url()
 
 
 @register.simple_tag
@@ -214,44 +239,49 @@ def bootstrap_css():
 
 
 @register.simple_tag
-def bootstrap_jquery():
+def bootstrap_jquery(jquery='full'):
     """
     Return HTML for jQuery tag.
 
-    Adjust url in settings. If no url is returned, we don't want this
-    statement to return any HTML.
+    Adjust the url dict in settings. If no url is returned, we
+    don't want this statement to return any HTML.
     This is intended behavior.
 
-    Default value: ``None``
-
-    This value is configurable, see Settings section
+    This value is configurable, see the Settings section.
 
     **Tag name**::
 
-        bootstrap_javascript
+        bootstrap_jquery
 
     **Parameters**:
 
-        :jquery: Truthy to include jQuery as well as Bootstrap
+        :jquery: falsy|slim|full (default=full)
 
     **Usage**::
 
-        {% bootstrap_javascript %}
+        {% bootstrap_jquery %}
 
     **Example**::
 
-        {% bootstrap_javascript jquery=1 %}
+        {% bootstrap_javascript jquery='slim' %}
     """
-    jquery = get_bootstrap_setting('jquery_url')
+    if jquery == 'falsy':
+        return ''
+    elif jquery == 'slim':
+        jquery = get_bootstrap_setting('jquery_slim_url')
+    else:
+        jquery = get_bootstrap_setting('jquery_url')
+
     if isinstance(jquery, six.string_types):
         jquery = dict(src=jquery)
     else:
         jquery.setdefault('src', jquery.pop('url', None))
+
     return render_tag('script', attrs=jquery)
 
 
 @register.simple_tag
-def bootstrap_javascript(jquery=None):
+def bootstrap_javascript(jquery='falsy'):
     """
     Return HTML for Bootstrap JavaScript.
 
@@ -259,7 +289,7 @@ def bootstrap_javascript(jquery=None):
     statement to return any HTML.
     This is intended behavior.
 
-    Default value: ``None``
+    Default value: ``falsy``
 
     This value is configurable, see Settings section
 
@@ -269,7 +299,7 @@ def bootstrap_javascript(jquery=None):
 
     **Parameters**:
 
-        :jquery: Truthy to include jQuery as well as Bootstrap
+        :jquery: falsy|slim|full (default=falsy)
 
     **Usage**::
 
@@ -277,16 +307,15 @@ def bootstrap_javascript(jquery=None):
 
     **Example**::
 
-        {% bootstrap_javascript jquery=1 %}
+        {% bootstrap_javascript jquery="slim" %}
     """
 
     # List of JS tags to include
     javascript_tags = []
 
-    # jQuery library (optional)
-    if jquery or get_bootstrap_setting('include_jquery', False):
-        jquery_url = bootstrap_jquery_url()
-        javascript_tags.append(render_script_tag(jquery_url))
+    # Include jQuery if the option is passed
+    if jquery != 'falsy':
+        javascript_tags.append(bootstrap_jquery(jquery=jquery))
 
     # Popper.js library
     popper_url = bootstrap_popper_url()

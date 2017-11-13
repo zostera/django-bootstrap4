@@ -188,16 +188,32 @@ class SettingsTest(TestCase):
 
 class MediaTest(TestCase):
     JQUERY_TAG = '<script' \
-                 ' src="https://code.jquery.com/jquery-3.2.1.slim.min.js"' \
-                 ' integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"' \
+                 ' src="https://code.jquery.com/jquery-3.2.1.min.js"' \
+                 ' integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f"' \
                  ' crossorigin="anonymous"' \
                  '></script>'
+
+    JQUERY_SLIM_TAG = '<script' \
+                      ' src="https://code.jquery.com/jquery-3.2.1.slim.min.js"' \
+                      ' integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"' \
+                      ' crossorigin="anonymous"' \
+                      '></script>'
 
     def test_bootstrap_jquery(self):
         res = render_template_with_form('{% bootstrap_jquery %}')
         self.assertHTMLEqual(
             res,
             self.JQUERY_TAG
+        )
+        res = render_template_with_form('{% bootstrap_jquery jquery="slim" %}')
+        self.assertHTMLEqual(
+            res,
+            self.JQUERY_SLIM_TAG
+        )
+        res = render_template_with_form('{% bootstrap_jquery jquery="falsy" %}')
+        self.assertHTMLEqual(
+            res,
+            ''
         )
         with self.settings(BOOTSTRAP4={'jquery_url': {'url': 'foo'}}):
             res = render_template_with_form('{% bootstrap_jquery %}')
@@ -213,7 +229,7 @@ class MediaTest(TestCase):
             )
 
     def test_bootstrap_javascript_tag(self):
-        res = render_template_with_form('{% bootstrap_javascript jquery=True %}')
+        res = render_template_with_form('{% bootstrap_javascript jquery="full" %}')
         # jQuery
         self.assertInHTML(
             self.JQUERY_TAG,
@@ -308,12 +324,12 @@ class TemplateTest(TestCase):
         self.assertIn('test_bootstrap4_content', res)
 
     def test_javascript_without_jquery(self):
-        res = render_template_with_form('{% bootstrap_javascript jquery=0 %}')
+        res = render_template_with_form('{% bootstrap_javascript %}')
         self.assertIn('bootstrap', res)
         self.assertNotIn('jquery', res)
 
     def test_javascript_with_jquery(self):
-        res = render_template_with_form('{% bootstrap_javascript jquery=1 %}')
+        res = render_template_with_form('{% bootstrap_javascript jquery="full" %}')
         self.assertIn('bootstrap', res)
         self.assertIn('jquery', res)
 

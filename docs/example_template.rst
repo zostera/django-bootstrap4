@@ -5,7 +5,7 @@
 
   {# Load CSS and JavaScript #}
   {% bootstrap_css %}
-  {% bootstrap_javascript %}
+  {% bootstrap_javascript jquery='full' %}
 
   {# Display django.contrib.messages as Bootstrap alerts #}
   {% bootstrap_messages %}
