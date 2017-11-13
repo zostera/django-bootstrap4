@@ -8,8 +8,8 @@ except RuntimeError:
     ReadOnlyPasswordHashWidget = None
 
 from django.forms import (
-    TextInput, DateInput, FileInput, NumberInput, CheckboxInput, MultiWidget,
-    ClearableFileInput, Select, RadioSelect, CheckboxSelectMultiple
+    TextInput, PasswordInput, DateInput, FileInput, NumberInput, CheckboxInput,
+    MultiWidget, ClearableFileInput, Select, RadioSelect, CheckboxSelectMultiple
 )
 from django.forms.widgets import SelectDateWidget
 from django.forms.forms import BaseForm, BoundField
@@ -397,7 +397,7 @@ class FieldRenderer(BaseRenderer):
         return html
 
     def make_input_group(self, html):
-        allowed_widget_types = (TextInput, DateInput, NumberInput, Select)
+        allowed_widget_types = (TextInput, PasswordInput, DateInput, NumberInput, Select)
         if (self.addon_before or self.addon_after) and isinstance(self.widget, allowed_widget_types):
             before = '<span class="{input_class}">{addon}</span>'.format(
                 input_class=self.addon_before_class, addon=self.addon_before) if self.addon_before else ''
