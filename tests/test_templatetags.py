@@ -13,9 +13,9 @@ from django.template import engines
 from django.test import TestCase
 from django.utils.html import escape
 
-from .exceptions import BootstrapError
-from .text import text_concat, text_value
-from .utils import add_css_class, render_tag, url_replace_param
+from bootstrap4.exceptions import BootstrapError
+from bootstrap4.text import text_concat, text_value
+from bootstrap4.utils import add_css_class, render_tag, url_replace_param
 
 RADIO_CHOICES = (
     ('1', 'Radio 1'),
@@ -176,16 +176,6 @@ def render_field(field, context=None):
     return render_template_with_form('{% bootstrap_field field %}', context)
 
 
-class SettingsTest(TestCase):
-    def test_settings(self):
-        from .bootstrap import get_bootstrap_setting
-        self.assertIsNone(get_bootstrap_setting('SETTING_DOES_NOT_EXIST'))
-        self.assertEqual('not none', get_bootstrap_setting('SETTING_DOES_NOT_EXIST', 'not none'))
-        # Override a setting
-        with self.settings(BOOTSTRAP4={'SETTING_DOES_NOT_EXIST': 'exists now'}):
-            self.assertEqual(get_bootstrap_setting('SETTING_DOES_NOT_EXIST'), 'exists now')
-
-
 class MediaTest(TestCase):
     JQUERY_TAG = '<script' \
                  ' src="https://code.jquery.com/jquery-3.2.1.min.js"' \
@@ -193,11 +183,13 @@ class MediaTest(TestCase):
                  ' crossorigin="anonymous"' \
                  '></script>'
 
-    JQUERY_SLIM_TAG = '<script' \
-                      ' src="https://code.jquery.com/jquery-3.2.1.slim.min.js"' \
-                      ' integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"' \
-                      ' crossorigin="anonymous"' \
-                      '></script>'
+    JQUERY_SLIM_TAG = (
+        '<script'
+        ' src="https://code.jquery.com/jquery-3.2.1.slim.min.js"'
+        ' integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"'
+        ' crossorigin="anonymous"'
+        '></script>'
+    )
 
     def test_bootstrap_jquery(self):
         res = render_template_with_form('{% bootstrap_jquery %}')
