@@ -275,6 +275,7 @@ def bootstrap_jquery(jquery='full'):
     if isinstance(jquery, six.string_types):
         jquery = dict(src=jquery)
     else:
+        jquery = jquery.copy()
         jquery.setdefault('src', jquery.pop('url', None))
 
     return render_tag('script', attrs=jquery)

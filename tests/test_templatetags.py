@@ -10,9 +10,10 @@ from django.contrib.messages import constants as DEFAULT_MESSAGE_LEVELS
 from django.core.paginator import Paginator
 from django.forms.formsets import formset_factory
 from django.template import engines
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.utils.html import escape
 
+from bootstrap4.bootstrap import get_bootstrap_setting
 from bootstrap4.exceptions import BootstrapError
 from bootstrap4.text import text_concat, text_value
 from bootstrap4.utils import add_css_class, render_tag, url_replace_param
@@ -177,102 +178,74 @@ def render_field(field, context=None):
 
 
 class MediaTest(TestCase):
-    JQUERY_TAG = '<script' \
-                 ' src="https://code.jquery.com/jquery-3.2.1.min.js"' \
-                 ' integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f"' \
-                 ' crossorigin="anonymous"' \
-                 '></script>'
+    def expected_css(self, tag):
+        template = '<link href="{href}" integrity="{integrity}" crossorigin="{crossorigin}" rel="stylesheet">'
 
-    JQUERY_SLIM_TAG = (
-        '<script'
-        ' src="https://code.jquery.com/jquery-3.2.1.slim.min.js"'
-        ' integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"'
-        ' crossorigin="anonymous"'
-        '></script>'
-    )
+        setting = get_bootstrap_setting(tag + '_url')
+        return template.format(**setting)
+
+    def expected_js(self, tag):
+        template = '<script src="{url}" integrity="{integrity}" crossorigin="{crossorigin}"></script>'
+        setting = get_bootstrap_setting(tag + '_url')
+
+        return template.format(**setting)
 
     def test_bootstrap_jquery(self):
-        res = render_template_with_form('{% bootstrap_jquery %}')
         self.assertHTMLEqual(
-            res,
-            self.JQUERY_TAG
+            render_template_with_form('{% bootstrap_jquery %}'),
+            self.expected_js('jquery')
         )
-        res = render_template_with_form('{% bootstrap_jquery jquery="slim" %}')
         self.assertHTMLEqual(
-            res,
-            self.JQUERY_SLIM_TAG
+            render_template_with_form('{% bootstrap_jquery jquery="slim" %}'),
+            self.expected_js('jquery_slim')
         )
-        res = render_template_with_form('{% bootstrap_jquery jquery="falsy" %}')
         self.assertHTMLEqual(
-            res,
+            render_template_with_form('{% bootstrap_jquery jquery="falsy" %}'),
             ''
         )
-        with self.settings(BOOTSTRAP4={'jquery_url': {'url': 'foo'}}):
-            res = render_template_with_form('{% bootstrap_jquery %}')
-            self.assertHTMLEqual(
-                res,
-                '<script src="foo"></script>'
-            )
-        with self.settings(BOOTSTRAP4={'jquery_url': 'foo'}):
-            res = render_template_with_form('{% bootstrap_jquery %}')
-            self.assertHTMLEqual(
-                res,
-                '<script src="foo"></script>'
-            )
+
+    @override_settings(BOOTSTRAP4={'jquery_url': {'url': 'foo'}})
+    def test_bootstrap_jquery_custom_setting_dict(self):
+        self.assertHTMLEqual(
+            render_template_with_form('{% bootstrap_jquery %}'),
+            '<script src="foo"></script>'
+        )
+
+    @override_settings(BOOTSTRAP4={'jquery_url': 'http://example.com'})
+    def test_bootstrap_jquery_custom_setting_str(self):
+        self.assertHTMLEqual(
+            render_template_with_form('{% bootstrap_jquery %}'),
+            '<script src="http://example.com"></script>'
+        )
 
     def test_bootstrap_javascript_tag(self):
-        res = render_template_with_form('{% bootstrap_javascript jquery="full" %}')
+        html = render_template_with_form('{% bootstrap_javascript jquery="full" %}')
         # jQuery
-        self.assertInHTML(
-            self.JQUERY_TAG,
-            res
-        )
+        self.assertInHTML(self.expected_js('jquery'), html)
         # Popper
-        self.assertInHTML(
-            '<script'
-            ' src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"'
-            ' integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"'
-            ' crossorigin="anonymous"'
-            '></script>',
-            res
-        )
+        self.assertInHTML(self.expected_js('popper'), html)
         # Bootstrap
-        self.assertInHTML(
-            '<script'
-            ' src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"'
-            ' integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"'
-            ' crossorigin="anonymous"'
-            '></script>',
-            res
-        )
+        self.assertInHTML(self.expected_js('javascript'), html)
 
     def test_bootstrap_css_tag(self):
-        res = render_template_with_form('{% bootstrap_css %}').strip()
-        self.assertInHTML(
-            '<link '
-            ' href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"'
-            ' integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" '
-            ' crossorigin="anonymous"'
-            ' rel="stylesheet">',
-            res
-        )
+        html = render_template_with_form('{% bootstrap_css %}').strip()
+        self.assertInHTML(self.expected_css('css'), html)
         # Theme
         self.assertInHTML(
             '<link rel="stylesheet" href="//example.com/theme.css">',
-            res
+            html
         )
 
+    @override_settings(BOOTSTRAP4={'base_url': '//example.com/', 'css_url': None})
     def test_bootstrap_css_from_base_url(self):
-        with self.settings(BOOTSTRAP4={'base_url': '//example.com/', 'css_url': None}):
-            res = render_template_with_form('{% bootstrap_css_url %}').strip()
-            self.assertEqual(res, '//example.com/css/bootstrap.min.css')
-            res = render_template_with_form('{% bootstrap_css %}').strip()
-            self.assertInHTML(
-                '<link'
-                ' href="//example.com/css/bootstrap.min.css"'
-                ' rel="stylesheet">',
-                res
-            )
+        self.assertEqual(
+            render_template_with_form('{% bootstrap_css_url %}').strip(),
+            '//example.com/css/bootstrap.min.css'
+        )
+        self.assertInHTML(
+            '<link href="//example.com/css/bootstrap.min.css" rel="stylesheet">',
+            render_template_with_form('{% bootstrap_css %}').strip()
+        )
 
     def test_settings_filter(self):
         res = render_template_with_form('{{ "required_css_class"|bootstrap_setting }}')
