@@ -263,7 +263,7 @@ def bootstrap_jquery(jquery='full'):
 
     **Example**::
 
-        {% bootstrap_javascript jquery='slim' %}
+        {% bootstrap_jquery jquery='slim' %}
     """
     if jquery == 'falsy':
         return ''
