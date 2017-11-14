@@ -546,7 +546,7 @@ class MessagesTest(TestCase):
         res = render_template_with_form(
             '{% bootstrap_messages messages %}', {'messages': messages})
         expected = """
-    <div class="alert alert-warning alert-dismissable">
+    <div class="alert alert-warning alert-dismissable fade show">
         <button type="button" class="close" data-dismiss="alert"
             aria-hidden="true">&#215;</button>
         hello
@@ -561,7 +561,7 @@ class MessagesTest(TestCase):
         res = render_template_with_form(
             '{% bootstrap_messages messages %}', {'messages': messages})
         expected = """
-    <div class="alert alert-danger alert-dismissable">
+    <div class="alert alert-danger alert-dismissable fade show">
         <button type="button" class="close" data-dismiss="alert"
             aria-hidden="true">&#215;</button>
         hello
@@ -576,7 +576,7 @@ class MessagesTest(TestCase):
         res = render_template_with_form(
             '{% bootstrap_messages messages %}', {'messages': messages})
         expected = """
-    <div class="alert alert-danger alert-dismissable">
+    <div class="alert alert-danger alert-dismissable fade show">
         <button type="button" class="close" data-dismiss="alert"
             aria-hidden="true">&#215;</button>
         hello
@@ -592,7 +592,7 @@ class MessagesTest(TestCase):
         res = render_template_with_form(
             '{% bootstrap_messages messages %}', {'messages': messages})
         expected = """
-    <div class="alert alert-danger alert-dismissable">
+    <div class="alert alert-danger alert-dismissable fade show">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&#215;</button>
         hello http://example.com
     </div>        """
@@ -605,7 +605,7 @@ class MessagesTest(TestCase):
         res = render_template_with_form(
             '{% bootstrap_messages messages %}', {'messages': messages})
         expected = """
-    <div class="alert alert-danger alert-dismissable">
+    <div class="alert alert-danger alert-dismissable fade show">
         <button type="button" class="close" data-dismiss="alert"
             aria-hidden="true">&#215;</button>
         hello there
