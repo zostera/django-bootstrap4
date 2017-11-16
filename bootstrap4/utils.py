@@ -176,4 +176,4 @@ def sanitize_url_dict(url, url_attr='src'):
     """
     if isinstance(url, six.string_types):
         return {url_attr: url}
-    return url
+    return url.copy()

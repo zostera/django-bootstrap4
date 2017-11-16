@@ -8,8 +8,8 @@ except RuntimeError:
     ReadOnlyPasswordHashWidget = None
 
 from django.forms import (
-    TextInput, DateInput, FileInput, NumberInput, CheckboxInput, MultiWidget,
-    ClearableFileInput, Select, RadioSelect, CheckboxSelectMultiple
+    TextInput, PasswordInput, DateInput, FileInput, NumberInput, CheckboxInput,
+    MultiWidget, ClearableFileInput, Select, RadioSelect, CheckboxSelectMultiple
 )
 from django.forms.widgets import SelectDateWidget
 from django.forms.forms import BaseForm, BoundField
@@ -21,8 +21,7 @@ from .bootstrap import get_bootstrap_setting
 from .exceptions import BootstrapError
 from .forms import (
     render_form, render_field, render_label, render_form_group,
-    is_widget_with_placeholder, FORM_GROUP_CLASS,
-    is_widget_required_attribute
+    is_widget_with_placeholder, FORM_GROUP_CLASS
 )
 from .text import text_value
 from .utils import add_css_class, render_template_file
@@ -64,7 +63,7 @@ class BaseRenderer(object):
             return 'medium'
         raise BootstrapError('Invalid value "%s" for parameter "size" (expected "sm", "md", "lg" or "").' % size)
 
-    def get_size_class(self, prefix='input'):
+    def get_size_class(self, prefix='form-control'):
         if self.size == 'small':
             return prefix + '-sm'
         if self.size == 'large':
@@ -406,7 +405,7 @@ class FieldRenderer(BaseRenderer):
         return html
 
     def make_input_group(self, html):
-        allowed_widget_types = (TextInput, DateInput, NumberInput, Select)
+        allowed_widget_types = (TextInput, PasswordInput, DateInput, NumberInput, Select)
         if (self.addon_before or self.addon_after) and isinstance(self.widget, allowed_widget_types):
             before = '<span class="{input_class}">{addon}</span>'.format(
                 input_class=self.addon_before_class, addon=self.addon_before) if self.addon_before else ''
@@ -453,10 +452,11 @@ class FieldRenderer(BaseRenderer):
         label_class = self.label_class
         if not label_class and self.layout == 'horizontal':
             label_class = self.horizontal_label_class
+            label_class = add_css_class(label_class, 'col-form-label')
         label_class = text_value(label_class)
         if not self.show_label:
             label_class = add_css_class(label_class, 'sr-only')
-        return add_css_class(label_class, 'control-label')
+        return label_class
 
     def get_label(self):
         if isinstance(self.widget, CheckboxInput):
@@ -489,7 +489,7 @@ class FieldRenderer(BaseRenderer):
         if self.layout == 'horizontal':
             form_group_class = add_css_class(
                 form_group_class,
-                self.get_size_class(prefix='form-group')
+                'row'
             )
         return form_group_class
 

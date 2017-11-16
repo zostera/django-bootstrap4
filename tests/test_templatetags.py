@@ -10,12 +10,13 @@ from django.contrib.messages import constants as DEFAULT_MESSAGE_LEVELS
 from django.core.paginator import Paginator
 from django.forms.formsets import formset_factory
 from django.template import engines
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.utils.html import escape
 
-from .exceptions import BootstrapError
-from .text import text_concat, text_value
-from .utils import add_css_class, render_tag, url_replace_param
+from bootstrap4.bootstrap import get_bootstrap_setting
+from bootstrap4.exceptions import BootstrapError
+from bootstrap4.text import text_concat, text_value
+from bootstrap4.utils import add_css_class, render_tag, url_replace_param
 
 RADIO_CHOICES = (
     ('1', 'Radio 1'),
@@ -176,103 +177,75 @@ def render_field(field, context=None):
     return render_template_with_form('{% bootstrap_field field %}', context)
 
 
-class SettingsTest(TestCase):
-    def test_settings(self):
-        from .bootstrap import get_bootstrap_setting
-        self.assertIsNone(get_bootstrap_setting('SETTING_DOES_NOT_EXIST'))
-        self.assertEqual('not none', get_bootstrap_setting('SETTING_DOES_NOT_EXIST', 'not none'))
-        # Override a setting
-        with self.settings(BOOTSTRAP4={'SETTING_DOES_NOT_EXIST': 'exists now'}):
-            self.assertEqual(get_bootstrap_setting('SETTING_DOES_NOT_EXIST'), 'exists now')
-
-
 class MediaTest(TestCase):
+    def expected_css(self, tag):
+        template = '<link href="{href}" integrity="{integrity}" crossorigin="{crossorigin}" rel="stylesheet">'
+
+        setting = get_bootstrap_setting(tag + '_url')
+        return template.format(**setting)
+
+    def expected_js(self, tag):
+        template = '<script src="{url}" integrity="{integrity}" crossorigin="{crossorigin}"></script>'
+        setting = get_bootstrap_setting(tag + '_url')
+
+        return template.format(**setting)
+
     def test_bootstrap_jquery(self):
-        res = render_template_with_form('{% bootstrap_jquery %}')
         self.assertHTMLEqual(
-            res,
-            '<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"'
-            ' crossorigin="anonymous"></script>'
+            render_template_with_form('{% bootstrap_jquery %}'),
+            self.expected_js('jquery')
         )
-        with self.settings(BOOTSTRAP4={'jquery_url': {'url': 'foo'}}):
-            res = render_template_with_form('{% bootstrap_jquery %}')
-            self.assertHTMLEqual(
-                res,
-                '<script src="foo"></script>'
-            )
-        with self.settings(BOOTSTRAP4={'jquery_url': 'foo'}):
-            res = render_template_with_form('{% bootstrap_jquery %}')
-            self.assertHTMLEqual(
-                res,
-                '<script src="foo"></script>'
-            )
+        self.assertHTMLEqual(
+            render_template_with_form('{% bootstrap_jquery jquery="slim" %}'),
+            self.expected_js('jquery_slim')
+        )
+        self.assertHTMLEqual(
+            render_template_with_form('{% bootstrap_jquery jquery="falsy" %}'),
+            ''
+        )
+
+    @override_settings(BOOTSTRAP4={'jquery_url': {'url': 'foo'}})
+    def test_bootstrap_jquery_custom_setting_dict(self):
+        self.assertHTMLEqual(
+            render_template_with_form('{% bootstrap_jquery %}'),
+            '<script src="foo"></script>'
+        )
+
+    @override_settings(BOOTSTRAP4={'jquery_url': 'http://example.com'})
+    def test_bootstrap_jquery_custom_setting_str(self):
+        self.assertHTMLEqual(
+            render_template_with_form('{% bootstrap_jquery %}'),
+            '<script src="http://example.com"></script>'
+        )
 
     def test_bootstrap_javascript_tag(self):
-        res = render_template_with_form('{% bootstrap_javascript jquery=True %}')
+        html = render_template_with_form('{% bootstrap_javascript jquery="full" %}')
         # jQuery
-        self.assertInHTML(
-            '<script'
-            ' src="https://code.jquery.com/jquery-3.2.1.slim.min.js"'
-            ' crossorigin="anonymous"'
-            '></script>',
-            res
-        )
-        # Tether
-        self.assertInHTML(
-            '<script'
-            ' src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"'
-            ' integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"'
-            ' crossorigin="anonymous"'
-            '></script>',
-            res
-        )
-
+        self.assertInHTML(self.expected_js('jquery'), html)
         # Popper
-        self.assertInHTML(
-            '<script'
-            ' src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js"'
-            ' integrity="sha256-jpW4gXAhFvqGDD5B7366rIPD7PDbAmqq4CO0ZnHbdM4="'
-            ' crossorigin="anonymous"'
-            '></script>',
-            res
-        )
-
+        self.assertInHTML(self.expected_js('popper'), html)
         # Bootstrap
-        self.assertInHTML(
-            '<script'
-            ' src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"'
-            ' integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"'
-            ' crossorigin="anonymous"'
-            '></script>',
-            res
-        )
+        self.assertInHTML(self.expected_js('javascript'), html)
 
     def test_bootstrap_css_tag(self):
-        res = render_template_with_form('{% bootstrap_css %}').strip()
-        self.assertInHTML(
-            '<link crossorigin="anonymous"'
-            ' href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"'
-            ' integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" '
-            ' rel="stylesheet">',
-            res
-        )
+        html = render_template_with_form('{% bootstrap_css %}').strip()
+        self.assertInHTML(self.expected_css('css'), html)
         # Theme
         self.assertInHTML(
             '<link rel="stylesheet" href="//example.com/theme.css">',
-            res
+            html
         )
 
+    @override_settings(BOOTSTRAP4={'base_url': '//example.com/', 'css_url': None})
     def test_bootstrap_css_from_base_url(self):
-        with self.settings(BOOTSTRAP4={'base_url': '//example.com/', 'css_url': None}):
-            res = render_template_with_form('{% bootstrap_css_url %}').strip()
-            self.assertEqual(res, '//example.com/css/bootstrap.min.css')
-            res = render_template_with_form('{% bootstrap_css %}').strip()
-            self.assertInHTML(
-                '<link'
-                ' href="//example.com/css/bootstrap.min.css"'
-                ' rel="stylesheet">',
-                res
-            )
+        self.assertEqual(
+            render_template_with_form('{% bootstrap_css_url %}').strip(),
+            '//example.com/css/bootstrap.min.css'
+        )
+        self.assertInHTML(
+            '<link href="//example.com/css/bootstrap.min.css" rel="stylesheet">',
+            render_template_with_form('{% bootstrap_css %}').strip()
+        )
 
     def test_settings_filter(self):
         res = render_template_with_form('{{ "required_css_class"|bootstrap_setting }}')
@@ -316,12 +289,12 @@ class TemplateTest(TestCase):
         self.assertIn('test_bootstrap4_content', res)
 
     def test_javascript_without_jquery(self):
-        res = render_template_with_form('{% bootstrap_javascript jquery=0 %}')
+        res = render_template_with_form('{% bootstrap_javascript %}')
         self.assertIn('bootstrap', res)
         self.assertNotIn('jquery', res)
 
     def test_javascript_with_jquery(self):
-        res = render_template_with_form('{% bootstrap_javascript jquery=1 %}')
+        res = render_template_with_form('{% bootstrap_javascript jquery="full" %}')
         self.assertIn('bootstrap', res)
         self.assertIn('jquery', res)
 
@@ -509,14 +482,14 @@ class FieldTest(TestCase):
 
         def _test_size_medium(param):
             res = render_template_with_form('{% bootstrap_field form.subject size="' + param + '" %}')
-            self.assertNotIn('input-lg', res)
-            self.assertNotIn('input-sm', res)
-            self.assertNotIn('input-md', res)
+            self.assertNotIn('form-control-lg', res)
+            self.assertNotIn('form-control-sm', res)
+            self.assertNotIn('form-control-md', res)
 
-        _test_size('sm', 'input-sm')
-        _test_size('small', 'input-sm')
-        _test_size('lg', 'input-lg')
-        _test_size('large', 'input-lg')
+        _test_size('sm', 'form-control-sm')
+        _test_size('small', 'form-control-sm')
+        _test_size('lg', 'form-control-lg')
+        _test_size('large', 'form-control-lg')
         _test_size_medium('md')
         _test_size_medium('medium')
         _test_size_medium('')
@@ -577,7 +550,7 @@ class MessagesTest(TestCase):
         res = render_template_with_form(
             '{% bootstrap_messages messages %}', {'messages': messages})
         expected = """
-    <div class="alert alert-warning alert-dismissable">
+    <div class="alert alert-warning alert-dismissable fade show">
         <button type="button" class="close" data-dismiss="alert"
             aria-hidden="true">&#215;</button>
         hello
@@ -592,7 +565,7 @@ class MessagesTest(TestCase):
         res = render_template_with_form(
             '{% bootstrap_messages messages %}', {'messages': messages})
         expected = """
-    <div class="alert alert-danger alert-dismissable">
+    <div class="alert alert-danger alert-dismissable fade show">
         <button type="button" class="close" data-dismiss="alert"
             aria-hidden="true">&#215;</button>
         hello
@@ -607,7 +580,7 @@ class MessagesTest(TestCase):
         res = render_template_with_form(
             '{% bootstrap_messages messages %}', {'messages': messages})
         expected = """
-    <div class="alert alert-danger alert-dismissable">
+    <div class="alert alert-danger alert-dismissable fade show">
         <button type="button" class="close" data-dismiss="alert"
             aria-hidden="true">&#215;</button>
         hello
@@ -623,7 +596,7 @@ class MessagesTest(TestCase):
         res = render_template_with_form(
             '{% bootstrap_messages messages %}', {'messages': messages})
         expected = """
-    <div class="alert alert-danger alert-dismissable">
+    <div class="alert alert-danger alert-dismissable fade show">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&#215;</button>
         hello http://example.com
     </div>        """
@@ -636,7 +609,7 @@ class MessagesTest(TestCase):
         res = render_template_with_form(
             '{% bootstrap_messages messages %}', {'messages': messages})
         expected = """
-    <div class="alert alert-danger alert-dismissable">
+    <div class="alert alert-danger alert-dismissable fade show">
         <button type="button" class="close" data-dismiss="alert"
             aria-hidden="true">&#215;</button>
         hello there
