@@ -391,12 +391,16 @@ class FormTest(TestCase):
         res = render_template_with_form('{% bootstrap_form form %}', {'form': form})
         self.assertIn('bootstrap4-bound', res)
 
+        form = TestForm({'sender': 'sender'})
+
         res = render_template_with_form(
             '{% bootstrap_form form bound_css_class="successful-test" %}',
             {'form': form}
         )
         self.assertIn('successful-test', res)
 
+        form = TestForm({'sender': 'sender'})
+        
         res = render_template_with_form(
             '{% bootstrap_form form bound_css_class="" %}',
             {'form': form}

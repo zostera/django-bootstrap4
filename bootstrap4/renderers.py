@@ -297,6 +297,14 @@ class FieldRenderer(BaseRenderer):
             classes = add_css_class(classes, 'form-control', prepend=True)
             # For these widget types, add the size class here
             classes = add_css_class(classes, self.get_size_class())
+
+        if self.field.errors:
+            if self.error_css_class:
+                classes = add_css_class(classes, self.error_css_class)
+        else:
+            if self.field.form.is_bound:
+                classes = add_css_class(classes, self.success_css_class)
+
         widget.attrs['class'] = classes
 
     def add_placeholder_attrs(self, widget=None):
@@ -411,16 +419,15 @@ class FieldRenderer(BaseRenderer):
         return html
 
     def append_to_field(self, html):
-        help_text_and_errors = []
-        if self.field_help:
-            help_text_and_errors.append(self.field_help)
-        help_text_and_errors += self.field_errors
-        if help_text_and_errors:
+        field_help = self.field_help or None
+        field_errors = self.field_errors
+        if field_help or field_errors:
             help_html = render_template_file(
                 'bootstrap4/field_help_text_and_errors.html',
                 context={
                     'field': self.field,
-                    'help_text_and_errors': help_text_and_errors,
+                    'field_help': field_help,
+                    'field_errors': field_errors,
                     'layout': self.layout,
                     'show_help': self.show_help,
                 }

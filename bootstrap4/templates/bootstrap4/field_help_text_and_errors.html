@@ -1,4 +1,7 @@
 {# Reverse the messages, so that errors are printed first #}
-{% for text in help_text_and_errors reversed %}
-    <div class="form-text text-muted">{{ text }}</div>
+{% for text in field_errors %}
+    <div class="invalid-feedback">{{ text }}</div>
 {% endfor %}
+{% if field_help %}
+    <div class="form-text text-muted">{{ field_help }}</div>
+{% endif %}

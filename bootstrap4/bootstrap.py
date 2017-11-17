@@ -42,8 +42,8 @@ BOOTSTRAP4_DEFAULTS = {
 
     'set_placeholder': True,
     'required_css_class': '',
-    'error_css_class': 'has-error',
-    'success_css_class': 'has-success',
+    'error_css_class': 'is-invalid',
+    'success_css_class': 'is-valid',
     'formset_renderers': {
         'default': 'bootstrap4.renderers.FormsetRenderer',
     },
