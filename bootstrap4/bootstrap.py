@@ -37,6 +37,7 @@ BOOTSTRAP4_DEFAULTS = {
     },
     'javascript_in_head': False,
     'include_jquery': False,
+    'use_i18n': False,
     'horizontal_label_class': 'col-md-3',
     'horizontal_field_class': 'col-md-9',
 
@@ -66,6 +67,9 @@ def get_bootstrap_setting(name, default=None):
 
     # Override with user settings from settings.py
     BOOTSTRAP4.update(getattr(settings, 'BOOTSTRAP4', {}))
+
+    # Update use_i18n
+    BOOTSTRAP4['use_i18n'] = i18n_enabled()
 
     return BOOTSTRAP4.get(name, default)
 
@@ -119,6 +123,13 @@ def theme_url():
     Return the full url to the theme CSS file
     """
     return get_bootstrap_setting('theme_url')
+
+
+def i18n_enabled():
+    """
+    Return the projects i18n setting
+    """
+    return getattr(settings, 'USE_I18N', False)
 
 
 def get_renderer(renderers, **kwargs):
