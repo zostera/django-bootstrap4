@@ -358,7 +358,7 @@ class FieldRenderer(BaseRenderer):
         )
 
     def fix_date_select_input(self, html):
-        div1 = '<div class="col-xs-4">'
+        div1 = '<div class="col-4">'
         div2 = '</div>'
         html = html.replace('<select', div1 + '<select')
         html = html.replace('</select>', '</select>' + div2)
@@ -380,7 +380,7 @@ class FieldRenderer(BaseRenderer):
 
         """
         # TODO This needs improvement
-        return '<div class="row bootstrap4-multi-input"><div class="col-xs-12">{html}</div></div>'.format(
+        return '<div class="row bootstrap4-multi-input"><div class="col-12">{html}</div></div>'.format(
             html=html
         )
 
