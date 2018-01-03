@@ -8,10 +8,10 @@ from django.conf import settings
 # Default settings
 
 BOOTSTRAP4_DEFAULTS = {
-    'base_url': None,  # '//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/'
+    'base_url': None,  # 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/'
     'css_url': {
-        'href': 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css',
-        'integrity': 'sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb',
+        'href': 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css',
+        'integrity': 'sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy',
         'crossorigin': 'anonymous',
     },
     'theme_url': None,
@@ -31,8 +31,8 @@ BOOTSTRAP4_DEFAULTS = {
         'crossorigin': 'anonymous',
     },
     'javascript_url': {
-        'url': 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js',
-        'integrity': 'sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ',
+        'url': 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js',
+        'integrity': 'sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4',
         'crossorigin': 'anonymous',
     },
     'javascript_in_head': False,
