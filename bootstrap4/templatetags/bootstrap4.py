@@ -887,8 +887,8 @@ def bootstrap_url_replace_param(url, name, value):
 
 
 def get_pagination_context(page, pages_to_show=11,
-                           url=None, size=None, extra=None,
-                           parameter_name='page'):
+                           url=None, size=None, justify_content=None,
+                           extra=None, parameter_name='page'):
     """
     Generate Bootstrap pagination context from a page object
     """
@@ -957,6 +957,13 @@ def get_pagination_context(page, pages_to_show=11,
         pagination_css_classes.append('pagination-sm')
     elif size == 'large':
         pagination_css_classes.append('pagination-lg')
+
+    if justify_content == 'start':
+        pagination_css_classes.append('justify-content-start')
+    elif justify_content == 'center':
+        pagination_css_classes.append('justify-content-center')
+    elif justify_content == 'end':
+        pagination_css_classes.append('justify-content-end')
 
     return {
         'bootstrap_pagination_url': url,
