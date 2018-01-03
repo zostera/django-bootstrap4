@@ -3,8 +3,8 @@
 History
 -------
 
-In progress
-+++++++++++
+0.0.5 (2018-01-03)
+++++++++++++++++++
 - Drop develop branch, work with master and feature branches
 - Clean up history file
 - Upgrade Bootstrap to 4.0.0-beta.3

@@ -400,7 +400,7 @@ class FormTest(TestCase):
         self.assertIn('successful-test', res)
 
         form = TestForm({'sender': 'sender'})
-        
+
         res = render_template_with_form(
             '{% bootstrap_form form bound_css_class="" %}',
             {'form': form}
