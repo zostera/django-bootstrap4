@@ -7,6 +7,11 @@ In progress
 +++++++++++
 - Drop develop branch, work with master and feature branches
 - Clean up history file
+- Upgrade Bootstrap to 4.0.0-beta.3
+- Use `col-4` rather than `col-xs-4` (#54)
+- Added pagination alignment options (#56)
+- Fixed form field errors and help texts (#39)
+- Use django language if ``USE_I18N=True`` (#53)
 
 0.0.4 (2017-10-25)
 ++++++++++++++++++
