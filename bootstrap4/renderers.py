@@ -248,9 +248,9 @@ class FieldRenderer(BaseRenderer):
         self.addon_before = kwargs.get('addon_before', self.widget.attrs.pop('addon_before', ''))
         self.addon_after = kwargs.get('addon_after', self.widget.attrs.pop('addon_after', ''))
         self.addon_before_class = kwargs.get('addon_before_class',
-                                             self.widget.attrs.pop('addon_before_class', 'input-group-addon'))
+                                             self.widget.attrs.pop('addon_before_class', 'input-group-prepend'))
         self.addon_after_class = kwargs.get('addon_after_class',
-                                            self.widget.attrs.pop('addon_after_class', 'input-group-addon'))
+                                            self.widget.attrs.pop('addon_after_class', 'input-group-append'))
 
         # These are set in Django or in the global BOOTSTRAP4 settings, and
         # they can be overwritten in the template
@@ -404,36 +404,53 @@ class FieldRenderer(BaseRenderer):
             html = '<div class="checkbox">{content}</div>'.format(content=html)
         return html
 
-    def make_input_group(self, html):
+    def make_input_group(self, html, append_inside_input_group, append_outside_input_group):
+        before = ''
+        after = ''
         allowed_widget_types = (TextInput, PasswordInput, DateInput, NumberInput, Select)
         if (self.addon_before or self.addon_after) and isinstance(self.widget, allowed_widget_types):
-            before = '<span class="{input_class}">{addon}</span>'.format(
+            before = '<div class="{input_class}"><span class="input-group-text">{addon}</span></div>'.format(
                 input_class=self.addon_before_class, addon=self.addon_before) if self.addon_before else ''
-            after = '<span class="{input_class}">{addon}</span>'.format(
+            after = '<div class="{input_class}"><span class="input-group-text">{addon}</span></div>'.format(
                 input_class=self.addon_after_class, addon=self.addon_after) if self.addon_after else ''
-            html = '<div class="input-group">{before}{html}{after}</div>'.format(
-                before=before,
-                after=after,
-                html=html
-            )
+        html = '<div class="input-group">{before}{html}{after}{append_inside_input_group}</div>{append_outside_input_group}'.format(
+            before=before,
+            after=after,
+            html=html,
+            append_inside_input_group=append_inside_input_group,
+            append_outside_input_group=append_outside_input_group,
+        )
         return html
 
-    def append_to_field(self, html):
-        field_help = self.field_help or None
+    def append_inside_input_group(self):
         field_errors = self.field_errors
-        if field_help or field_errors:
-            help_html = render_template_file(
-                'bootstrap4/field_help_text_and_errors.html',
+        error_html = ''
+        if field_errors:
+            error_html = render_template_file(
+                'bootstrap4/field_errors.html',
                 context={
                     'field': self.field,
-                    'field_help': field_help,
                     'field_errors': field_errors,
                     'layout': self.layout,
                     'show_help': self.show_help,
                 }
             )
-            html += help_html
-        return html
+        return error_html
+
+    def append_outside_input_group(self):
+        field_help = self.field_help or None
+        help_html = ''
+        if field_help:
+            help_html = render_template_file(
+                'bootstrap4/field_help_text.html',
+                context={
+                    'field': self.field,
+                    'field_help': field_help,
+                    'layout': self.layout,
+                    'show_help': self.show_help,
+                }
+            )
+        return help_html
 
     def get_field_class(self):
         field_class = self.field_class
@@ -510,8 +527,9 @@ class FieldRenderer(BaseRenderer):
         # Start post render
         html = self.post_widget_render(html)
         html = self.wrap_widget(html)
-        html = self.make_input_group(html)
-        html = self.append_to_field(html)
+        inside = self.append_inside_input_group()
+        outside = self.append_outside_input_group()
+        html = self.make_input_group(html, inside, outside)
         html = self.wrap_field(html)
         html = self.add_label(html)
         html = self.wrap_label_and_field(html)
