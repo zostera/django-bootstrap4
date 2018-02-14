@@ -3,6 +3,11 @@
 History
 -------
 
+0.0.6 (2018-02-14)
+++++++++++++++++++
+- Change form help text element from div to small (#60)
+- Upgrade Bootstrap to 4.0.0 (#66)
+
 0.0.5 (2018-01-03)
 ++++++++++++++++++
 - Drop develop branch, work with master and feature branches
