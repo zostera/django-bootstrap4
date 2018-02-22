@@ -477,10 +477,10 @@ class FieldTest(TestCase):
 
     def test_input_group_addon_empty(self):
         res = render_template_with_form(
-            '{% bootstrap_field form.subject addon_before=None addon_after="" %}')  # noqa
-        self.assertNotIn('class="input-group"', res)
-        self.assertNotIn('<div class="input-group-prepend">', res)
-        self.assertNotIn('<div class="input-group-append">', res)
+            '{% bootstrap_field form.subject addon_before=None addon_after="after" %}')  # noqa
+        self.assertIn('class="input-group"', res)
+        self.assertNotIn('input-group-prepend', res)
+        self.assertIn('<div class="input-group-append"><span class="input-group-text">after</span></div>', res)
 
     def test_size(self):
         def _test_size(param, klass):
