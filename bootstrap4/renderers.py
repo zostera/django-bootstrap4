@@ -179,7 +179,7 @@ class FormRenderer(BaseRenderer):
         form_errors = []
         for field in self.form:
             if not field.is_hidden and field.errors:
-                form_errors += field.errors
+                form_errors += "%s - %s" % (field.label_tag,field.errors)
         return form_errors
 
     def render_errors(self, type='all'):
