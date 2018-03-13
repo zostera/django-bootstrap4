@@ -248,9 +248,9 @@ class FieldRenderer(BaseRenderer):
         self.addon_before = kwargs.get('addon_before', self.widget.attrs.pop('addon_before', ''))
         self.addon_after = kwargs.get('addon_after', self.widget.attrs.pop('addon_after', ''))
         self.addon_before_class = kwargs.get('addon_before_class',
-                                             self.widget.attrs.pop('addon_before_class', 'input-group-addon'))
+                                             self.widget.attrs.pop('addon_before_class', 'input-group-text'))
         self.addon_after_class = kwargs.get('addon_after_class',
-                                            self.widget.attrs.pop('addon_after_class', 'input-group-addon'))
+                                            self.widget.attrs.pop('addon_after_class', 'input-group-text'))
 
         # These are set in Django or in the global BOOTSTRAP4 settings, and
         # they can be overwritten in the template
@@ -404,16 +404,21 @@ class FieldRenderer(BaseRenderer):
             html = '<div class="checkbox">{content}</div>'.format(content=html)
         return html
 
+    def make_input_group_addon(self, inner_class, outer_class, content):
+        if not content:
+            return ''
+
+        content = '<span class="{input_class}">{addon}</span>'.format(
+            input_class=inner_class, addon=content) if inner_class else content
+
+        return '<div class="{addon_class}">{addon}</div>'.format(addon_class=outer_class, addon=content)
+
     def make_input_group(self, html):
         allowed_widget_types = (TextInput, PasswordInput, DateInput, NumberInput, Select)
         if (self.addon_before or self.addon_after) and isinstance(self.widget, allowed_widget_types):
-            before = '<span class="{input_class}">{addon}</span>'.format(
-                input_class=self.addon_before_class, addon=self.addon_before) if self.addon_before else ''
-            after = '<span class="{input_class}">{addon}</span>'.format(
-                input_class=self.addon_after_class, addon=self.addon_after) if self.addon_after else ''
             html = '<div class="input-group">{before}{html}{after}</div>'.format(
-                before=before,
-                after=after,
+                before=self.make_input_group_addon(self.addon_before_class, 'input-group-prepend', self.addon_before),
+                after=self.make_input_group_addon(self.addon_after_class, 'input-group-append', self.addon_after),
                 html=html
             )
         return html

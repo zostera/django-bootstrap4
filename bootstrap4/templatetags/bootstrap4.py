@@ -542,20 +542,24 @@ def bootstrap_field(*args, **kwargs):
 
             One of the following values:
 
-                * ``'input-group-addon'``
-                * ``'input-group-btn'``
+                * ``'input-group-text'``
+                * ``None``
 
-            :default: ``input-group-addon``
+            Set to None to disable the span inside the addon. (for use with buttons)
+
+            :default: ``input-group-text``
 
         addon_after_class
             Class used on the span when ``addon_after`` is used.
 
             One of the following values:
 
-                * ``'input-group-addon'``
-                * ``'input-group-btn'``
+                * ``'input-group-text'``
+                * ``None``
 
-            :default: ``input-group-addon``
+            Set to None to disable the span inside the addon. (for use with buttons)
+
+            :default: ``input-group-text``
 
         error_css_class
             CSS class used when the field has an error

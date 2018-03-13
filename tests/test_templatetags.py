@@ -324,8 +324,8 @@ class FormTest(TestCase):
     def test_field_addons(self):
         form = TestForm()
         res = render_form(form)
-        self.assertIn('<div class="input-group"><span class="input-group-addon">before</span><input', res)
-        self.assertIn('><span class="input-group-addon">after</span></div>', res)
+        self.assertIn('<div class="input-group"><div class="input-group-prepend"><span class="input-group-text">before</span></div><input', res)
+        self.assertIn('><div class="input-group-append"><span class="input-group-text">after</span></div></div>', res)
 
     def test_exclude(self):
         form = TestForm()
@@ -465,15 +465,22 @@ class FieldTest(TestCase):
     def test_input_group(self):
         res = render_template_with_form('{% bootstrap_field form.subject addon_before="$"  addon_after=".00" %}')
         self.assertIn('class="input-group"', res)
-        self.assertIn('class="input-group-addon">$', res)
-        self.assertIn('class="input-group-addon">.00', res)
+        self.assertIn('class="input-group-prepend"><span class="input-group-text">$', res)
+        self.assertIn('class="input-group-append"><span class="input-group-text">.00', res)
 
     def test_input_group_addon_button(self):
         res = render_template_with_form(
-            '{% bootstrap_field form.subject addon_before="$" addon_before_class="input-group-btn" addon_after=".00" addon_after_class="input-group-btn" %}')  # noqa
+            '{% bootstrap_field form.subject addon_before="$" addon_before_class=None addon_after=".00" addon_after_class=None %}')  # noqa
         self.assertIn('class="input-group"', res)
-        self.assertIn('class="input-group-btn">$', res)
-        self.assertIn('class="input-group-btn">.00', res)
+        self.assertIn('<div class="input-group-prepend">$</div>', res)
+        self.assertIn('<div class="input-group-append">.00</div>', res)
+
+    def test_input_group_addon_empty(self):
+        res = render_template_with_form(
+            '{% bootstrap_field form.subject addon_before=None addon_after="after" %}')  # noqa
+        self.assertIn('class="input-group"', res)
+        self.assertNotIn('input-group-prepend', res)
+        self.assertIn('<div class="input-group-append"><span class="input-group-text">after</span></div>', res)
 
     def test_size(self):
         def _test_size(param, klass):
