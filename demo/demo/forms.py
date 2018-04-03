@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django import forms
 from django.forms.formsets import BaseFormSet, formset_factory
 
-from bootstrap4.tests import TestForm
+from tests.test_templatetags import TestForm
 
 RADIO_CHOICES = (
     ('1', 'Radio 1'),
