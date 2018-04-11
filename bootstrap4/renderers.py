@@ -334,6 +334,19 @@ class FieldRenderer(BaseRenderer):
             self.add_placeholder_attrs(widget)
             self.add_help_attrs(widget)
 
+    def radio_list_to_class(self, html, klass):
+        classes = add_css_class(klass, self.get_size_class())
+        mapping = [
+            ('<ul', '<div class="{klass}"'.format(klass=classes)),
+            ('</ul>', '</div>'),
+            ('<li>', ''),
+            ('</li>', ''),
+        ]
+        for k, v in mapping:
+            html = html.replace(k, v)
+        return html
+
+
     def list_to_class(self, html, klass):
         classes = add_css_class(klass, self.get_size_class())
         mapping = [
@@ -385,7 +398,7 @@ class FieldRenderer(BaseRenderer):
 
     def post_widget_render(self, html):
         if isinstance(self.widget, RadioSelect):
-            html = self.list_to_class(html, 'radio')
+            html = self.radio_list_to_class(html, 'radio radio-success')
         elif isinstance(self.widget, CheckboxSelectMultiple):
             html = self.list_to_class(html, 'checkbox')
         elif isinstance(self.widget, SelectDateWidget):
