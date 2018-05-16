@@ -315,8 +315,8 @@ def bootstrap_javascript(jquery=None):
     javascript_tags = []
 
     # Set jquery value from setting or leave default.
-    jquery = jquery or get_bootstrap_setting('include_jquery', 'falsy')
-    
+    jquery = jquery or (get_bootstrap_setting('include_jquery', 'falsy') or 'falsy')
+
     # Include jQuery if the option is passed
     if jquery != 'falsy':
         javascript_tags.append(bootstrap_jquery(jquery=jquery))
