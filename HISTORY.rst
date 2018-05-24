@@ -3,6 +3,13 @@
 History
 -------
 
+0.0.6 (2018-05-24)
+++++++++++++++++++
+- Upgrade Bootstrap to 4.1.1
+- Upgrade jQuery to 3.3.1
+- Upgrade Popper to 1.14.3
+- Fixed bootstrap4.html to add jQuery per setting 'include_jquery' [False|True|'full'|'slim']
+
 0.0.5 (2018-01-03)
 ++++++++++++++++++
 - Drop develop branch, work with master and feature branches
