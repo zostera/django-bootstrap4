@@ -3,8 +3,8 @@
 History
 -------
 
-0.0.6 (2018-05-24)
-++++++++++++++++++
+In development
+++++++++++++++
 - Upgrade Bootstrap to 4.1.1
 - Upgrade jQuery to 3.3.1
 - Upgrade Popper to 1.14.3
