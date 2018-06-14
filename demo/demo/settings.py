@@ -8,9 +8,10 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 # Include BOOTSTRAP4_FOLDER in path
 BOOTSTRAP4_FOLDER = os.path.abspath(os.path.join(BASE_DIR, '..', 'bootstrap4'))
+TEST_FOLDER = os.path.abspath(os.path.join(BASE_DIR, '..',))
 if BOOTSTRAP4_FOLDER not in sys.path:
     sys.path.insert(0, BOOTSTRAP4_FOLDER)
-
+sys.path.insert(0, TEST_FOLDER)
 DEBUG = True
 
 ADMINS = ()
@@ -87,6 +88,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+import django
+if django.get_version() > '1.11.0':
+    MIDDLEWARE= MIDDLEWARE_CLASSES
+else:
+    MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES
 
 ROOT_URLCONF = 'demo.urls'
 
