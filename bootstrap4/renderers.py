@@ -346,7 +346,6 @@ class FieldRenderer(BaseRenderer):
             html = html.replace(k, v)
         return html
 
-
     def list_to_class(self, html, klass):
         classes = add_css_class(klass, self.get_size_class())
         mapping = [
@@ -361,12 +360,12 @@ class FieldRenderer(BaseRenderer):
 
     def add_checkbox_label(self, html):
         return '{field}{label}'.format(
-                field=html,
-                label=render_label(
-                    content=mark_safe(self.field.label),
-                    label_for=self.field.id_for_label,
-                    label_title=escape(strip_tags(self.field_help))
-                )
+            field=html,
+            label=render_label(
+                content=mark_safe(self.field.label),
+                label_for=self.field.id_for_label,
+                label_title=escape(strip_tags(self.field_help))
+            )
         )
 
     def fix_date_select_input(self, html):
