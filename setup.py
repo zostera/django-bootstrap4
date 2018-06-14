@@ -22,11 +22,6 @@ if sys.argv[-1] == 'publish':
     print(message.format(version=VERSION))
     sys.exit()
 
-if sys.argv[-1] == 'tag':
-    os.system("git tag -a %s -m 'tagging version %s'" % (VERSION, VERSION))
-    os.system('git push --tags')
-    sys.exit()
-
 if sys.argv[-1] == 'test':
     print("Running tests only on current environment.")
     print("Use `tox` for testing multiple environments.")
@@ -59,7 +54,7 @@ setup(
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: Apache Software License',
+        'License :: OSI Approved :: BSD License',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
