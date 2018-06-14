@@ -16,7 +16,7 @@
     {% bootstrap_form form %}
     {% buttons %}
       <button type="submit" class="btn btn-primary">
-        {% bootstrap_icon "star" %} Submit
+        Submit
       </button>
     {% endbuttons %}
   </form>
