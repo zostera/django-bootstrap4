@@ -1,6 +1,6 @@
 {% load bootstrap4 %}
 {% for message in messages %}
-    <div class="{{ message|bootstrap_message_classes }} alert-dismissable fade show">
+    <div class="{{ message|bootstrap_message_classes }} alert-dismissable fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&#215;</button>
         {{ message }}
     </div>

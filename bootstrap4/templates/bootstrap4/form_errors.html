@@ -1,4 +1,4 @@
-<div class="alert alert-danger alert-dismissable alert-link">
+<div class="alert alert-danger alert-dismissable alert-link" role="alert">
     <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&#215;</button>
     {% for error in errors %}
         {{ error }}{% if not forloop.last %}<br>{% endif %}
