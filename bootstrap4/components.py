@@ -5,6 +5,7 @@ from django.utils.safestring import mark_safe
 from bootstrap4.utils import render_tag, add_css_class
 
 from .text import text_value
+from .bootstrap import get_bootstrap_setting
 
 
 def render_alert(content, alert_type=None, dismissable=True):
@@ -15,7 +16,7 @@ def render_alert(content, alert_type=None, dismissable=True):
     if not alert_type:
         alert_type = "info"
     css_classes = ["alert", "alert-" + text_value(alert_type)]
-    if dismissable:
+    if dismissable and get_bootstrap_setting("use_javascript"):
         css_classes.append("alert-dismissable")
         button = (
             '<button type="button" class="close" '
