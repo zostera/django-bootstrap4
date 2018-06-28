@@ -9,11 +9,15 @@ Write Django as usual, and let ``django-bootstrap4`` make template output into B
     :target: https://travis-ci.org/zostera/django-bootstrap4
 
 .. image:: https://img.shields.io/coveralls/dzostera/django-bootstrap4/master.svg
-  :target: https://coveralls.io/r/zostera/django-bootstrap4?branch=master
+    :target: https://coveralls.io/r/zostera/django-bootstrap4?branch=master
 
 .. image:: https://img.shields.io/pypi/v/django-bootstrap4.svg
     :target: https://pypi.python.org/pypi/django-bootstrap4
     :alt: Latest PyPI version
+
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/ambv/black
+    :alt: Any color you like
 
 
 Requirements

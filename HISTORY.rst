@@ -9,6 +9,7 @@ In development
 - Upgrade jQuery to 3.3.1
 - Upgrade Popper to 1.14.3
 - Fixed bootstrap4.html to add jQuery per setting 'include_jquery' [False|True|'full'|'slim']
+- Adopt Black formatting, see https://github.com/ambv/black
 
 0.0.6 (2018-02-14)
 +++++++++++++++++++
