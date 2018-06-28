@@ -17,7 +17,6 @@ Write Django as usual, and let ``django-bootstrap4`` make template output into B
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/ambv/black
-    :alt: Any color you like
 
 
 Requirements
