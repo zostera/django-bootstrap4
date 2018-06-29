@@ -1,12 +1,23 @@
 language: python
+sudo: false
+cache: pip
+
 python:
     - "2.7"
     - "3.4"
     - "3.5"
     - "3.6"
 
+addons:
+  apt:
+    packages:
+      - sqlite3
+      - gdal-bin
+      - libproj-dev
+      - libgeos-dev
+      - libspatialite-dev
+
 install:
-    - sudo apt-get install libgdal-dev
     - pip install tox-travis python-coveralls
 
 script:
