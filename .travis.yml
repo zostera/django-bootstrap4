@@ -5,10 +5,13 @@ python:
     - "3.5"
     - "3.6"
 
-install:
-    - sudo apt-get install libgdal-dev
-    - pip install tox-travis python-coveralls
+before_install:
+ - sudo apt-get update -y
+ - sudo apt-get install -y libgdal-dev libproj-dev libproj-dev spatialite-bin python-dev python3-dev
 
+install:
+    - pip install tox-travis python-coveralls
+ 
 script:
     - tox
 
