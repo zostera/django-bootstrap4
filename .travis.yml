@@ -1,32 +1,48 @@
 language: python
 sudo: false
-cache: pip
+
+cache:
+ pip: true
 
 python:
     - "2.7"
     - "3.4"
     - "3.5"
     - "3.6"
-
-addons:
-  apt:
-    packages:
-      - sqlite3
-      - gdal-bin
-      - libproj-dev
-      - libgeos-dev
-      - libspatialite-dev
+    - "3.7"
 
 install:
-    - pip install tox-travis python-coveralls
+  - pip install tox
+  - pip install python-coveralls
 
 script:
-    - tox
+  - tox
 
 matrix:
+  include:
+    - { python: 2.7, env: TOXENV=py27-1.11 }
+    - { python: 3.4, env: TOXENV=py34-1.11 }
+    - { python: 3.4, env: TOXENV=py34-2.0 }
+    - { python: 3.5, env: TOXENV=py35-1.11 }
+    - { python: 3.5, env: TOXENV=py35-2.0 }
+    - { python: 3.5, env: TOXENV=py35-2.1 }
+    - { python: 3.5, env: TOXENV=py35-master }
+    - { python: 3.6, env: TOXENV=py36-2.0 }
+    - { python: 3.6, env: TOXENV=py36-2.1 }
+    - { python: 3.6, env: TOXENV=py36-master }
+    - { python: 3.7-dev, env: TOXENV=py37-2.1 }
+    - { python: 3.7-dev, env: TOXENV=py37-master }
+    - { python: 3.6, env: TOXENV=flake8 }
+    - { python: 3.6, env: TOXENV=isort }
+    - { python: 3.6, env: TOXENV=migrate }
+    - { python: 3.6, env: TOXENV=docs }
+
+  # we allow failures for versions which are not yet released:
   allow_failures:
-    - env: TOXENV=py35-djangomaster
-    - env: TOXENV=py36-djangomaster
+      - env: TOXENV=py35-master
+      - env: TOXENV=py36-master
+      - env: TOXENV=py37-master
+      - env: TOXENV=py37-2.1
 
 after_success:
     coveralls
