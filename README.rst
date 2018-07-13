@@ -25,6 +25,12 @@ Requirements
 - Django >= 1.11 (and `compatible Python versions <https://docs.djangoproject.com/en/1.11/faq/install/#what-python-version-can-i-use-with-django>`_)
 
 
+Documentation
+-------------
+
+The full documentation is at http://django-bootstrap4.readthedocs.io/
+
+
 Installation
 ------------
 
@@ -59,10 +65,10 @@ Example template
     </form>
 
 
-Documentation
--------------
+Demo
+----
 
-The full documentation is at http://django-bootstrap4.readthedocs.io/
+A demo app is provided in `demo`. You can run it from your virtualenv with `python manage.py runserver`.
 
 
 Bugs and suggestions
