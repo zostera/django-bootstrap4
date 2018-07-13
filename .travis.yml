@@ -1,45 +1,11 @@
 language: python
 sudo: false
-
-cache:
- pip: true
-
+cache: pip
 python:
-    - "2.7"
-    - "3.4"
-    - "3.5"
-    - "3.6"
-    - "3.7"
-
-install:
-  - pip install tox
-  - pip install python-coveralls
-
-script:
-  - tox
-
-matrix:
-  include:
-    - { python: 2.7, env: TOXENV=py27-django111 }
-    - { python: 3.4, env: TOXENV=py34-django111 }
-    - { python: 3.4, env: TOXENV=py34-django20 }
-    - { python: 3.5, env: TOXENV=py35-django111 }
-    - { python: 3.5, env: TOXENV=py35-django20 }
-    - { python: 3.5, env: TOXENV=py35-django21 }
-    - { python: 3.5, env: TOXENV=py35-master }
-    - { python: 3.6, env: TOXENV=py36-django20 }
-    - { python: 3.6, env: TOXENV=py36-django21 }
-    - { python: 3.6, env: TOXENV=py36-master }
-    - { python: 3.7, env: TOXENV=py37-django21 }
-    - { python: 3.7, env: TOXENV=py37-master }
-    - { python: 3.6, env: TOXENV=flake8 }
-    - { python: 3.6, env: TOXENV=docs }
-
-  # we allow failures for versions which are not yet released:
-  allow_failures:
-      - env: TOXENV=py35-master
-      - env: TOXENV=py36-master
-      - env: TOXENV=py37-master
-
-after_success:
-    coveralls
+ - "3.7"
+ - "3.6"
+ - "3.5"
+ - "3.4"
+ - "2.7"
+install: pip install tox-travis
+script: tox
