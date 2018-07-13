@@ -33,8 +33,6 @@ matrix:
     - { python: 3.7, env: TOXENV=py37-django21 }
     - { python: 3.7, env: TOXENV=py37-master }
     - { python: 3.6, env: TOXENV=flake8 }
-    - { python: 3.6, env: TOXENV=isort }
-    - { python: 3.6, env: TOXENV=migrate }
     - { python: 3.6, env: TOXENV=docs }
 
   # we allow failures for versions which are not yet released:
