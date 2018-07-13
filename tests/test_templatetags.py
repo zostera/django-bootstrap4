@@ -483,9 +483,9 @@ class FieldTest(TestCase):
     def test_input_group_addon_button(self):
         res = render_template_with_form(
             # Jumping through hoops to keep flake8 and black happy here
-            '{% bootstrap_field '
+            "{% bootstrap_field "
             'form.subject addon_before="$" addon_before_class=None addon_after=".00" addon_after_class=None'
-            ' %}'
+            " %}"
         )
         self.assertIn('class="input-group"', res)
         self.assertIn('<div class="input-group-prepend">$</div>', res)

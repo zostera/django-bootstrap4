@@ -20,7 +20,7 @@ fieldfile = FieldFile(None, FakeField, "dummy.txt")
 
 
 class HomePageView(TemplateView):
-    template_name = "demo/home.html"
+    template_name = "app/home.html"
 
     def get_context_data(self, **kwargs):
         context = super(HomePageView, self).get_context_data(**kwargs)
@@ -29,32 +29,32 @@ class HomePageView(TemplateView):
 
 
 class DefaultFormsetView(FormView):
-    template_name = "demo/formset.html"
+    template_name = "app/formset.html"
     form_class = ContactFormSet
 
 
 class DefaultFormView(FormView):
-    template_name = "demo/form.html"
+    template_name = "app/form.html"
     form_class = ContactForm
 
 
 class DefaultFormByFieldView(FormView):
-    template_name = "demo/form_by_field.html"
+    template_name = "app/form_by_field.html"
     form_class = ContactForm
 
 
 class FormHorizontalView(FormView):
-    template_name = "demo/form_horizontal.html"
+    template_name = "app/form_horizontal.html"
     form_class = ContactForm
 
 
 class FormInlineView(FormView):
-    template_name = "demo/form_inline.html"
+    template_name = "app/form_inline.html"
     form_class = ContactForm
 
 
 class FormWithFilesView(FormView):
-    template_name = "demo/form_with_files.html"
+    template_name = "app/form_with_files.html"
     form_class = FilesForm
 
     def get_context_data(self, **kwargs):
@@ -67,7 +67,7 @@ class FormWithFilesView(FormView):
 
 
 class PaginationView(TemplateView):
-    template_name = "demo/pagination.html"
+    template_name = "app/pagination.html"
 
     def get_context_data(self, **kwargs):
         context = super(PaginationView, self).get_context_data(**kwargs)
@@ -89,4 +89,4 @@ class PaginationView(TemplateView):
 
 
 class MiscView(TemplateView):
-    template_name = "demo/misc.html"
+    template_name = "app/misc.html"

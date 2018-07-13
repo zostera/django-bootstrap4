@@ -79,19 +79,19 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = "8s)l4^2s&&0*31-)+6lethmfy3#r1egh^6y^=b9@g!q63r649_"
 
-MIDDLEWARE_CLASSES = (
-    "django.middleware.common.CommonMiddleware",
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-)
-
-ROOT_URLCONF = "demo.urls"
+]
+ROOT_URLCONF = "demo.app.urls"
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = "demo.wsgi.application"
+WSGI_APPLICATION = "demo.app.wsgi.application"
 
 TEMPLATES = [
     {
