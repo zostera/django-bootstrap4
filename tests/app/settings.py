@@ -1,3 +1,5 @@
+DEBUG = True
+
 SECRET_KEY = "bootstrap4isawesome"
 
 DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}}

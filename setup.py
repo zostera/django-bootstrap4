@@ -1,17 +1,24 @@
-#!/usr/bin/env python
+#!/usr/local/bin/python
 # -*- coding: utf-8 -*-
 
 import os
+import re
 import sys
 
-import bootstrap4
+from setuptools import setup
 
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+# Allow setup.py to be run from any path
+os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
-VERSION = bootstrap4.__version__
+# Read version from app
+with open("bootstrap4/__init__.py", "rb") as f:
+    VERSION = str(re.search('__version__ = "(.+?)"', f.read().decode("utf-8")).group(1))
+
+with open(os.path.join(os.path.dirname(__file__), "README.rst")) as readme_file:
+    readme = readme_file.read()
+
+with open(os.path.join(os.path.dirname(__file__), "HISTORY.rst")) as history_file:
+    history = history_file.read().replace(".. :changelog:", "")
 
 if sys.argv[-1] == "publish":
     os.system("cd docs && make html")
@@ -27,12 +34,6 @@ if sys.argv[-1] == "test":
     print("Use `tox` for testing multiple environments.")
     os.system("python manage.py test")
     sys.exit()
-
-with open("README.rst") as readme_file:
-    readme = readme_file.read()
-
-with open("HISTORY.rst") as history_file:
-    history = history_file.read().replace(".. :changelog:", "")
 
 setup(
     name="django-bootstrap4",
