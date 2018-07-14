@@ -331,6 +331,8 @@ class FieldRenderer(BaseRenderer):
             classes = add_css_class(classes, "form-control", prepend=True)
             # For these widget types, add the size class here
             classes = add_css_class(classes, self.get_size_class())
+        elif isinstance(widget, CheckboxInput):
+            classes = add_css_class(classes, "form-check-input", prepend=True)
 
         if self.field.errors:
             if self.error_css_class:
@@ -392,13 +394,11 @@ class FieldRenderer(BaseRenderer):
         return html
 
     def add_checkbox_label(self, html):
-        return "{field}{label}".format(
-            field=html,
-            label=render_label(
-                content=mark_safe(self.field.label),
-                label_for=self.field.id_for_label,
-                label_title=escape(strip_tags(self.field_help)),
-            ),
+        return html + render_label(
+            content=self.field.label,
+            label_for=self.field.id_for_label,
+            label_title=escape(strip_tags(self.field_help)),
+            label_class="form-check-label",
         )
 
     def fix_date_select_input(self, html):
@@ -445,7 +445,7 @@ class FieldRenderer(BaseRenderer):
         if isinstance(self.widget, CheckboxInput):
             # Wrap checkboxes
             # Note checkboxes do not get size classes, see #318
-            html = '<div class="checkbox">{content}</div>'.format(content=html)
+            html = '<div class="form-check">{content}</div>'.format(content=html)
         return html
 
     def make_input_group_addon(self, inner_class, outer_class, content):
@@ -486,7 +486,7 @@ class FieldRenderer(BaseRenderer):
             )
         return html
 
-    def append_to_field(self, html):
+    def append_help_and_error(self, html):
         field_help = self.field_help or None
         field_errors = self.field_errors
         if field_help or field_errors:
@@ -502,6 +502,16 @@ class FieldRenderer(BaseRenderer):
             )
             html += help_html
         return html
+
+    def append_to_field(self, html):
+        if isinstance(self.widget, CheckboxInput):
+            return html
+        return self.append_help_and_error(html)
+
+    def append_to_checkbox_field(self, html):
+        if not isinstance(self.widget, CheckboxInput):
+            return html
+        return self.append_help_and_error(html)
 
     def get_field_class(self):
         field_class = self.field_class
@@ -581,6 +591,7 @@ class FieldRenderer(BaseRenderer):
         self.restore_widget_attrs()
         # Start post render
         html = self.post_widget_render(html)
+        html = self.append_to_checkbox_field(html)
         html = self.wrap_widget(html)
         html = self.make_input_group(html)
         html = self.append_to_field(html)
