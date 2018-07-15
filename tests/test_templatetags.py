@@ -2,6 +2,8 @@
 from __future__ import unicode_literals
 
 import re
+
+from bs4 import BeautifulSoup
 from django import forms
 from django.contrib.admin.widgets import AdminSplitDateTime
 from django.contrib.gis import forms as gisforms
@@ -441,6 +443,62 @@ class FieldTest(TestCase):
         self.assertIn('type="password"', res)
         self.assertIn('placeholder="Password"', res)
 
+    def test_checkbox(self):
+        """Test Checkbox rendering, because it is special."""
+        def _select_one_element(html, selector, err_msg):
+            lst = html.select(selector)
+            self.assertEqual(len(lst), 1, err_msg)
+            return lst[0]
+
+        res = render_form_field("cc_myself")
+        # strip out newlines and spaces around newlines
+        res = "".join(line.strip() for line in res.split('\n'))
+        res = BeautifulSoup(res, 'html.parser')
+        form_group = _select_one_element(
+            res,
+            ".form-group",
+            "Checkbox should be rendered inside a .form-group.",
+        )
+        form_check = _select_one_element(
+            form_group,
+            ".form-check",
+            "There should be a .form-check inside .form-group",
+        )
+        checkbox = _select_one_element(
+            form_check,
+            "input",
+            "The checkbox should be inside the .form-check",
+        )
+        self.assertIn(
+            "form-check-input",
+            checkbox["class"],
+            "The checkbox should have the class 'form-check-input'.",
+        )
+        label = checkbox.nextSibling
+        self.assertIsNotNone(label, "The label should be rendered after the checkbox.")
+        self.assertEqual(label.name, "label", "After the checkbox there should be a label.")
+        self.assertEqual(
+            label["for"],
+            checkbox["id"],
+            "The for attribute of the label should be the id of the checkbox.",
+        )
+        help_text = label.nextSibling
+        self.assertIsNotNone(help_text, "The help text should be rendered after the label.")
+        self.assertEqual(
+            help_text.name,
+            "small", "The help text should be rendered as <small> tag.",
+        )
+        self.assertIn(
+            "form-text",
+            help_text["class"],
+            "The help text should have the class 'form-text'.",
+        )
+        self.assertIn(
+            "text-muted",
+            help_text["class"],
+            "The help text should have the class 'text-muted'.",
+        )
+
     def test_required_field(self):
         required_css_class = "bootstrap4-req"
         required_field = render_form_field("subject")
@@ -718,13 +776,13 @@ class ShowLabelTest(TestCase):
 
 class PaginatorTest(TestCase):
     def test_url_replace_param(self):
-        self.assertEquals(
+        self.assertEqual(
             url_replace_param("/foo/bar?baz=foo", "baz", "yohoo"), "/foo/bar?baz=yohoo"
         )
-        self.assertEquals(
+        self.assertEqual(
             url_replace_param("/foo/bar?baz=foo", "baz", None), "/foo/bar"
         )
-        self.assertEquals(
+        self.assertEqual(
             url_replace_param("/foo/bar#id", "baz", "foo"), "/foo/bar?baz=foo#id"
         )
 
