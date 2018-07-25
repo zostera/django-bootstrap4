@@ -268,10 +268,10 @@ class TemplateTest(TestCase):
 
     def test_bootstrap_template(self):
         res = render_template(
-            '{% extends "bootstrap4/bootstrap4.html" %}'
-            + "{% block bootstrap4_content %}"
-            + "test_bootstrap4_content"
-            + "{% endblock %}"
+            '{% extends "bootstrap4/bootstrap4.html" %}' +
+            "{% block bootstrap4_content %}" +
+            "test_bootstrap4_content" +
+            "{% endblock %}"
         )
         self.assertIn("test_bootstrap4_content", res)
 
