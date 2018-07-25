@@ -16,6 +16,7 @@ from bootstrap4.bootstrap import get_bootstrap_setting
 from bootstrap4.exceptions import BootstrapError
 from bootstrap4.text import text_concat, text_value
 from bootstrap4.utils import add_css_class, render_tag, url_replace_param
+from bootstrap4.widgets import RadioSelectButtonGroup
 
 RADIO_CHOICES = (("1", "Radio 1"), ("2", "Radio 2"))
 
@@ -69,6 +70,7 @@ class TestForm(forms.Form):
         widget=forms.CheckboxSelectMultiple,
         help_text="Check as many as you like.",
     )
+    category5 = forms.ChoiceField(widget=RadioSelectButtonGroup, choices=MEDIA_CHOICES)
     addon = forms.CharField(
         widget=forms.TextInput(attrs={"addon_before": "before", "addon_after": "after"})
     )
@@ -335,9 +337,9 @@ class FormTest(TestCase):
         self.assertIn("col-md-3", res)
         self.assertIn("col-md-9", res)
         res = render_template_with_form(
-            '{% bootstrap_form form layout="horizontal" '
-            + 'horizontal_label_class="hlabel" '
-            + 'horizontal_field_class="hfield" %}',
+            '{% bootstrap_form form layout="horizontal" ' +
+            'horizontal_label_class="hlabel" ' +
+            'horizontal_field_class="hfield" %}',
             {"form": form},
         )
         self.assertIn("hlabel", res)
@@ -403,6 +405,13 @@ class FormTest(TestCase):
             '{% bootstrap_form form bound_css_class="" %}', {"form": form}
         )
         self.assertNotIn("bootstrap4-bound", res)
+
+    def test_radio_select_button_group(self):
+        form = TestForm()
+        res = render_template_with_form(
+            '{% bootstrap_form form %}', {"form": form}
+        )
+        self.assertIn('input type="radio" name="category5" id="id_category5_0_0"', res)
 
 
 class FieldTest(TestCase):
