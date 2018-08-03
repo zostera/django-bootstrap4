@@ -693,8 +693,12 @@ class ButtonTest(TestCase):
         )
         self.assertIn(
             res.strip(),
-            '<a class="btn btn-default btn-lg" href="#">button</a><a href="#" '
-            + 'class="btn btn-lg">button</a>',
+            '<a class="btn btn-default btn-lg" href="#" role="button">button</a>'
+            + '<a class="btn btn-default btn-lg" role="button" href="#" >button</a>'
+            + '<a href="#" class="btn btn-default btn-lg" role="button">button</a>'
+            + '<a href="#" role="button" class="btn btn-default btn-lg">button</a>'
+            + '<a role="button" href="#" class="btn btn-default btn-lg">button</a>'
+            + '<a role="button" class="btn btn-default btn-lg"href="#">button</a>',
         )
 
 
