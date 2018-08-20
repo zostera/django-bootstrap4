@@ -28,7 +28,7 @@ Requirements
 Documentation
 -------------
 
-The full documentation is at http://django-bootstrap4.readthedocs.io/
+The full documentation is at https://django-bootstrap4.readthedocs.io/
 
 
 Installation
