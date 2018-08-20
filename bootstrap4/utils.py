@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 import re
-from collections import Mapping
 
 from django.forms.utils import flatatt
 from django.template import Variable, VariableDoesNotExist
@@ -20,6 +19,13 @@ from django.utils.six.moves.urllib.parse import (
 )
 
 from .text import text_value
+
+try:
+    from collections.abc import Mapping
+except ImportError:
+    # py27 fallback, remove if support for python 2.7 is dropped
+    from collections import Mapping
+
 
 # RegEx for quoted string
 QUOTED_STRING = re.compile(r'^["\'](?P<noquotes>.+)["\']$')
