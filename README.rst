@@ -2,9 +2,6 @@
 Bootstrap 4 for Django
 ======================
 
-Write Django as usual, and let ``django-bootstrap4`` make template output into Bootstrap 4 code.
-
-
 .. image:: https://travis-ci.org/zostera/django-bootstrap4.svg?branch=develop
     :target: https://travis-ci.org/zostera/django-bootstrap4
 
@@ -17,6 +14,14 @@ Write Django as usual, and let ``django-bootstrap4`` make template output into B
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/ambv/black
+
+Write Django as usual, and let ``django-bootstrap4`` make template output into Bootstrap 4 code.
+
+
+Goal
+----
+
+The goal of this project is to seamlessly blend Python, Django and Bootstrap 4.
 
 
 Requirements
