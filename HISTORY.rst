@@ -5,6 +5,7 @@ History
 
 In development
 ++++++++++++++
+- Improve alert accessibility (#93)
 - Add a new widget: RadioSelectButtonGroup (#103)
 - Several fixes and improvements to HTML rendering
 - Switch to explicit Travis tests
