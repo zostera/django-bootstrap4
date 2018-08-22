@@ -3,8 +3,8 @@
 History
 -------
 
-In development
-++++++++++++++
+0.0.7 (2018-08-22)
+++++++++++++++++++
 - Improve alert accessibility (#93)
 - Add a new widget: RadioSelectButtonGroup (#103)
 - Several fixes and improvements to HTML rendering
