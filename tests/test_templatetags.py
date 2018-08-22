@@ -445,6 +445,7 @@ class FieldTest(TestCase):
 
     def test_checkbox(self):
         """Test Checkbox rendering, because it is special."""
+
         def _select_one_element(html, selector, err_msg):
             lst = html.select(selector)
             self.assertEqual(len(lst), 1, err_msg)
@@ -452,12 +453,10 @@ class FieldTest(TestCase):
 
         res = render_form_field("cc_myself")
         # strip out newlines and spaces around newlines
-        res = "".join(line.strip() for line in res.split('\n'))
-        res = BeautifulSoup(res, 'html.parser')
+        res = "".join(line.strip() for line in res.split("\n"))
+        res = BeautifulSoup(res, "html.parser")
         form_group = _select_one_element(
-            res,
-            ".form-group",
-            "Checkbox should be rendered inside a .form-group.",
+            res, ".form-group", "Checkbox should be rendered inside a .form-group."
         )
         form_check = _select_one_element(
             form_group,
@@ -465,9 +464,7 @@ class FieldTest(TestCase):
             "There should be a .form-check inside .form-group",
         )
         checkbox = _select_one_element(
-            form_check,
-            "input",
-            "The checkbox should be inside the .form-check",
+            form_check, "input", "The checkbox should be inside the .form-check"
         )
         self.assertIn(
             "form-check-input",
@@ -476,17 +473,20 @@ class FieldTest(TestCase):
         )
         label = checkbox.nextSibling
         self.assertIsNotNone(label, "The label should be rendered after the checkbox.")
-        self.assertEqual(label.name, "label", "After the checkbox there should be a label.")
+        self.assertEqual(
+            label.name, "label", "After the checkbox there should be a label."
+        )
         self.assertEqual(
             label["for"],
             checkbox["id"],
             "The for attribute of the label should be the id of the checkbox.",
         )
         help_text = label.nextSibling
-        self.assertIsNotNone(help_text, "The help text should be rendered after the label.")
+        self.assertIsNotNone(
+            help_text, "The help text should be rendered after the label."
+        )
         self.assertEqual(
-            help_text.name,
-            "small", "The help text should be rendered as <small> tag.",
+            help_text.name, "small", "The help text should be rendered as <small> tag."
         )
         self.assertIn(
             "form-text",
@@ -779,9 +779,7 @@ class PaginatorTest(TestCase):
         self.assertEqual(
             url_replace_param("/foo/bar?baz=foo", "baz", "yohoo"), "/foo/bar?baz=yohoo"
         )
-        self.assertEqual(
-            url_replace_param("/foo/bar?baz=foo", "baz", None), "/foo/bar"
-        )
+        self.assertEqual(url_replace_param("/foo/bar?baz=foo", "baz", None), "/foo/bar")
         self.assertEqual(
             url_replace_param("/foo/bar#id", "baz", "foo"), "/foo/bar?baz=foo#id"
         )
