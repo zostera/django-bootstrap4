@@ -1,5 +1,8 @@
+{% load bootstrap4 %}
 <div class="alert alert-danger alert-dismissable alert-link">
+    {% if 'use_javascript'|bootstrap_setting %}
     <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&#215;</button>
+    {% endif %}
     {% for error in errors %}
         {{ error }}{% if not forloop.last %}<br>{% endif %}
     {% endfor %}

@@ -185,7 +185,10 @@ def bootstrap_javascript_url():
 
         {% bootstrap_javascript_url %}
     """
-    return javascript_url()
+    if not get_bootstrap_setting('use_javascript'):
+        return None
+    else:
+        return javascript_url()
 
 
 @register.simple_tag
@@ -338,6 +341,9 @@ def bootstrap_javascript(jquery="falsy"):
 
         {% bootstrap_javascript jquery="slim" %}
     """
+
+    if not get_bootstrap_setting('use_javascript'):
+        return None
 
     # List of JS tags to include
     javascript_tags = []

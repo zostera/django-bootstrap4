@@ -38,6 +38,7 @@ BOOTSTRAP4_DEFAULTS = {
     "javascript_in_head": False,
     "include_jquery": False,
     "use_i18n": False,
+    "use_javascript": True,
     "horizontal_label_class": "col-md-3",
     "horizontal_field_class": "col-md-9",
     "set_placeholder": True,

@@ -26,6 +26,9 @@ The ``BOOTSTRAP4`` dict variable contains these settings and defaults:
         # The complete URL to the Bootstrap CSS file (None means no theme)
         'theme_url': None,
 
+        # Whether to use any JavaScript at all
+        'use_javascript': True,
+
         # The complete URL to the Bootstrap JavaScript file (None means derive it from base_url)
         'javascript_url': None,
 
