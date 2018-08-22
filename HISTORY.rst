@@ -5,6 +5,8 @@ History
 
 In development
 ++++++++++++++
+- Several fixes and improvements to HTML rendering
+- Switch to explicit Travis tests
 - Upgrade Bootstrap to 4.1.1
 - Upgrade jQuery to 3.3.1
 - Upgrade Popper to 1.14.3
