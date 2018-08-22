@@ -620,9 +620,9 @@ class ComponentsTest(TestCase):
         )
         self.assertEqual(
             res.strip(),
-            '<div class="alert alert-danger alert-dismissable">'
+            '<div class="alert alert-danger alert-dismissable" role="alert">'
             + '<button type="button" class="close" data-dismiss="alert" '
-            + 'aria-hidden="true">'
+            + 'aria-label="close">'
             + "&times;</button>content</div>",
         )
 
@@ -652,9 +652,9 @@ class MessagesTest(TestCase):
             "{% bootstrap_messages messages %}", {"messages": messages}
         )
         expected = """
-    <div class="alert alert-warning alert-dismissable fade show">
+    <div class="alert alert-warning alert-dismissable fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert"
-            aria-hidden="true">&#215;</button>
+            aria-label="close">&#215;</button>
         hello
     </div>
 """
@@ -665,9 +665,9 @@ class MessagesTest(TestCase):
             "{% bootstrap_messages messages %}", {"messages": messages}
         )
         expected = """
-    <div class="alert alert-danger alert-dismissable fade show">
+    <div class="alert alert-danger alert-dismissable fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert"
-            aria-hidden="true">&#215;</button>
+            aria-label="close">&#215;</button>
         hello
     </div>
         """
@@ -678,9 +678,9 @@ class MessagesTest(TestCase):
             "{% bootstrap_messages messages %}", {"messages": messages}
         )
         expected = """
-    <div class="alert alert-danger alert-dismissable fade show">
+    <div class="alert alert-danger alert-dismissable fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert"
-            aria-hidden="true">&#215;</button>
+            aria-label="close">&#215;</button>
         hello
     </div>
         """
@@ -694,8 +694,8 @@ class MessagesTest(TestCase):
             "{% bootstrap_messages messages %}", {"messages": messages}
         )
         expected = """
-    <div class="alert alert-danger alert-dismissable fade show">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&#215;</button>
+    <div class="alert alert-danger alert-dismissable fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">&#215;</button>
         hello http://example.com
     </div>        """
         self.assertEqual(
@@ -708,9 +708,9 @@ class MessagesTest(TestCase):
             "{% bootstrap_messages messages %}", {"messages": messages}
         )
         expected = """
-    <div class="alert alert-danger alert-dismissable fade show">
+    <div class="alert alert-danger alert-dismissable fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert"
-            aria-hidden="true">&#215;</button>
+            aria-label="close">&#215;</button>
         hello there
     </div>
         """
