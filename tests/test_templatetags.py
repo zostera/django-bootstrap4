@@ -270,10 +270,10 @@ class TemplateTest(TestCase):
 
     def test_bootstrap_template(self):
         res = render_template(
-            '{% extends "bootstrap4/bootstrap4.html" %}' +
-            "{% block bootstrap4_content %}" +
-            "test_bootstrap4_content" +
-            "{% endblock %}"
+            '{% extends "bootstrap4/bootstrap4.html" %}'
+            + "{% block bootstrap4_content %}"
+            + "test_bootstrap4_content"
+            + "{% endblock %}"
         )
         self.assertIn("test_bootstrap4_content", res)
 
@@ -339,9 +339,9 @@ class FormTest(TestCase):
         self.assertIn("col-md-3", res)
         self.assertIn("col-md-9", res)
         res = render_template_with_form(
-            '{% bootstrap_form form layout="horizontal" ' +
-            'horizontal_label_class="hlabel" ' +
-            'horizontal_field_class="hfield" %}',
+            '{% bootstrap_form form layout="horizontal" '
+            + 'horizontal_label_class="hlabel" '
+            + 'horizontal_field_class="hfield" %}',
             {"form": form},
         )
         self.assertIn("hlabel", res)
@@ -410,9 +410,7 @@ class FormTest(TestCase):
 
     def test_radio_select_button_group(self):
         form = TestForm()
-        res = render_template_with_form(
-            '{% bootstrap_form form %}', {"form": form}
-        )
+        res = render_template_with_form("{% bootstrap_form form %}", {"form": form})
         self.assertIn('input type="radio" name="category5" id="id_category5_0_0"', res)
 
 
