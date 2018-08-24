@@ -32,7 +32,8 @@ The ``BOOTSTRAP4`` dict variable contains these settings and defaults:
         # Put JavaScript in the HEAD section of the HTML document (only relevant if you use bootstrap4.html)
         'javascript_in_head': False,
 
-        # Include jQuery with Bootstrap JavaScript (affects django-bootstrap4 template tags)
+        # Include jQuery with Bootstrap JavaScript False|falsy|slim|full (default=False)
+        # False - means tag bootstrap_javascript use default value - `falsy` and does not include jQuery)
         'include_jquery': False,
 
         # Label class to use in horizontal forms

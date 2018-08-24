@@ -310,7 +310,7 @@ def bootstrap_jquery(jquery="full"):
 
 
 @register.simple_tag
-def bootstrap_javascript(jquery="falsy"):
+def bootstrap_javascript(jquery=None):
     """
     Return HTML for Bootstrap JavaScript.
 
@@ -341,6 +341,9 @@ def bootstrap_javascript(jquery="falsy"):
 
     # List of JS tags to include
     javascript_tags = []
+
+    # Set jquery value from setting or leave default.
+    jquery = jquery or (get_bootstrap_setting('include_jquery', 'falsy') or 'falsy')
 
     # Include jQuery if the option is passed
     if jquery != "falsy":
