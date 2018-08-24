@@ -17,6 +17,11 @@ INSTALLED_APPS = (
     "bootstrap4",
 )
 
+MIDDLEWARE = [
+    "django.contrib.auth.middleware.AuthenticationMiddleware",  # required for django.contrib.admin
+    "django.contrib.messages.middleware.MessageMiddleware",  # required for django.contrib.admin
+]
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
