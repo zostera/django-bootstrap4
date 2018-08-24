@@ -3,6 +3,10 @@
 History
 -------
 
+Development
++++++++++++
+- Fix javascript inclusion bugs (#71)
+
 0.0.7 (2018-08-22)
 ++++++++++++++++++
 - Improve alert accessibility (#93)
