@@ -186,11 +186,19 @@ class MediaTest(TestCase):
             self.expected_js("jquery"),
         )
         self.assertHTMLEqual(
+            render_template_with_form("{% bootstrap_jquery jquery=True %}"),
+            self.expected_js("jquery"),
+        )
+        self.assertHTMLEqual(
+            render_template_with_form('{% bootstrap_jquery jquery="full" %}'),
+            self.expected_js("jquery"),
+        )
+        self.assertHTMLEqual(
             render_template_with_form('{% bootstrap_jquery jquery="slim" %}'),
             self.expected_js("jquery_slim"),
         )
         self.assertHTMLEqual(
-            render_template_with_form('{% bootstrap_jquery jquery="falsy" %}'), ""
+            render_template_with_form("{% bootstrap_jquery jquery=False %}"), ""
         )
 
     @override_settings(BOOTSTRAP4={"jquery_url": {"url": "foo"}})
@@ -208,7 +216,7 @@ class MediaTest(TestCase):
         )
 
     def test_bootstrap_javascript_tag(self):
-        html = render_template_with_form('{% bootstrap_javascript jquery="full" %}')
+        html = render_template_with_form("{% bootstrap_javascript jquery=True %}")
         # jQuery
         self.assertInHTML(self.expected_js("jquery"), html)
         # Popper
@@ -283,7 +291,7 @@ class TemplateTest(TestCase):
         self.assertNotIn("jquery", res)
 
     def test_javascript_with_jquery(self):
-        res = render_template_with_form('{% bootstrap_javascript jquery="full" %}')
+        res = render_template_with_form("{% bootstrap_javascript jquery=True %}")
         self.assertIn("bootstrap", res)
         self.assertIn("jquery", res)
 

@@ -267,15 +267,15 @@ def bootstrap_css():
 
 
 @register.simple_tag
-def bootstrap_jquery(jquery="full"):
+def bootstrap_jquery(jquery=True):
     """
     Return HTML for jQuery tag.
 
-    Adjust the url dict in settings. If no url is returned, we
-    don't want this statement to return any HTML.
-    This is intended behavior.
+    Adjust the url dict in settings.
+    If no url is returned, we don't want this statement to return any HTML. This is intended behavior.
 
-    This value is configurable, see the Settings section.
+    This value is configurable, see Settings section. Note that any value that evaluates to True and is
+    not "slim" will be interpreted as True.
 
     **Tag name**::
 
@@ -283,7 +283,7 @@ def bootstrap_jquery(jquery="full"):
 
     **Parameters**:
 
-        :jquery: falsy|slim|full (default=full)
+        :jquery: False|"slim"|True (default=True)
 
     **Usage**::
 
@@ -293,7 +293,7 @@ def bootstrap_jquery(jquery="full"):
 
         {% bootstrap_jquery jquery='slim' %}
     """
-    if jquery == "falsy":
+    if not jquery:
         return ""
     elif jquery == "slim":
         jquery = get_bootstrap_setting("jquery_slim_url")
@@ -310,17 +310,17 @@ def bootstrap_jquery(jquery="full"):
 
 
 @register.simple_tag
-def bootstrap_javascript(jquery=None):
+def bootstrap_javascript(jquery=False):
     """
     Return HTML for Bootstrap JavaScript.
 
-    Adjust url in settings. If no url is returned, we don't want this
-    statement to return any HTML.
-    This is intended behavior.
+    Adjust url in settings.
+    If no url is returned, we don't want this statement to return any HTML. This is intended behavior.
 
-    Default value: ``falsy``
+    Default value: False
 
-    This value is configurable, see Settings section
+    This value is configurable, see Settings section. Note that any value that evaluates to True and is
+    not "slim" will be interpreted as True.
 
     **Tag name**::
 
@@ -328,7 +328,7 @@ def bootstrap_javascript(jquery=None):
 
     **Parameters**:
 
-        :jquery: falsy|slim|full (default=falsy)
+        :jquery: False|"slim"|True (default=False)
 
     **Usage**::
 
@@ -343,10 +343,10 @@ def bootstrap_javascript(jquery=None):
     javascript_tags = []
 
     # Set jquery value from setting or leave default.
-    jquery = jquery or (get_bootstrap_setting('include_jquery', 'falsy') or 'falsy')
+    jquery = jquery or get_bootstrap_setting("include_jquery", False)
 
     # Include jQuery if the option is passed
-    if jquery != "falsy":
+    if jquery:
         javascript_tags.append(bootstrap_jquery(jquery=jquery))
 
     # Popper.js library
