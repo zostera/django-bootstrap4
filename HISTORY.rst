@@ -5,6 +5,7 @@ History
 
 Development
 +++++++++++
+- Remove use of "falsy" as a string literal (#111)
 - Fix javascript inclusion bugs (#71)
 
 0.0.7 (2018-08-22)
