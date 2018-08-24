@@ -3,7 +3,8 @@ import os
 import sys
 
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tests.app.settings")
+    settings = "tests.app.settings" if "test" in sys.argv else "demo.app.settings"
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings)
 
     from django.core.management import execute_from_command_line
 

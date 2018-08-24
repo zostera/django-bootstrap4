@@ -3,6 +3,23 @@
 History
 -------
 
+0.0.7 (2018-08-22)
+++++++++++++++++++
+- Improve alert accessibility (#93)
+- Add a new widget: RadioSelectButtonGroup (#103)
+- Several fixes and improvements to HTML rendering
+- Switch to explicit Travis tests
+- Upgrade Bootstrap to 4.1.1
+- Upgrade jQuery to 3.3.1
+- Upgrade Popper to 1.14.3
+- Fixed bootstrap4.html to add jQuery per setting 'include_jquery' [False|True|'full'|'slim']
+- Adopt Black formatting, see https://github.com/ambv/black
+
+0.0.6 (2018-02-14)
++++++++++++++++++++
+- Change form help text element from div to small (#60)
+- Upgrade Bootstrap to 4.0.0 (#66)
+ 
 0.0.5 (2018-01-03)
 ++++++++++++++++++
 - Drop develop branch, work with master and feature branches
@@ -13,17 +30,17 @@ History
 - Fixed form field errors and help texts (#39)
 - Use django language if ``USE_I18N=True`` (#53)
 
-0.0.4 (2017-10-25)
+0.0.4 (2017-10-26)
 ++++++++++++++++++
 - Upgrade Bootstrap to 4.0.0-beta.2
 - Fix settings, tags and tests for remote JS and CSS
 
-0.0.3 (2017-09-22)
+0.0.3 (2017-09-24)
 ++++++++++++++++++
 - Upgraded bootstrap4 to the beta version
 
-0.0.2 (2017-09-06)
-++++++++++++++++++
+0.0.2 (2017-09-06, not released on PyPI)
+++++++++++++++++++++++++++++++++++++++++
 - Upgraded jQuery version from CDN to 3.2.1 (#17)
 - Added proper pagination layout classes (#19)
 

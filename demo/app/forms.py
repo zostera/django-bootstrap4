@@ -4,27 +4,14 @@ from __future__ import unicode_literals
 from django import forms
 from django.forms.formsets import BaseFormSet, formset_factory
 
-from bootstrap4.tests import TestForm
+from tests.test_templatetags import TestForm
 
-RADIO_CHOICES = (
-    ('1', 'Radio 1'),
-    ('2', 'Radio 2'),
-)
+RADIO_CHOICES = (("1", "Radio 1"), ("2", "Radio 2"))
 
 MEDIA_CHOICES = (
-    (
-        'Audio', (
-            ('vinyl', 'Vinyl'),
-            ('cd', 'CD'),
-        )
-    ),
-    (
-        'Video', (
-            ('vhs', 'VHS Tape'),
-            ('dvd', 'DVD'),
-        )
-    ),
-    ('unknown', 'Unknown'),
+    ("Audio", (("vinyl", "Vinyl"), ("cd", "CD"))),
+    ("Video", (("vhs", "VHS Tape"), ("dvd", "DVD"))),
+    ("unknown", "Unknown"),
 )
 
 
@@ -38,13 +25,14 @@ class ContactBaseFormSet(BaseFormSet):
 
     def clean(self):
         super(ContactBaseFormSet, self).clean()
-        raise forms.ValidationError("This error was added to show the non form errors styling")
+        raise forms.ValidationError(
+            "This error was added to show the non form errors styling"
+        )
 
 
-ContactFormSet = formset_factory(TestForm, formset=ContactBaseFormSet,
-                                 extra=2,
-                                 max_num=4,
-                                 validate_max=True)
+ContactFormSet = formset_factory(
+    TestForm, formset=ContactBaseFormSet, extra=2, max_num=4, validate_max=True
+)
 
 
 class FilesForm(forms.Form):
@@ -62,5 +50,7 @@ class ArticleForm(forms.Form):
 
     def clean(self):
         cleaned_data = super(ArticleForm, self).clean()
-        raise forms.ValidationError("This error was added to show the non field errors styling.")
+        raise forms.ValidationError(
+            "This error was added to show the non field errors styling."
+        )
         return cleaned_data
