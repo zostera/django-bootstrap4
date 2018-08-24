@@ -761,14 +761,23 @@ class ButtonTest(TestCase):
         self.assertEqual(
             res.strip(), '<button class="btn btn-default btn-lg">button</button>'
         )
+
+        link_button = (
+            '<a class="btn btn-default btn-lg" href="#" role="button">button</a>'
+        )
+
         res = render_template_with_form(
             "{% bootstrap_button 'button' size='lg' href='#' %}"
         )
-        self.assertIn(
-            res.strip(),
-            '<a class="btn btn-default btn-lg" href="#">button</a><a href="#" '
-            + 'class="btn btn-lg">button</a>',
+        self.assertIn(res.strip(), link_button)
+        res = render_template_with_form(
+            "{% bootstrap_button 'button' button_type='link' size='lg' href='#' %}"
         )
+        self.assertIn(res.strip(), link_button)
+        with self.assertRaises(BootstrapError):
+            res = render_template_with_form(
+                "{% bootstrap_button 'button' button_type='button' href='#' %}"
+            )
 
 
 class ShowLabelTest(TestCase):

@@ -699,6 +699,8 @@ def bootstrap_button(*args, **kwargs):
 
         href
             Render the button as an ``<a>`` element. The ``href`` attribute is set with this value.
+            If a ``button_type`` other than ``link`` is defined, specifying a ``href`` will throw a
+            ``ValueError`` exception.
 
         name
             Value of the ``name`` attribute of the rendered element.

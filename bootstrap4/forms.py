@@ -23,7 +23,7 @@ from .bootstrap import (
     get_formset_renderer,
 )
 from .exceptions import BootstrapError
-from .text import text_concat, text_value
+from .text import text_value
 from .utils import add_css_class, render_tag
 
 FORM_GROUP_CLASS = "form-group"
@@ -114,20 +114,33 @@ def render_button(
             'Parameter "size" should be "xs", "sm", "lg" or '
             + 'empty ("{}" given).'.format(size)
         )
+
     if button_type:
         if button_type not in ("submit", "reset", "button", "link"):
             raise BootstrapError(
                 'Parameter "button_type" should be "submit", "reset", '
                 + '"button", "link" or empty  ("{}" given).'.format(button_type)
             )
-        attrs["type"] = button_type
+        if button_type != "link":
+            attrs["type"] = button_type
+
     classes = add_css_class(classes, extra_classes)
     attrs["class"] = classes
+
     if href:
-        attrs["href"] = href
         tag = "a"
+        if button_type and button_type != "link":
+            raise BootstrapError(
+                'Button of type "{button_type}" is not allowed a "href" parameter.'.format(
+                    button_type=button_type
+                )
+            )
+        attrs["href"] = href
+        # Specify role for link with button appearance
+        attrs.setdefault("role", "button")
     else:
         tag = "button"
+
     if id:
         attrs["id"] = id
     if name:
