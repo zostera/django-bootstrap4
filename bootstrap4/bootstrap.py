@@ -8,10 +8,14 @@ from django.conf import settings
 # Default settings
 
 BOOTSTRAP4_DEFAULTS = {
-    "base_url": None,  # 'https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/'
     "css_url": {
         "href": "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css",
         "integrity": "sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB",
+        "crossorigin": "anonymous",
+    },
+    "javascript_url": {
+        "url": "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js",
+        "integrity": "sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T",
         "crossorigin": "anonymous",
     },
     "theme_url": None,
@@ -28,11 +32,6 @@ BOOTSTRAP4_DEFAULTS = {
     "popper_url": {
         "url": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js",
         "integrity": "sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49",
-        "crossorigin": "anonymous",
-    },
-    "javascript_url": {
-        "url": "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js",
-        "integrity": "sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T",
         "crossorigin": "anonymous",
     },
     "javascript_in_head": False,
@@ -69,13 +68,6 @@ def get_bootstrap_setting(name, default=None):
     return BOOTSTRAP4.get(name, default)
 
 
-def bootstrap_url(postfix):
-    """
-    Prefix a relative url with the bootstrap base url
-    """
-    return get_bootstrap_setting("base_url") + postfix
-
-
 def jquery_url():
     """
     Return the full url to jQuery library file to use
@@ -110,16 +102,14 @@ def javascript_url():
     """
     Return the full url to the Bootstrap JavaScript file
     """
-    url = get_bootstrap_setting("javascript_url")
-    return url if url else bootstrap_url("js/bootstrap.min.js")
+    return get_bootstrap_setting("javascript_url")
 
 
 def css_url():
     """
     Return the full url to the Bootstrap CSS file
     """
-    url = get_bootstrap_setting("css_url")
-    return url if url else bootstrap_url("css/bootstrap.min.css")
+    return get_bootstrap_setting("css_url")
 
 
 def theme_url():

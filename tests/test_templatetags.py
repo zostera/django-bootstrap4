@@ -232,17 +232,6 @@ class MediaTest(TestCase):
             '<link rel="stylesheet" href="//example.com/theme.css">', html
         )
 
-    @override_settings(BOOTSTRAP4={"base_url": "//example.com/", "css_url": None})
-    def test_bootstrap_css_from_base_url(self):
-        self.assertEqual(
-            render_template_with_form("{% bootstrap_css_url %}").strip(),
-            "//example.com/css/bootstrap.min.css",
-        )
-        self.assertInHTML(
-            '<link href="//example.com/css/bootstrap.min.css" rel="stylesheet">',
-            render_template_with_form("{% bootstrap_css %}").strip(),
-        )
-
     def test_settings_filter(self):
         res = render_template_with_form('{{ "required_css_class"|bootstrap_setting }}')
         self.assertEqual(res.strip(), "bootstrap4-req")
