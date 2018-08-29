@@ -5,6 +5,7 @@ History
 
 Development
 +++++++++++
+- Drop support for the `base_url` setting (#105)
 - Remove use of "falsy" as a string literal (#111)
 - Fix javascript inclusion bugs (#71)
 
