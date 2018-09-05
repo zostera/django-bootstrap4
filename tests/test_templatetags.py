@@ -770,12 +770,26 @@ class ButtonTest(TestCase):
 
 
 class ShowLabelTest(TestCase):
-    def test_show_label(self):
+    def test_show_label_false(self):
         form = TestForm()
         res = render_template_with_form(
             "{% bootstrap_form form show_label=False %}", {"form": form}
         )
         self.assertIn("sr-only", res)
+
+    def test_show_label_sr_only(self):
+        form = TestForm()
+        res = render_template_with_form(
+            "{% bootstrap_form form show_label='sr-only' %}", {"form": form}
+        )
+        self.assertIn("sr-only", res)
+
+    def test_show_label_skip(self):
+        form = TestForm()
+        res = render_template_with_form(
+            "{% bootstrap_form form show_label='skip' %}", {"form": form}
+        )
+        self.assertNotIn("<label>", res)
 
     def test_for_formset(self):
         TestFormSet = formset_factory(TestForm, extra=1)
