@@ -7,7 +7,7 @@ addons:
     packages:
      - postgresql-9.6-postgis-2.3
 
-install: pip install tox tox-travis
+install: pip install tox python-coveralls
 script: tox
 
 matrix:
@@ -32,3 +32,6 @@ matrix:
       - env: TOXENV=py35-master
       - env: TOXENV=py36-master
       - env: TOXENV=py37-master
+
+after_success:
+    coveralls
