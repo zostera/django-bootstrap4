@@ -115,14 +115,20 @@ def render_template_with_bootstrap(text, context=None):
     return render_template("{% load bootstrap4 %}" + text, context)
 
 
-def render_template_with_form(text, context=None):
+def render_template_with_form(text, context=None, data=None):
     """
     Create a template ``text`` that first loads bootstrap4.
+
+    When ``data`` is given, the form will be initialized with data and
+    form.is_valid() will be called in order to enable validations.
     """
     if not context:
         context = {}
     if "form" not in context:
-        context["form"] = TestForm()
+        form = TestForm(data=data)
+        if data:
+            form.is_valid()
+        context["form"] = form
     return render_template_with_bootstrap(text, context)
 
 
@@ -412,6 +418,17 @@ class FormTest(TestCase):
 
 
 class FieldTest(TestCase):
+
+    def _select_one_element(self, html, selector, err_msg):
+        """
+        Select exactly one html element in an BeautifulSoup html fragment.
+
+        Fail if there is not exactly one element.
+        """
+        lst = html.select(selector)
+        self.assertEqual(len(lst), 1, err_msg)
+        return lst[0]
+
     def test_illegal_field(self):
         with self.assertRaises(BootstrapError):
             render_field(field="illegal")
@@ -449,25 +466,19 @@ class FieldTest(TestCase):
 
     def test_checkbox(self):
         """Test Checkbox rendering, because it is special."""
-
-        def _select_one_element(html, selector, err_msg):
-            lst = html.select(selector)
-            self.assertEqual(len(lst), 1, err_msg)
-            return lst[0]
-
         res = render_form_field("cc_myself")
         # strip out newlines and spaces around newlines
         res = "".join(line.strip() for line in res.split("\n"))
         res = BeautifulSoup(res, "html.parser")
-        form_group = _select_one_element(
+        form_group = self._select_one_element(
             res, ".form-group", "Checkbox should be rendered inside a .form-group."
         )
-        form_check = _select_one_element(
+        form_check = self._select_one_element(
             form_group,
             ".form-check",
             "There should be a .form-check inside .form-group",
         )
-        checkbox = _select_one_element(
+        checkbox = self._select_one_element(
             form_check, "input", "The checkbox should be inside the .form-check"
         )
         self.assertIn(
@@ -563,6 +574,39 @@ class FieldTest(TestCase):
             '<div class="input-group-append"><span class="input-group-text">after</span></div>',
             res,
         )
+
+    def test_input_group_addon_validation(self):
+        """
+        Test that invalid-feedback messages are placed inside input-groups.
+
+        See issue #89.
+        """
+        data = {'subject': ''}  # invalid
+        res = render_template_with_form(
+            '{% bootstrap_field form.subject addon_before=None addon_after="after" %}',
+            data=data,
+        )  # noqa
+        res = BeautifulSoup(res, "html.parser")
+        self._select_one_element(
+            res,
+            '.input-group > .invalid-feedback',
+            'The invalid-feedback message, complaining that this field is required, must be placed inside the input-group',
+        )  # noqa
+        self._select_one_element(
+            res,
+            '.form-group > .form-text',
+            'The form-text message must be placed inside the form-group',
+        )  # noqa
+        self.assertEqual(
+            len(res.select('.form-group > .invalid-feedback')),
+            0,
+            'The invalid-feedback message must be placed inside the input-group and not inside the form-group',
+        )  # noqa
+        self.assertEqual(
+            len(res.select('.input-group > .form-text')),
+            0,
+            'The form-text message must be placed inside the form-group and not inside the input-group',
+        )  # noqa
 
     def test_size(self):
         def _test_size(param, klass):
