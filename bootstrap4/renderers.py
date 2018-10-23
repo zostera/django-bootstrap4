@@ -464,7 +464,8 @@ class FieldRenderer(BaseRenderer):
             addon_class=outer_class, addon=content
         )
 
-    def make_input_group(self, html):
+    @property
+    def is_input_group(self):
         allowed_widget_types = (
             TextInput,
             PasswordInput,
@@ -472,10 +473,14 @@ class FieldRenderer(BaseRenderer):
             NumberInput,
             Select,
         )
-        if (self.addon_before or self.addon_after) and isinstance(
-            self.widget, allowed_widget_types
-        ):
-            html = '<div class="input-group">{before}{html}{after}</div>'.format(
+        return (
+            (self.addon_before or self.addon_after)
+            and isinstance(self.widget, allowed_widget_types)
+        )
+
+    def make_input_group(self, html):
+        if self.is_input_group:
+            html = '{before}{html}{after}'.format(
                 before=self.make_input_group_addon(
                     self.addon_before_class, "input-group-prepend", self.addon_before
                 ),
@@ -484,18 +489,18 @@ class FieldRenderer(BaseRenderer):
                 ),
                 html=html,
             )
+            html = self.append_errors(html)
+            html = '<div class="input-group">{html}</div>'.format(html=html)
         return html
 
-    def append_help_and_error(self, html):
+    def append_help(self, html):
         field_help = self.field_help or None
-        field_errors = self.field_errors
-        if field_help or field_errors:
+        if field_help:
             help_html = render_template_file(
-                "bootstrap4/field_help_text_and_errors.html",
+                "bootstrap4/field_help_text.html",
                 context={
                     "field": self.field,
                     "field_help": field_help,
-                    "field_errors": field_errors,
                     "layout": self.layout,
                     "show_help": self.show_help,
                 },
@@ -503,15 +508,40 @@ class FieldRenderer(BaseRenderer):
             html += help_html
         return html
 
+    def append_errors(self, html):
+        field_errors = self.field_errors
+        if field_errors:
+            errors_html = render_template_file(
+                "bootstrap4/field_errors.html",
+                context={
+                    "field": self.field,
+                    "field_errors": field_errors,
+                    "layout": self.layout,
+                    "show_help": self.show_help,
+                },
+            )
+            html += errors_html
+        return html
+
     def append_to_field(self, html):
         if isinstance(self.widget, CheckboxInput):
+            # we have already appended errors and help to checkboxes
+            # in append_to_checkbox_field
             return html
-        return self.append_help_and_error(html)
+
+        if not self.is_input_group:
+            # we already appended errors for input groups in make_input_group
+            html = self.append_errors(html)
+
+        return self.append_help(html)
 
     def append_to_checkbox_field(self, html):
         if not isinstance(self.widget, CheckboxInput):
+            # we will append errors and help to normal fields later in append_to_field
             return html
-        return self.append_help_and_error(html)
+
+        html = self.append_errors(html)
+        return self.append_help(html)
 
     def get_field_class(self):
         field_class = self.field_class
