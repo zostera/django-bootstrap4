@@ -581,7 +581,8 @@ class FieldTest(TestCase):
 
         See issue #89.
         """
-        data = {'subject': ''}  # invalid
+        # invalid form data:
+        data = {'subject': ''}
         res = render_template_with_form(
             '{% bootstrap_field form.subject addon_before=None addon_after="after" %}',
             data=data,
@@ -590,23 +591,26 @@ class FieldTest(TestCase):
         self._select_one_element(
             res,
             '.input-group > .invalid-feedback',
-            'The invalid-feedback message, complaining that this field is required, must be placed inside the input-group',
-        )  # noqa
+            'The invalid-feedback message, complaining that this field is '
+            'required, must be placed inside the input-group',
+        )
         self._select_one_element(
             res,
             '.form-group > .form-text',
             'The form-text message must be placed inside the form-group',
-        )  # noqa
+        )
         self.assertEqual(
             len(res.select('.form-group > .invalid-feedback')),
             0,
-            'The invalid-feedback message must be placed inside the input-group and not inside the form-group',
-        )  # noqa
+            'The invalid-feedback message must be placed inside the '
+            'input-group and not inside the form-group',
+        )
         self.assertEqual(
             len(res.select('.input-group > .form-text')),
             0,
-            'The form-text message must be placed inside the form-group and not inside the input-group',
-        )  # noqa
+            'The form-text message must be placed inside the form-group and '
+            'not inside the input-group',
+        )
 
     def test_size(self):
         def _test_size(param, klass):
