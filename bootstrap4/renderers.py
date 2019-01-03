@@ -345,8 +345,8 @@ class FieldRenderer(BaseRenderer):
         mapping = [
             ("<ul", '<div class="{klass}"'.format(klass=classes)),
             ("</ul>", "</div>"),
-            ("<li>", ""),
-            ("</li>", ""),
+            ("<li>", "<div class='form-check'>"),
+            ("</li>", "</div>"),
         ]
         for k, v in mapping:
             html = html.replace(k, v)
