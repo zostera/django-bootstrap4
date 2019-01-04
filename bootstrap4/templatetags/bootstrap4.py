@@ -804,7 +804,7 @@ class ButtonsNode(template.Node):
         submit = output_kwargs.get("submit", None)
         reset = output_kwargs.get("reset", None)
         if submit:
-            buttons.append(bootstrap_button(submit, "submit"))
+            buttons.append(bootstrap_button(submit, "submit", button_class="btn-primary"))
         if reset:
             buttons.append(bootstrap_button(reset, "reset"))
         buttons = " ".join(buttons) + self.nodelist.render(context)
