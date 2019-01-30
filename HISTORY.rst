@@ -5,6 +5,7 @@ History
 
 Development
 +++++++++++
+- Allow to choose which errors are displayed in form alert block
 - Template tag `bootstrap_field` now allows 3 values for `show_label`: `True`, `False` / `'sr-only'` and `'skip'`. In the case of `False` / `'sr-only'` the label is hidden but present for screen readers. When `show_label` is set to `'skip'`, the label is not generated at all.
 - Fix validation on input groups (#122)
 
