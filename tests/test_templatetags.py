@@ -62,15 +62,15 @@ class TestForm(forms.Form):
     polygon = gisforms.PointField()
 
     required_css_class = "bootstrap4-req"
+    non_field_error_message = "This is a non field error."
 
     # Set this to allow tests to work properly in Django 1.10+
     # More information, see issue #337
     use_required_attribute = False
 
     def clean(self):
-        cleaned_data = super().clean()
-        raise forms.ValidationError("This error was added to show the non field errors styling.")
-        return cleaned_data
+        super().clean()
+        raise forms.ValidationError(self.non_field_error_message)
 
 
 class TestFormWithoutRequiredClass(TestForm):
@@ -344,6 +344,37 @@ class BootstrapFormTest(TestCase):
         self.assertIn(
             'input class="form-check-input" id="id_category5_0_0" name="category5" required="" type="radio"', res
         )
+
+    def test_alert_error_type(self):
+        form = TestForm({"sender": "sender"})
+
+        # Show all error messages
+        res = render_template_with_form("{% bootstrap_form form alert_error_type='all' %}", {"form": form})
+        html = BeautifulSoup(res, "html.parser")
+        errors = list(html.select(".alert-danger")[0].stripped_strings)
+        self.assertIn(form.non_field_error_message, errors)
+        self.assertIn("This field is required.", errors)
+
+        # Show only non-field error messages (default config)
+        res = render_template_with_form("{% bootstrap_form form alert_error_type='non_fields' %}", {"form": form})
+        default = render_template_with_form("{% bootstrap_form form %}", {"form": form})
+        self.assertEqual(res, default, "Default behavior is not the same as showing non-field errors")
+        html = BeautifulSoup(res, "html.parser")
+        errors = list(html.select(".alert-danger")[0].stripped_strings)
+        self.assertIn(form.non_field_error_message, errors)
+        self.assertNotIn("This field is required.", errors)
+
+        # Show only field error messages
+        res = render_template_with_form("{% bootstrap_form form alert_error_type='fields' %}", {"form": form})
+        html = BeautifulSoup(res, "html.parser")
+        errors = list(html.select(".alert-danger")[0].stripped_strings)
+        self.assertNotIn(form.non_field_error_message, errors)
+        self.assertIn("This field is required.", errors)
+
+        # Show nothing
+        res = render_template_with_form("{% bootstrap_form form alert_error_type='none' %}", {"form": form})
+        html = BeautifulSoup(res, "html.parser")
+        self.assertFalse(html.select(".alert-danger"))
 
 
 class FieldTest(TestCase):
