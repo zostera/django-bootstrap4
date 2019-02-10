@@ -19,6 +19,7 @@ from django.forms import (
     Select,
     RadioSelect,
     CheckboxSelectMultiple,
+    EmailInput
 )
 from django.forms.widgets import SelectDateWidget
 from django.forms.forms import BaseForm, BoundField
@@ -471,6 +472,7 @@ class FieldRenderer(BaseRenderer):
             DateInput,
             NumberInput,
             Select,
+            EmailInput
         )
         if (self.addon_before or self.addon_after) and isinstance(
             self.widget, allowed_widget_types

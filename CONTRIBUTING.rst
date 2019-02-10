@@ -66,6 +66,7 @@ Ready to contribute? Here's how to set up `django-bootstrap4` for local developm
 
     $ mkvirtualenv django-bootstrap4
     $ cd django-bootstrap4/
+    $ pip install -r requirements.txt
     $ python setup.py develop
 
 4. Create a branch for local development::
