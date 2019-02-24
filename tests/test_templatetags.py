@@ -40,7 +40,11 @@ class TestForm(forms.Form):
         max_length=100,
         help_text="my_help_text",
         required=True,
-        widget=forms.TextInput(attrs={"placeholder": "placeholdertest"}),
+        widget=forms.TextInput(attrs={"placeholder": "placeholdertest"})
+    )
+    xss_field = forms.CharField(
+        label='XSS" onmouseover="alert(\'Hello, XSS\')" foo="',
+        max_length=100,
     )
     password = forms.CharField(widget=forms.PasswordInput)
     message = forms.CharField(required=False, help_text="<i>my_help_text</i>")
@@ -441,6 +445,18 @@ class FieldTest(TestCase):
         res = render_form_field("subject")
         self.assertIn('type="text"', res)
         self.assertIn('placeholder="placeholdertest"', res)
+
+    def test_xss_field(self):
+        res = render_form_field("xss_field")
+        self.assertIn('type="text"', res)
+        self.assertIn(
+            '<label for="id_xss_field">XSS&quot; onmouseover=&quot;alert(&#39;Hello, XSS&#39;)&quot; foo=&quot;</label>',
+            res,
+        )
+        self.assertIn(
+            'placeholder="XSS&quot; onmouseover=&quot;alert(&#39;Hello, XSS&#39;)&quot; foo=&quot;"',
+            res,
+        )
 
     def test_password(self):
         res = render_form_field("password")
