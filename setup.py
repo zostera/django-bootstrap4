@@ -20,6 +20,11 @@ with open(os.path.join(os.path.dirname(__file__), "README.rst")) as readme_file:
 with open(os.path.join(os.path.dirname(__file__), "HISTORY.rst")) as history_file:
     history = history_file.read().replace(".. :changelog:", "")
 
+if sys.argv[-1] == "tag":
+    os.system("git tag -a v{} -m 'tagging v{}'".format(VERSION, VERSION))
+    os.system("git push --tags && git push origin master")
+    sys.exit()
+
 if sys.argv[-1] == "publish":
     os.system("cd docs && make html")
     os.system("python setup.py sdist")
