@@ -19,7 +19,7 @@ from django.forms import (
     Select,
     RadioSelect,
     CheckboxSelectMultiple,
-    EmailInput
+    EmailInput,
 )
 from django.forms.widgets import SelectDateWidget
 from django.forms.forms import BaseForm, BoundField
@@ -73,8 +73,7 @@ class BaseRenderer(object):
         if size in ("md", "medium", ""):
             return "medium"
         raise BootstrapError(
-            'Invalid value "%s" for parameter "size" (expected "sm", "md", "lg" or "").'
-            % size
+            'Invalid value "%s" for parameter "size" (expected "sm", "md", "lg" or "").' % size
         )
 
     def get_size_class(self, prefix="form-control"):
@@ -98,9 +97,7 @@ class FormsetRenderer(BaseRenderer):
 
     def __init__(self, formset, *args, **kwargs):
         if not isinstance(formset, BaseFormSet):
-            raise BootstrapError(
-                'Parameter "formset" should contain a valid Django Formset.'
-            )
+            raise BootstrapError('Parameter "formset" should contain a valid Django Formset.')
         self.formset = formset
         super(FormsetRenderer, self).__init__(*args, **kwargs)
 
@@ -139,11 +136,7 @@ class FormsetRenderer(BaseRenderer):
         if formset_errors:
             return render_template_file(
                 "bootstrap4/form_errors.html",
-                context={
-                    "errors": formset_errors,
-                    "form": self.formset,
-                    "layout": self.layout,
-                },
+                context={"errors": formset_errors, "form": self.formset, "layout": self.layout},
             )
         return ""
 
@@ -230,18 +223,11 @@ class FieldRenderer(BaseRenderer):
     """
 
     # These widgets will not be wrapped in a form-control class
-    WIDGETS_NO_FORM_CONTROL = (
-        CheckboxInput,
-        RadioSelect,
-        CheckboxSelectMultiple,
-        FileInput,
-    )
+    WIDGETS_NO_FORM_CONTROL = (CheckboxInput, RadioSelect, CheckboxSelectMultiple, FileInput)
 
     def __init__(self, field, *args, **kwargs):
         if not isinstance(field, BoundField):
-            raise BootstrapError(
-                'Parameter "field" should contain a valid Django BoundField.'
-            )
+            raise BootstrapError('Parameter "field" should contain a valid Django BoundField.')
         self.field = field
         super(FieldRenderer, self).__init__(*args, **kwargs)
 
@@ -249,13 +235,9 @@ class FieldRenderer(BaseRenderer):
         self.is_multi_widget = isinstance(field.field.widget, MultiWidget)
         self.initial_attrs = self.widget.attrs.copy()
         self.field_help = (
-            text_value(mark_safe(field.help_text))
-            if self.show_help and field.help_text
-            else ""
+            text_value(mark_safe(field.help_text)) if self.show_help and field.help_text else ""
         )
-        self.field_errors = [
-            conditional_escape(text_value(error)) for error in field.errors
-        ]
+        self.field_errors = [conditional_escape(text_value(error)) for error in field.errors]
 
         if "placeholder" in kwargs:
             # Find the placeholder in kwargs, even if it's empty
@@ -269,19 +251,13 @@ class FieldRenderer(BaseRenderer):
         if self.placeholder:
             self.placeholder = text_value(self.placeholder)
 
-        self.addon_before = kwargs.get(
-            "addon_before", self.widget.attrs.pop("addon_before", "")
-        )
-        self.addon_after = kwargs.get(
-            "addon_after", self.widget.attrs.pop("addon_after", "")
-        )
+        self.addon_before = kwargs.get("addon_before", self.widget.attrs.pop("addon_before", ""))
+        self.addon_after = kwargs.get("addon_after", self.widget.attrs.pop("addon_after", ""))
         self.addon_before_class = kwargs.get(
-            "addon_before_class",
-            self.widget.attrs.pop("addon_before_class", "input-group-text"),
+            "addon_before_class", self.widget.attrs.pop("addon_before_class", "input-group-text")
         )
         self.addon_after_class = kwargs.get(
-            "addon_after_class",
-            self.widget.attrs.pop("addon_after_class", "input-group-text"),
+            "addon_after_class", self.widget.attrs.pop("addon_after_class", "input-group-text")
         )
 
         # These are set in Django or in the global BOOTSTRAP4 settings, and
@@ -299,17 +275,13 @@ class FieldRenderer(BaseRenderer):
             self.required_css_class = required_css_class
         else:
             self.required_css_class = getattr(
-                field.form,
-                "required_css_class",
-                get_bootstrap_setting("required_css_class"),
+                field.form, "required_css_class", get_bootstrap_setting("required_css_class")
             )
         if bound_css_class is not None:
             self.success_css_class = bound_css_class
         else:
             self.success_css_class = getattr(
-                field.form,
-                "bound_css_class",
-                get_bootstrap_setting("success_css_class"),
+                field.form, "bound_css_class", get_bootstrap_setting("success_css_class")
             )
 
         # If the form is marked as form.empty_permitted, do not set required class
@@ -356,9 +328,7 @@ class FieldRenderer(BaseRenderer):
         if widget is None:
             widget = self.widget
         if not isinstance(widget, CheckboxInput):
-            widget.attrs["title"] = widget.attrs.get(
-                "title", escape(strip_tags(self.field_help))
-            )
+            widget.attrs["title"] = widget.attrs.get("title", escape(strip_tags(self.field_help)))
 
     def add_widget_attrs(self):
         if self.is_multi_widget:
@@ -472,7 +442,7 @@ class FieldRenderer(BaseRenderer):
             DateInput,
             NumberInput,
             Select,
-            EmailInput
+            EmailInput,
         )
         if (self.addon_before or self.addon_after) and isinstance(
             self.widget, allowed_widget_types
@@ -524,9 +494,7 @@ class FieldRenderer(BaseRenderer):
     def wrap_field(self, html):
         field_class = self.get_field_class()
         if field_class:
-            html = '<div class="{klass}">{html}</div>'.format(
-                klass=field_class, html=html
-            )
+            html = '<div class="{klass}">{html}</div>'.format(klass=field_class, html=html)
         return html
 
     def get_label_class(self):
@@ -553,9 +521,7 @@ class FieldRenderer(BaseRenderer):
         if label:
             html = (
                 render_label(
-                    label,
-                    label_for=self.field.id_for_label,
-                    label_class=self.get_label_class(),
+                    label, label_for=self.field.id_for_label, label_class=self.get_label_class()
                 )
                 + html
             )
@@ -568,9 +534,7 @@ class FieldRenderer(BaseRenderer):
                 form_group_class = add_css_class(form_group_class, self.error_css_class)
         else:
             if self.field.form.is_bound:
-                form_group_class = add_css_class(
-                    form_group_class, self.success_css_class
-                )
+                form_group_class = add_css_class(form_group_class, self.success_css_class)
         if self.field.field.required and self.required_css_class:
             form_group_class = add_css_class(form_group_class, self.required_css_class)
         if self.layout == "horizontal":

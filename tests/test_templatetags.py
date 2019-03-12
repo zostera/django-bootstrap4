@@ -40,17 +40,14 @@ class TestForm(forms.Form):
         max_length=100,
         help_text="my_help_text",
         required=True,
-        widget=forms.TextInput(attrs={"placeholder": "placeholdertest"})
+        widget=forms.TextInput(attrs={"placeholder": "placeholdertest"}),
     )
     xss_field = forms.CharField(
-        label='XSS" onmouseover="alert(\'Hello, XSS\')" foo="',
-        max_length=100,
+        label='XSS" onmouseover="alert(\'Hello, XSS\')" foo="', max_length=100
     )
     password = forms.CharField(widget=forms.PasswordInput)
     message = forms.CharField(required=False, help_text="<i>my_help_text</i>")
-    sender = forms.EmailField(
-        label="Sender © unicode", help_text='E.g., "me@example.com"'
-    )
+    sender = forms.EmailField(label="Sender © unicode", help_text='E.g., "me@example.com"')
     secret = forms.CharField(initial=42, widget=forms.HiddenInput)
     cc_myself = forms.BooleanField(
         required=False,
@@ -90,9 +87,7 @@ class TestForm(forms.Form):
 
     def clean(self):
         cleaned_data = super(TestForm, self).clean()
-        raise forms.ValidationError(
-            "This error was added to show the non field errors styling."
-        )
+        raise forms.ValidationError("This error was added to show the non field errors styling.")
         return cleaned_data
 
 
@@ -156,9 +151,7 @@ def render_form_field(field, context=None):
     Create a template that renders a field
     """
     form_field = "form.%s" % field
-    return render_template_with_form(
-        "{% bootstrap_field " + form_field + " %}", context
-    )
+    return render_template_with_form("{% bootstrap_field " + form_field + " %}", context)
 
 
 def render_field(field, context=None):
@@ -179,15 +172,16 @@ class MediaTest(TestCase):
         return template.format(**setting)
 
     def expected_js(self, tag):
-        template = '<script src="{url}" integrity="{integrity}" crossorigin="{crossorigin}"></script>'
+        template = (
+            '<script src="{url}" integrity="{integrity}" crossorigin="{crossorigin}"></script>'
+        )
         setting = get_bootstrap_setting(tag + "_url")
 
         return template.format(**setting)
 
     def test_bootstrap_jquery(self):
         self.assertHTMLEqual(
-            render_template_with_form("{% bootstrap_jquery %}"),
-            self.expected_js("jquery"),
+            render_template_with_form("{% bootstrap_jquery %}"), self.expected_js("jquery")
         )
         self.assertHTMLEqual(
             render_template_with_form("{% bootstrap_jquery jquery=True %}"),
@@ -201,15 +195,12 @@ class MediaTest(TestCase):
             render_template_with_form('{% bootstrap_jquery jquery="slim" %}'),
             self.expected_js("jquery_slim"),
         )
-        self.assertHTMLEqual(
-            render_template_with_form("{% bootstrap_jquery jquery=False %}"), ""
-        )
+        self.assertHTMLEqual(render_template_with_form("{% bootstrap_jquery jquery=False %}"), "")
 
     @override_settings(BOOTSTRAP4={"jquery_url": {"url": "foo"}})
     def test_bootstrap_jquery_custom_setting_dict(self):
         self.assertHTMLEqual(
-            render_template_with_form("{% bootstrap_jquery %}"),
-            '<script src="foo"></script>',
+            render_template_with_form("{% bootstrap_jquery %}"), '<script src="foo"></script>'
         )
 
     @override_settings(BOOTSTRAP4={"jquery_url": "http://example.com"})
@@ -232,9 +223,7 @@ class MediaTest(TestCase):
         html = render_template_with_form("{% bootstrap_css %}").strip()
         self.assertInHTML(self.expected_css("css"), html)
         # Theme
-        self.assertInHTML(
-            '<link rel="stylesheet" href="//example.com/theme.css">', html
-        )
+        self.assertInHTML('<link rel="stylesheet" href="//example.com/theme.css">', html)
 
     def test_settings_filter(self):
         res = render_template_with_form('{{ "required_css_class"|bootstrap_setting }}')
@@ -362,8 +351,7 @@ class FormTest(TestCase):
         self.assertIn("bootstrap4-err", res)
 
         res = render_template_with_form(
-            '{% bootstrap_form form error_css_class="successful-test" %}',
-            {"form": form},
+            '{% bootstrap_form form error_css_class="successful-test" %}', {"form": form}
         )
         self.assertIn("successful-test", res)
 
@@ -378,8 +366,7 @@ class FormTest(TestCase):
         self.assertIn("bootstrap4-req", res)
 
         res = render_template_with_form(
-            '{% bootstrap_form form required_css_class="successful-test" %}',
-            {"form": form},
+            '{% bootstrap_form form required_css_class="successful-test" %}', {"form": form}
         )
         self.assertIn("successful-test", res)
 
@@ -397,8 +384,7 @@ class FormTest(TestCase):
         form = TestForm({"sender": "sender"})
 
         res = render_template_with_form(
-            '{% bootstrap_form form bound_css_class="successful-test" %}',
-            {"form": form},
+            '{% bootstrap_form form bound_css_class="successful-test" %}', {"form": form}
         )
         self.assertIn("successful-test", res)
 
@@ -424,22 +410,15 @@ class FieldTest(TestCase):
         res = render_form_field("subject")
         self.assertIn("my_help_text", res)
         self.assertNotIn("<i>my_help_text</i>", res)
-        res = render_template_with_form(
-            "{% bootstrap_field form.subject show_help=0 %}"
-        )
+        res = render_template_with_form("{% bootstrap_field form.subject show_help=0 %}")
         self.assertNotIn("my_help_text", res)
 
     def test_help_with_quotes(self):
         # Checkboxes get special handling, so test a checkbox and something else
         res = render_form_field("sender")
-        self.assertIn(
-            'title="{}"'.format(escape(TestForm.base_fields["sender"].help_text)), res
-        )
+        self.assertIn('title="{}"'.format(escape(TestForm.base_fields["sender"].help_text)), res)
         res = render_form_field("cc_myself")
-        self.assertIn(
-            'title="{}"'.format(escape(TestForm.base_fields["cc_myself"].help_text)),
-            res,
-        )
+        self.assertIn('title="{}"'.format(escape(TestForm.base_fields["cc_myself"].help_text)), res)
 
     def test_subject(self):
         res = render_form_field("subject")
@@ -479,9 +458,7 @@ class FieldTest(TestCase):
             res, ".form-group", "Checkbox should be rendered inside a .form-group."
         )
         form_check = _select_one_element(
-            form_group,
-            ".form-check",
-            "There should be a .form-check inside .form-group",
+            form_group, ".form-check", "There should be a .form-check inside .form-group"
         )
         checkbox = _select_one_element(
             form_check, "input", "The checkbox should be inside the .form-check"
@@ -493,30 +470,22 @@ class FieldTest(TestCase):
         )
         label = checkbox.nextSibling
         self.assertIsNotNone(label, "The label should be rendered after the checkbox.")
-        self.assertEqual(
-            label.name, "label", "After the checkbox there should be a label."
-        )
+        self.assertEqual(label.name, "label", "After the checkbox there should be a label.")
         self.assertEqual(
             label["for"],
             checkbox["id"],
             "The for attribute of the label should be the id of the checkbox.",
         )
         help_text = label.nextSibling
-        self.assertIsNotNone(
-            help_text, "The help text should be rendered after the label."
-        )
+        self.assertIsNotNone(help_text, "The help text should be rendered after the label.")
         self.assertEqual(
             help_text.name, "small", "The help text should be rendered as <small> tag."
         )
         self.assertIn(
-            "form-text",
-            help_text["class"],
-            "The help text should have the class 'form-text'.",
+            "form-text", help_text["class"], "The help text should have the class 'form-text'."
         )
         self.assertIn(
-            "text-muted",
-            help_text["class"],
-            "The help text should have the class 'text-muted'.",
+            "text-muted", help_text["class"], "The help text should have the class 'text-muted'."
         )
 
     def test_required_field(self):
@@ -528,9 +497,7 @@ class FieldTest(TestCase):
         # Required settings in field
         form_field = "form.subject"
         rendered = render_template_with_form(
-            "{% bootstrap_field "
-            + form_field
-            + ' required_css_class="test-required" %}'
+            "{% bootstrap_field " + form_field + ' required_css_class="test-required" %}'
         )
         self.assertIn("test-required", rendered)
 
@@ -551,12 +518,8 @@ class FieldTest(TestCase):
             '{% bootstrap_field form.subject addon_before="$"  addon_after=".00" %}'
         )
         self.assertIn('class="input-group"', res)
-        self.assertIn(
-            'class="input-group-prepend"><span class="input-group-text">$', res
-        )
-        self.assertIn(
-            'class="input-group-append"><span class="input-group-text">.00', res
-        )
+        self.assertIn('class="input-group-prepend"><span class="input-group-text">$', res)
+        self.assertIn('class="input-group-append"><span class="input-group-text">.00', res)
 
     def test_input_group_addon_button(self):
         res = render_template_with_form(
@@ -576,8 +539,7 @@ class FieldTest(TestCase):
         self.assertIn('class="input-group"', res)
         self.assertNotIn("input-group-prepend", res)
         self.assertIn(
-            '<div class="input-group-append"><span class="input-group-text">after</span></div>',
-            res,
+            '<div class="input-group-append"><span class="input-group-text">after</span></div>', res
         )
 
     def test_size(self):
@@ -615,9 +577,7 @@ class FieldTest(TestCase):
         self.assertEqual(rendered_a, rendered_b)
 
     def test_label(self):
-        res = render_template_with_form(
-            '{% bootstrap_label "foobar" label_for="subject" %}'
-        )
+        res = render_template_with_form('{% bootstrap_label "foobar" label_for="subject" %}')
         self.assertEqual('<label for="subject">foobar</label>', res)
 
     def test_attributes_consistency(self):
@@ -628,9 +588,7 @@ class FieldTest(TestCase):
 
 class ComponentsTest(TestCase):
     def test_alert(self):
-        res = render_template_with_form(
-            '{% bootstrap_alert "content" alert_type="danger" %}'
-        )
+        res = render_template_with_form('{% bootstrap_alert "content" alert_type="danger" %}')
         self.assertEqual(
             res.strip(),
             '<div class="alert alert-danger alert-dismissable" role="alert">'
@@ -661,9 +619,7 @@ class MessagesTest(TestCase):
 
         pattern = re.compile(r"\s+")
         messages = [FakeMessage(DEFAULT_MESSAGE_LEVELS.WARNING, "hello")]
-        res = render_template_with_form(
-            "{% bootstrap_messages messages %}", {"messages": messages}
-        )
+        res = render_template_with_form("{% bootstrap_messages messages %}", {"messages": messages})
         expected = """
     <div class="alert alert-warning alert-dismissable fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert"
@@ -674,9 +630,7 @@ class MessagesTest(TestCase):
         self.assertEqual(re.sub(pattern, "", res), re.sub(pattern, "", expected))
 
         messages = [FakeMessage(DEFAULT_MESSAGE_LEVELS.ERROR, "hello")]
-        res = render_template_with_form(
-            "{% bootstrap_messages messages %}", {"messages": messages}
-        )
+        res = render_template_with_form("{% bootstrap_messages messages %}", {"messages": messages})
         expected = """
     <div class="alert alert-danger alert-dismissable fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert"
@@ -687,9 +641,7 @@ class MessagesTest(TestCase):
         self.assertEqual(re.sub(pattern, "", res), re.sub(pattern, "", expected))
 
         messages = [FakeMessage(None, "hello")]
-        res = render_template_with_form(
-            "{% bootstrap_messages messages %}", {"messages": messages}
-        )
+        res = render_template_with_form("{% bootstrap_messages messages %}", {"messages": messages})
         expected = """
     <div class="alert alert-danger alert-dismissable fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert"
@@ -700,12 +652,8 @@ class MessagesTest(TestCase):
 
         self.assertEqual(re.sub(pattern, "", res), re.sub(pattern, "", expected))
 
-        messages = [
-            FakeMessage(DEFAULT_MESSAGE_LEVELS.ERROR, "hello http://example.com")
-        ]
-        res = render_template_with_form(
-            "{% bootstrap_messages messages %}", {"messages": messages}
-        )
+        messages = [FakeMessage(DEFAULT_MESSAGE_LEVELS.ERROR, "hello http://example.com")]
+        res = render_template_with_form("{% bootstrap_messages messages %}", {"messages": messages})
         expected = """
     <div class="alert alert-danger alert-dismissable fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="close">&#215;</button>
@@ -717,9 +665,7 @@ class MessagesTest(TestCase):
         )
 
         messages = [FakeMessage(DEFAULT_MESSAGE_LEVELS.ERROR, "hello\nthere")]
-        res = render_template_with_form(
-            "{% bootstrap_messages messages %}", {"messages": messages}
-        )
+        res = render_template_with_form("{% bootstrap_messages messages %}", {"messages": messages})
         expected = """
     <div class="alert alert-danger alert-dismissable fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert"
@@ -755,25 +701,18 @@ class UtilsTest(TestCase):
         self.assertEqual(render_tag("span"), "<span></span>")
         self.assertEqual(render_tag("span", content="foo"), "<span>foo</span>")
         self.assertEqual(
-            render_tag("span", attrs={"bar": 123}, content="foo"),
-            '<span bar="123">foo</span>',
+            render_tag("span", attrs={"bar": 123}, content="foo"), '<span bar="123">foo</span>'
         )
 
 
 class ButtonTest(TestCase):
     def test_button(self):
         res = render_template_with_form("{% bootstrap_button 'button' size='lg' %}")
-        self.assertEqual(
-            res.strip(), '<button class="btn btn-default btn-lg">button</button>'
-        )
+        self.assertEqual(res.strip(), '<button class="btn btn-default btn-lg">button</button>')
 
-        link_button = (
-            '<a class="btn btn-default btn-lg" href="#" role="button">button</a>'
-        )
+        link_button = '<a class="btn btn-default btn-lg" href="#" role="button">button</a>'
 
-        res = render_template_with_form(
-            "{% bootstrap_button 'button' size='lg' href='#' %}"
-        )
+        res = render_template_with_form("{% bootstrap_button 'button' size='lg' href='#' %}")
         self.assertIn(res.strip(), link_button)
         res = render_template_with_form(
             "{% bootstrap_button 'button' button_type='link' size='lg' href='#' %}"
@@ -797,8 +736,7 @@ class ShowLabelTest(TestCase):
         TestFormSet = formset_factory(TestForm, extra=1)
         test_formset = TestFormSet()
         res = render_template_with_form(
-            "{% bootstrap_formset formset show_label=False %}",
-            {"formset": test_formset},
+            "{% bootstrap_formset formset show_label=False %}", {"formset": test_formset}
         )
         self.assertIn("sr-only", res)
 
@@ -809,9 +747,7 @@ class PaginatorTest(TestCase):
             url_replace_param("/foo/bar?baz=foo", "baz", "yohoo"), "/foo/bar?baz=yohoo"
         )
         self.assertEqual(url_replace_param("/foo/bar?baz=foo", "baz", None), "/foo/bar")
-        self.assertEqual(
-            url_replace_param("/foo/bar#id", "baz", "foo"), "/foo/bar?baz=foo#id"
-        )
+        self.assertEqual(url_replace_param("/foo/bar#id", "baz", "foo"), "/foo/bar?baz=foo#id")
 
     def bootstrap_pagination(self, page, extra=""):
         """Helper to test bootstrap_pagination tag"""
@@ -831,12 +767,9 @@ class PaginatorTest(TestCase):
         res = self.bootstrap_pagination(p.page(2), extra='url="/projects/?foo=bar"')
         # order in dicts is not guaranteed in some python versions,
         # so we have to check both options
+        self.assertTrue("/projects/?foo=bar&page=1" in res or "/projects/?page=1&foo=bar" in res)
         self.assertTrue(
-            "/projects/?foo=bar&page=1" in res or "/projects/?page=1&foo=bar" in res
-        )
-        self.assertTrue(
-            "/projects/?foo=bar&page=3" not in res
-            and "/projects/?page=3&foo=bar" not in res
+            "/projects/?foo=bar&page=3" not in res and "/projects/?page=3&foo=bar" not in res
         )
 
         res = self.bootstrap_pagination(p.page(2), extra='url="/projects/#id"')
@@ -845,9 +778,5 @@ class PaginatorTest(TestCase):
         res = self.bootstrap_pagination(p.page(2), extra='url="/projects/?page=3#id"')
         self.assertTrue("/projects/?page=1#id" in res)
 
-        res = self.bootstrap_pagination(
-            p.page(2), extra='url="/projects/?page=3" extra="id=20"'
-        )
-        self.assertTrue(
-            "/projects/?page=1&id=20" in res or "/projects/?id=20&page=1" in res
-        )
+        res = self.bootstrap_pagination(p.page(2), extra='url="/projects/?page=3" extra="id=20"')
+        self.assertTrue("/projects/?page=1&id=20" in res or "/projects/?id=20&page=1" in res)
