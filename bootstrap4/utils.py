@@ -11,12 +11,7 @@ from django.utils import six
 from django.utils.encoding import force_str
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
-from django.utils.six.moves.urllib.parse import (
-    parse_qs,
-    urlencode,
-    urlparse,
-    urlunparse,
-)
+from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 from .text import text_value
 

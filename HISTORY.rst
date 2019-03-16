@@ -5,9 +5,16 @@ History
 
 Development
 +++++++++++
+
+
+0.0.8 (2019-03-12)
+++++++++++++++++++
 - Drop support for the `base_url` setting (#105)
 - Remove use of "falsy" as a string literal (#111)
 - Fix javascript inclusion bugs (#71)
+- Allow email to have addons (#131)
+- Do not mark placeholder text as safe (#135)
+- Adopt black
 
 0.0.7 (2018-08-22)
 ++++++++++++++++++
@@ -25,7 +32,7 @@ Development
 +++++++++++++++++++
 - Change form help text element from div to small (#60)
 - Upgrade Bootstrap to 4.0.0 (#66)
- 
+
 0.0.5 (2018-01-03)
 ++++++++++++++++++
 - Drop develop branch, work with master and feature branches

@@ -8,12 +8,7 @@ from django.contrib.messages import constants as message_constants
 from django.template import Context
 from django.utils import six
 from django.utils.safestring import mark_safe
-from django.utils.six.moves.urllib.parse import (
-    parse_qs,
-    urlencode,
-    urlparse,
-    urlunparse,
-)
+from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 from ..bootstrap import (
     css_url,

@@ -111,8 +111,7 @@ def render_button(
         pass
     elif size:
         raise BootstrapError(
-            'Parameter "size" should be "xs", "sm", "lg" or '
-            + 'empty ("{}" given).'.format(size)
+            'Parameter "size" should be "xs", "sm", "lg" or ' + 'empty ("{}" given).'.format(size)
         )
 
     if button_type:
@@ -178,9 +177,7 @@ def render_form_group(content, css_class=FORM_GROUP_CLASS):
     """
     Render a Bootstrap form group
     """
-    return '<div class="{klass}">{content}</div>'.format(
-        klass=css_class, content=content
-    )
+    return '<div class="{klass}">{content}</div>'.format(klass=css_class, content=content)
 
 
 def is_widget_required_attribute(widget):
@@ -190,14 +187,7 @@ def is_widget_required_attribute(widget):
     if not widget.is_required:
         return False
     if isinstance(
-        widget,
-        (
-            AdminFileWidget,
-            HiddenInput,
-            FileInput,
-            CheckboxInput,
-            CheckboxSelectMultiple,
-        ),
+        widget, (AdminFileWidget, HiddenInput, FileInput, CheckboxInput, CheckboxSelectMultiple)
     ):
         return False
     return True
