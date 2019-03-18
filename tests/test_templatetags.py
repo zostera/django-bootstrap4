@@ -409,18 +409,23 @@ class FormTest(TestCase):
     def test_alert_error_type(self):
         form = TestForm({"sender": "sender"})
 
-        # Show all error messages (default config)
-        res = render_template_with_form("{% bootstrap_form form %}", {"form": form})
+        # Show all error messages
+        res = render_template_with_form("{% bootstrap_form form alert_error_type='all' %}", {"form": form})
         html = BeautifulSoup(res, "html.parser")
         errors = list(html.select('.alert-danger')[0].stripped_strings)
         self.assertIn(form.non_field_error_message, errors)
         self.assertIn('This field is required.', errors)
 
-        # Show only non-field error messages
+        # Show only non-field error messages (default config)
         res = render_template_with_form(
             "{% bootstrap_form form alert_error_type='non_fields' %}",
             {"form": form},
         )
+        default = render_template_with_form(
+            "{% bootstrap_form form %}",
+            {"form": form},
+        )
+        self.assertEqual(res, default, 'Default behavior is not the same as showing non-field errors')
         html = BeautifulSoup(res, "html.parser")
         errors = list(html.select('.alert-danger')[0].stripped_strings)
         self.assertIn(form.non_field_error_message, errors)

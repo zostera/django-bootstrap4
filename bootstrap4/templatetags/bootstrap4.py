@@ -443,7 +443,7 @@ def bootstrap_form(*args, **kwargs):
                     * ``'fields'``
                     * ``'non_fields'``
 
-                :default: ``'all'``
+                :default: ``'non_fields'``
 
         See bootstrap_field_ for other arguments
 
