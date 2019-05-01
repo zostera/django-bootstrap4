@@ -5,9 +5,9 @@ Template tags and filters
 
 .. note::
 
- All the following examples it is understood that you have already loaded the ``bootstrap4``
- template tag library, placing the code below in the beginning that each template that ``bootstrap4``
- template tag library will be used. Read the :doc:`installation` and :doc:`quickstart` sections on how
+ In each of the following examples it is understood that you have already loaded the ``bootstrap4``
+ template tag library, placing the code below at the beginning of each template in which the ``bootstrap4``
+ template tag library will be used. Read the :doc:`installation` and :doc:`quickstart` sections to understand how
  to accomplish this.
 
 
