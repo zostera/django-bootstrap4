@@ -306,6 +306,8 @@ class FieldRenderer(BaseRenderer):
             classes = add_css_class(classes, self.get_size_class())
         elif isinstance(widget, CheckboxInput):
             classes = add_css_class(classes, "form-check-input", prepend=True)
+        elif isinstance(widget, FileInput):
+            classes = add_css_class(classes, "form-control-file", prepend=True)
 
         if self.field.errors:
             if self.error_css_class:
@@ -379,26 +381,6 @@ class FieldRenderer(BaseRenderer):
         html = html.replace("</select>", "</select>" + div2)
         return '<div class="row bootstrap4-multi-input">' + html + "</div>"
 
-    def fix_clearable_file_input(self, html):
-        """
-        Fix a clearable file input
-        TODO: This needs improvement
-
-        Currently Django returns
-        Currently:
-        <a href="dummy.txt">dummy.txt</a>
-        <input id="file4-clear_id" name="file4-clear" type="checkbox" />
-        <label for="file4-clear_id">Clear</label><br />
-        Change: <input id="id_file4" name="file4" type="file" />
-        <span class=help-block></span>
-        </div>
-
-        """
-        # TODO This needs improvement
-        return '<div class="row bootstrap4-multi-input"><div class="col-12">{html}</div></div>'.format(
-            html=html
-        )
-
     def post_widget_render(self, html):
         if isinstance(self.widget, RadioSelect):
             html = self.radio_list_to_class(html, "radio radio-success")
@@ -406,8 +388,6 @@ class FieldRenderer(BaseRenderer):
             html = self.list_to_class(html, "checkbox")
         elif isinstance(self.widget, SelectDateWidget):
             html = self.fix_date_select_input(html)
-        elif isinstance(self.widget, ClearableFileInput):
-            html = self.fix_clearable_file_input(html)
         elif isinstance(self.widget, CheckboxInput):
             html = self.add_checkbox_label(html)
         return html
