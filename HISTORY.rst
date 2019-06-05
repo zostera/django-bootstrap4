@@ -3,6 +3,10 @@
 History
 -------
 
+Development
++++++++++++
+- Fix form-check-{label,input} classes applied too broadly. These should only be applied to labels and inputs found underneath the enclosing widget div for radio and checkbox select, not on the whole document.
+
 1.0.1 (2019-08-30)
 ++++++++++++++++++
 - Fix support for Python 3.5 (#168)

@@ -331,9 +331,11 @@ class FieldRenderer(BaseRenderer):
         # A simple 'replace' isn't enough as we don't want to have several 'class' attr definition, which would happen
         # if we tried to 'html.replace("input", "input class=...")'
         soup = BeautifulSoup(html, features="html.parser")
-        for label in soup.find_all("label"):
-            label.attrs["class"] = label.attrs.get("class", []) + ["form-check-label"]
-            label.input.attrs["class"] = label.input.attrs.get("class", []) + ["form-check-input"]
+        enclosing_div = soup.find("div", {"class": classes})
+        if enclosing_div:
+            for label in enclosing_div.find_all("label"):
+                label.attrs["class"] = label.attrs.get("class", []) + ["form-check-label"]
+                label.input.attrs["class"] = label.input.attrs.get("class", []) + ["form-check-input"]
         return str(soup)
 
     def add_checkbox_label(self, html):

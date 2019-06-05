@@ -230,9 +230,7 @@ class BootstrapFormTest(TestCase):
     def test_radio_select_button_group(self):
         form = TestForm()
         res = render_template_with_form("{% bootstrap_form form %}", {"form": form})
-        self.assertIn(
-            'input class="form-check-input" id="id_category5_0_0" name="category5" required="" type="radio"', res
-        )
+        self.assertIn('input id="id_category5_0_0" name="category5" required="" type="radio"', res)
 
     def test_alert_error_type(self):
         form = TestForm({"sender": "sender"})
