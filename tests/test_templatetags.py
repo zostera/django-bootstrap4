@@ -181,6 +181,13 @@ class BootstrapFormTest(TestCase):
         self.assertIn("hlabel", res)
         self.assertIn("hfield", res)
 
+    def test_form_check_class(self):
+        form = TestForm()
+        res = render_template_with_form(
+            "{% bootstrap_form form form_check_class='form-check form-check-inline' %}", {"form": form}
+        )
+        self.assertIn('div class="form-check form-check-inline"', res)
+
     def test_buttons_tag(self):
         form = TestForm()
         res = render_template_with_form('{% buttons layout="horizontal" %}{% endbuttons %}', {"form": form})

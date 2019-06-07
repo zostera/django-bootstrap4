@@ -523,6 +523,9 @@ def bootstrap_field(*args, **kwargs):
         label_class
             CSS class of the ``label`` element. Will always have ``control-label`` as the last CSS class.
 
+        form_check_class
+            CSS class of the ``div`` element wrapping the label and input when rendering checkboxes and radio buttons.
+
         show_help
             Show the field's help text, if the field has help text.
 
