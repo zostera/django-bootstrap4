@@ -3,15 +3,15 @@ from __future__ import unicode_literals
 
 import re
 
+import six
 from django.forms.utils import flatatt
 from django.template import Variable, VariableDoesNotExist
 from django.template.base import FilterExpression, TemplateSyntaxError, kwarg_re
 from django.template.loader import get_template
-from django.utils import six
 from django.utils.encoding import force_str
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
-from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse, urlunparse
+from six.moves.urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 from .text import text_value
 

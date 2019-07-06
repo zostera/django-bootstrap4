@@ -50,7 +50,9 @@ setup(
     url="https://github.com/zostera/django-bootstrap4",
     packages=["bootstrap4"],
     include_package_data=True,
-    install_requires=[],
+    install_requires=[
+        "six"
+    ],
     license="Apache License 2.0",
     zip_safe=False,
     keywords="django-bootstrap4",

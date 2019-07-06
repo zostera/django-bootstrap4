@@ -3,12 +3,12 @@ from __future__ import unicode_literals
 
 from math import floor
 
+import six
 from django import template
 from django.contrib.messages import constants as message_constants
 from django.template import Context
-from django.utils import six
 from django.utils.safestring import mark_safe
-from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse, urlunparse
+from six.moves.urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 from ..bootstrap import (
     css_url,
