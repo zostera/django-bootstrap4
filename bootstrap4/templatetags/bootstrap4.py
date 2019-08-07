@@ -14,8 +14,8 @@ from ..bootstrap import (
     css_url,
     get_bootstrap_setting,
     javascript_url,
-    jquery_url,
     jquery_slim_url,
+    jquery_url,
     popper_url,
     theme_url,
 )

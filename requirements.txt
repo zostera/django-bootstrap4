@@ -4,5 +4,14 @@ Django>=1.11
 Sphinx
 sphinx_rtd_theme
 
+# Code style
+black
+isort
+autoflake
+flake8
+
 # Tests
 beautifulsoup4
+
+# PyPI
+twine

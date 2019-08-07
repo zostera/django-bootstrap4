@@ -4,15 +4,15 @@ from __future__ import unicode_literals
 from django.conf.urls import url
 
 from .views import (
-    HomePageView,
+    DefaultFormByFieldView,
+    DefaultFormsetView,
+    DefaultFormView,
     FormHorizontalView,
     FormInlineView,
-    PaginationView,
     FormWithFilesView,
-    DefaultFormView,
+    HomePageView,
     MiscView,
-    DefaultFormsetView,
-    DefaultFormByFieldView,
+    PaginationView,
 )
 
 urlpatterns = [

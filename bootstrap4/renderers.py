@@ -1,44 +1,44 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-try:
-    # If Django is set up without a database, importing this widget gives RuntimeError
-    from django.contrib.auth.forms import ReadOnlyPasswordHashWidget
-except RuntimeError:
-    ReadOnlyPasswordHashWidget = None
-
 from django.forms import (
-    TextInput,
-    PasswordInput,
-    DateInput,
-    FileInput,
-    NumberInput,
     CheckboxInput,
-    MultiWidget,
-    ClearableFileInput,
-    Select,
-    RadioSelect,
     CheckboxSelectMultiple,
+    ClearableFileInput,
+    DateInput,
     EmailInput,
+    FileInput,
+    MultiWidget,
+    NumberInput,
+    PasswordInput,
+    RadioSelect,
+    Select,
+    TextInput,
 )
-from django.forms.widgets import SelectDateWidget
 from django.forms.forms import BaseForm, BoundField
 from django.forms.formsets import BaseFormSet
+from django.forms.widgets import SelectDateWidget
 from django.utils.html import conditional_escape, escape, strip_tags
 from django.utils.safestring import mark_safe
 
 from .bootstrap import get_bootstrap_setting
 from .exceptions import BootstrapError
 from .forms import (
-    render_form,
-    render_field,
-    render_label,
-    render_form_group,
-    is_widget_with_placeholder,
     FORM_GROUP_CLASS,
+    is_widget_with_placeholder,
+    render_field,
+    render_form,
+    render_form_group,
+    render_label,
 )
 from .text import text_value
 from .utils import add_css_class, render_template_file
+
+try:
+    # If Django is set up without a database, importing this widget gives RuntimeError
+    from django.contrib.auth.forms import ReadOnlyPasswordHashWidget
+except RuntimeError:
+    ReadOnlyPasswordHashWidget = None
 
 
 class BaseRenderer(object):
@@ -445,14 +445,13 @@ class FieldRenderer(BaseRenderer):
             Select,
             EmailInput,
         )
-        return (
-            (self.addon_before or self.addon_after)
-            and isinstance(self.widget, allowed_widget_types)
+        return (self.addon_before or self.addon_after) and isinstance(
+            self.widget, allowed_widget_types
         )
 
     def make_input_group(self, html):
         if self.is_input_group:
-            html = '{before}{html}{after}'.format(
+            html = "{before}{html}{after}".format(
                 before=self.make_input_group_addon(
                     self.addon_before_class, "input-group-prepend", self.addon_before
                 ),
