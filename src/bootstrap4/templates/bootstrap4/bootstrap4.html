@@ -15,12 +15,8 @@
     <!-- Bootstrap CSS -->
     {% bootstrap_css %}
 
+    <!-- Bootstrap JavaScript if it is in head -->
     {% if 'javascript_in_head'|bootstrap_setting %}
-        {% if 'include_jquery'|bootstrap_setting %}
-            <!-- jQuery JavaScript if it is in head -->
-	    {% bootstrap_jquery jquery='include_jquery'|bootstrap_setting %}
-        {% endif %}
-        <!-- Bootstrap JavaScript if it is in head -->
         {% bootstrap_javascript %}
     {% endif %}
 
@@ -32,15 +28,14 @@
 {% block bootstrap4_before_content %}{% endblock %}
 {% block bootstrap4_content %} CONTENT {% endblock %}
 {% block bootstrap4_after_content %}{% endblock %}
+
+<!-- Bootstrap JavaScript if it is in body -->
 {% if not 'javascript_in_head'|bootstrap_setting %}
-    {% if 'include_jquery'|bootstrap_setting %}
-        <!-- jQuery JavaScript if it is in body -->
-	{% bootstrap_jquery jquery='include_jquery'|bootstrap_setting %}
-    {% endif %}
-    <!-- Bootstrap JavaScript if it is in body -->
     {% bootstrap_javascript %}
 {% endif %}
+
 {% block bootstrap4_extra_script %}{% endblock %}
+
 </body>
 
 </html>
