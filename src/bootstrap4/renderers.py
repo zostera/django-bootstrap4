@@ -1,3 +1,4 @@
+from bs4 import BeautifulSoup
 from django.forms import (
     CheckboxInput,
     CheckboxSelectMultiple,
@@ -320,19 +321,25 @@ class FieldRenderer(BaseRenderer):
             self.add_placeholder_attrs(widget)
             self.add_help_attrs(widget)
 
-    def radio_list_to_class(self, html, klass):
-        classes = add_css_class(klass, self.get_size_class())
-        mapping = [("<ul", f'<div class="{classes}"'), ("</ul>", "</div>"), ("<li>", ""), ("</li>", "")]
-        for k, v in mapping:
-            html = html.replace(k, v)
-        return html
-
     def list_to_class(self, html, klass):
         classes = add_css_class(klass, self.get_size_class())
-        mapping = [("<ul", "<div"), ("</ul>", "</div>"), ("<li", f'<div class="{classes}"'), ("</li>", "</div>")]
+        mapping = [
+            ("<ul", f'<div class="{classes}"'),
+            ("</ul>", "</div>"),
+            ("<li", '<div class="form-check"'),
+            ("</li>", "</div>"),
+        ]
         for k, v in mapping:
             html = html.replace(k, v)
-        return html
+
+        # Apply bootstrap4 classes to labels and inputs.
+        # A simple 'replace' isn't enough as we don't want to have several 'class' attr definition, which would happen
+        # if we tried to 'html.replace("input", "input class=...")'
+        soup = BeautifulSoup(html, features="html.parser")
+        for label in soup.find_all("label"):
+            label.attrs["class"] = label.attrs.get("class", []) + ["form-check-label"]
+            label.input.attrs["class"] = label.input.attrs.get("class", []) + ["form-check-input"]
+        return str(soup)
 
     def add_checkbox_label(self, html):
         return html + render_label(
@@ -369,7 +376,7 @@ class FieldRenderer(BaseRenderer):
 
     def post_widget_render(self, html):
         if isinstance(self.widget, RadioSelect):
-            html = self.radio_list_to_class(html, "radio radio-success")
+            html = self.list_to_class(html, "radio radio-success")
         elif isinstance(self.widget, CheckboxSelectMultiple):
             html = self.list_to_class(html, "checkbox")
         elif isinstance(self.widget, SelectDateWidget):

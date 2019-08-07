@@ -357,7 +357,9 @@ class FormTest(TestCase):
     def test_radio_select_button_group(self):
         form = TestForm()
         res = render_template_with_form("{% bootstrap_form form %}", {"form": form})
-        self.assertIn('input type="radio" name="category5" id="id_category5_0_0"', res)
+        self.assertIn(
+            'input class="form-check-input" id="id_category5_0_0" name="category5" required="" type="radio"', res
+        )
 
 
 class FieldTest(TestCase):
@@ -407,6 +409,34 @@ class FieldTest(TestCase):
         res = render_form_field("password")
         self.assertIn('type="password"', res)
         self.assertIn('placeholder="Password"', res)
+
+    def test_radio_select(self):
+        """Test RadioSelect rendering, because it is special."""
+        res = render_form_field("category1")
+        # strip out newlines and spaces around newlines
+        res = "".join(line.strip() for line in res.split("\n"))
+        res = BeautifulSoup(res, "html.parser")
+        form_group = self._select_one_element(res, ".form-group", "RadioSelect should be rendered inside a .form-group")
+        radio = self._select_one_element(form_group, ".radio", "There should be a .radio inside .form-group")
+        self.assertIn("radio-success", radio["class"], "The radio select should have the class 'radio-success'")
+        elements = radio.find_all("div", class_="form-check")
+        self.assertIsNotNone(elements, "Radio should have at least one div with class 'form-check'")
+        for idx, form_check in enumerate(elements, start=1):
+            label = form_check.next_element
+            self.assertIsNotNone(label, "The label should be rendered after the form-check div")
+            self.assertEqual(label.name, "label", "After the form-check div there should be a label")
+            self.assertIn("form-check-label", label["class"], "The label should have the class 'form-check-label'")
+            self.assertEqual(
+                "Radio {idx}".format(idx=idx), label.text, "The label should have text 'Radio {idx}'".format(idx=idx)
+            )
+            input_ = label.next_element
+            self.assertIsNotNone(input_, "The input should be rendered after the label")
+            self.assertEqual(input_.name, "input", "After the label there should be an input")
+            self.assertIn("form-check-input", input_["class"], "The input should have the class 'form-check-input'")
+            self.assertEqual(str(idx), input_["value"], "The input should have value '{idx}'".format(idx=idx))
+            self.assertEqual(
+                label["for"], input_["id"], "The for attribute of the label should be the id of the radio input"
+            )
 
     def test_checkbox(self):
         """Test Checkbox rendering, because it is special."""
