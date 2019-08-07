@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import os
 import sys
 
@@ -48,8 +47,8 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = u"django-bootstrap4"
-copyright = u"2014, Dylan Verheul"
+project = "django-bootstrap4"
+copyright = "2014-2019, Dylan Verheul"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -191,13 +190,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-    (
-        "index",
-        "django-bootstrap4.tex",
-        u"django-bootstrap4 Documentation",
-        u"Dylan Verheul",
-        "manual",
-    )
+    ("index", "django-bootstrap4.tex", "django-bootstrap4 Documentation", "Dylan Verheul", "manual")
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -226,7 +219,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ("index", "django-bootstrap4", u"django-bootstrap4 Documentation", [u"Dylan Verheul"], 1)
+    ("index", "django-bootstrap4", "django-bootstrap4 Documentation", ["Dylan Verheul"], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -242,8 +235,8 @@ texinfo_documents = [
     (
         "index",
         "django-bootstrap4",
-        u"django-bootstrap4 Documentation",
-        u"Dylan Verheul",
+        "django-bootstrap4 Documentation",
+        "Dylan Verheul",
         "django-bootstrap4",
         "One line description of project.",
         "Miscellaneous",

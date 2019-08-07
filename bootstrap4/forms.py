@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 from django.contrib.admin.widgets import AdminFileWidget
@@ -195,13 +194,10 @@ def is_widget_required_attribute(widget):
 
 def is_widget_with_placeholder(widget):
     """
-    Is this a widget that should have a placeholder?
-    Only text, search, url, tel, e-mail, password, number have placeholders
-    These are all derived form TextInput, except for Textarea
+    Return whether this widget should have a placeholder.
+
+    Only text, text area, number, e-mail, url, password, number and derived inputs have placeholders.
     """
-    # PasswordInput inherits from Input in Django 1.4.
-    # It was changed to inherit from TextInput in 1.5.
-    # NumberInput, EmailInput, URLInput, PasswordInput switch from TextInput inheritance to Input inheritance in 1.11.
     return isinstance(
         widget, (TextInput, Textarea, NumberInput, EmailInput, URLInput, PasswordInput)
     )

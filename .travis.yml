@@ -10,7 +10,6 @@ cache: pip
 python:
  - "3.7"
  - "3.6"
- - "2.7"
 install: pip install tox-travis coverage coveralls
 script: tox
 after_success:

@@ -1,17 +1,16 @@
-# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 import re
+from urllib.parse import parse_qs, urlparse, urlunparse
 
 from django.forms.utils import flatatt
 from django.template import Variable, VariableDoesNotExist
 from django.template.base import FilterExpression, TemplateSyntaxError, kwarg_re
 from django.template.loader import get_template
-from django.utils import six
 from django.utils.encoding import force_str
 from django.utils.html import format_html
+from django.utils.http import urlencode
 from django.utils.safestring import mark_safe
-from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 from .text import text_value
 
@@ -176,6 +175,6 @@ def sanitize_url_dict(url, url_attr="src"):
     """
     Sanitize url dict as used in django-bootstrap4 settings
     """
-    if isinstance(url, six.string_types):
+    if isinstance(url, str):
         return {url_attr: url}
     return url.copy()
