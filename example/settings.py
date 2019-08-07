@@ -1,9 +1,7 @@
-from __future__ import unicode_literals
-
 import os
 import sys
 
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ""))
 
 # Include BOOTSTRAP4_FOLDER in path
 BOOTSTRAP4_FOLDER = os.path.abspath(os.path.join(BASE_DIR, "..", "bootstrap4"))
@@ -87,14 +85,13 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-ROOT_URLCONF = "demo.app.urls"
 
-# Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = "demo.app.wsgi.application"
+ROOT_URLCONF = "urls"
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": ["templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -117,11 +114,9 @@ INSTALLED_APPS = (
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django.contrib.gis",
     "django.contrib.admin",
     "bootstrap4",
-    "tests",
-    "demo",
+    "app",
 )
 
 # A sample logging configuration. The only tangible logging
@@ -140,9 +135,7 @@ LOGGING = {
             "class": "django.utils.log.AdminEmailHandler",
         }
     },
-    "loggers": {
-        "django.request": {"handlers": ["mail_admins"], "level": "ERROR", "propagate": True}
-    },
+    "loggers": {"django.request": {"handlers": ["mail_admins"], "level": "ERROR", "propagate": True}},
 }
 
 # Settings for django-bootstrap4

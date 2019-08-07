@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import re
 from urllib.parse import parse_qs, urlparse, urlunparse
 
@@ -127,12 +125,7 @@ def render_tag(tag, attrs=None, content=None, close=True):
     builder = "<{tag}{attrs}>{content}"
     if content or close:
         builder += "</{tag}>"
-    return format_html(
-        builder,
-        tag=tag,
-        attrs=mark_safe(flatatt(attrs)) if attrs else "",
-        content=text_value(content),
-    )
+    return format_html(builder, tag=tag, attrs=mark_safe(flatatt(attrs)) if attrs else "", content=text_value(content))
 
 
 def render_template_file(template, context=None):

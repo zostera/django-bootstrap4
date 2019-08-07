@@ -1,8 +1,10 @@
+include LICENSE
+include HISTORY.rst
+include README.rst
 include AUTHORS.rst
 include CONTRIBUTING.rst
-include HISTORY.rst
-include LICENSE
-include README.rst
-recursive-include bootstrap4 *
-recursive-include demo *
-global-exclude *.pyc
+recursive-include docs *
+include tox.ini
+include runtests.py
+graft src
+graft tests

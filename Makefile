@@ -1,6 +1,6 @@
 .PHONY: all
 
-version_file := bootstrap4/_version.py
+version_file := src/bootstrap4/_version.py
 version := $(word 3, $(shell cat ${version_file}))
 
 version:
@@ -17,13 +17,13 @@ tox:
 	tox
 
 reformat:
-	isort -rc bootstrap4
-	isort -rc demo
+	isort -rc src/bootstrap4
+	isort -rc example
 	isort -rc tests
 	isort -rc *.py
-	autoflake -ir *.py bootstrap4 demo tests --remove-all-unused-imports
+	autoflake -ir *.py src/bootstrap4 example tests --remove-all-unused-imports
 	black .
-	flake8 bootstrap4 demo tests *.py
+	flake8 bootstrap4 example tests *.py
 
 publish: clean
 	cd docs && make html

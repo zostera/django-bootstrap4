@@ -1,6 +1,3 @@
-from __future__ import unicode_literals
-
-
 class BootstrapException(Exception):
     """
     Any exception from this package
