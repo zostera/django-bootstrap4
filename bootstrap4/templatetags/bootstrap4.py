@@ -676,7 +676,7 @@ def bootstrap_button(*args, **kwargs):
                 * ``'link'``
 
         button_class
-            The class of button to use. If none is given, btn-default will be used.
+            The class of button to use. If none is given, btn-primary will be used.
 
         extra_classes
             Any extra CSS classes that should be added to the button.

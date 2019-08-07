@@ -85,7 +85,7 @@ def render_label(content, label_for=None, label_class=None, label_title=""):
 def render_button(
     content,
     button_type=None,
-    button_class="btn-default",
+    button_class="btn-primary",
     size="",
     href="",
     name=None,

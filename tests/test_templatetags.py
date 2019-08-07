@@ -753,9 +753,9 @@ class UtilsTest(TestCase):
 class ButtonTest(TestCase):
     def test_button(self):
         res = render_template_with_form("{% bootstrap_button 'button' size='lg' %}")
-        self.assertEqual(res.strip(), '<button class="btn btn-default btn-lg">button</button>')
+        self.assertEqual(res.strip(), '<button class="btn btn-primary btn-lg">button</button>')
 
-        link_button = '<a class="btn btn-default btn-lg" href="#" role="button">button</a>'
+        link_button = '<a class="btn btn-primary btn-lg" href="#" role="button">button</a>'
 
         res = render_template_with_form("{% bootstrap_button 'button' size='lg' href='#' %}")
         self.assertIn(res.strip(), link_button)
