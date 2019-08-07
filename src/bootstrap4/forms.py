@@ -102,13 +102,12 @@ def render_button(
     elif size == "md" or size == "medium":
         pass
     elif size:
-        raise BootstrapError('Parameter "size" should be "xs", "sm", "lg" or empty ("{}" given).'.format(size))
+        raise BootstrapError(f'Parameter "size" should be "xs", "sm", "lg" or empty ("{size}" given).')
 
     if button_type:
         if button_type not in ("submit", "reset", "button", "link"):
             raise BootstrapError(
-                'Parameter "button_type" should be "submit", "reset", '
-                + '"button", "link" or empty  ("{}" given).'.format(button_type)
+                f'Parameter "button_type" should be "submit", "reset", "button", "link" or empty  ("{button_type}" given).'
             )
         if button_type != "link":
             attrs["type"] = button_type
@@ -119,9 +118,7 @@ def render_button(
     if href:
         tag = "a"
         if button_type and button_type != "link":
-            raise BootstrapError(
-                'Button of type "{button_type}" is not allowed a "href" parameter.'.format(button_type=button_type)
-            )
+            raise BootstrapError(f'Button of type "{button_type}" is not allowed a "href" parameter.')
         attrs["href"] = href
         # Specify role for link with button appearance
         attrs.setdefault("role", "button")
@@ -153,7 +150,7 @@ def render_field_and_label(field, label, field_class="", label_for=None, label_c
         label_class = add_css_class(label_class, "control-label")
     html = field
     if field_class:
-        html = '<div class="{klass}">{html}</div>'.format(klass=field_class, html=html)
+        html = f'<div class="{field_class}">{html}</div>'
     if label:
         html = render_label(label, label_for=label_for, label_class=label_class) + html
     return html
@@ -163,7 +160,7 @@ def render_form_group(content, css_class=FORM_GROUP_CLASS):
     """
     Render a Bootstrap form group
     """
-    return '<div class="{klass}">{content}</div>'.format(klass=css_class, content=content)
+    return f'<div class="{css_class}">{content}</div>'
 
 
 def is_widget_required_attribute(widget):
