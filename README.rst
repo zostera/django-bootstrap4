@@ -5,7 +5,7 @@ Bootstrap 4 for Django
 .. image:: https://travis-ci.org/zostera/django-bootstrap4.svg?branch=develop
     :target: https://travis-ci.org/zostera/django-bootstrap4
 
-.. image:: https://img.shields.io/coveralls/dzostera/django-bootstrap4/master.svg
+.. image:: https://img.shields.io/coveralls/zostera/django-bootstrap4/master.svg
     :target: https://coveralls.io/r/zostera/django-bootstrap4?branch=master
 
 .. image:: https://img.shields.io/pypi/v/django-bootstrap4.svg
@@ -27,7 +27,7 @@ The goal of this project is to seamlessly blend Django and Bootstrap 4.
 Requirements
 ------------
 
-- Django >= 1.11 (and `compatible Python versions <https://docs.djangoproject.com/en/1.11/faq/install/#what-python-version-can-i-use-with-django>`_)
+- Django >= 2.1 (and `compatible Python versions <https://docs.djangoproject.com/en/2.2/faq/install/#what-python-version-can-i-use-with-django>`_)
 
 
 Documentation

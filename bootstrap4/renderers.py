@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 from django.forms import (
@@ -99,7 +98,7 @@ class FormsetRenderer(BaseRenderer):
         if not isinstance(formset, BaseFormSet):
             raise BootstrapError('Parameter "formset" should contain a valid Django Formset.')
         self.formset = formset
-        super(FormsetRenderer, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def render_management_form(self):
         return text_value(self.formset.management_form)
@@ -155,7 +154,7 @@ class FormRenderer(BaseRenderer):
         if not isinstance(form, BaseForm):
             raise BootstrapError('Parameter "form" should contain a valid Django Form.')
         self.form = form
-        super(FormRenderer, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.error_css_class = kwargs.get("error_css_class", None)
         self.required_css_class = kwargs.get("required_css_class", None)
         self.bound_css_class = kwargs.get("bound_css_class", None)
@@ -229,7 +228,7 @@ class FieldRenderer(BaseRenderer):
         if not isinstance(field, BoundField):
             raise BootstrapError('Parameter "field" should contain a valid Django BoundField.')
         self.field = field
-        super(FieldRenderer, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.widget = field.field.widget
         self.is_multi_widget = isinstance(field.field.widget, MultiWidget)
@@ -609,7 +608,7 @@ class InlineFieldRenderer(FieldRenderer):
         self.widget.attrs["title"] = field_title.strip()
 
     def add_widget_attrs(self):
-        super(InlineFieldRenderer, self).add_widget_attrs()
+        super().add_widget_attrs()
         self.add_error_attrs()
 
     def append_to_field(self, html):

@@ -1,14 +1,13 @@
-# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 from math import floor
+from urllib.parse import parse_qs, urlparse, urlunparse
 
 from django import template
 from django.contrib.messages import constants as message_constants
 from django.template import Context
-from django.utils import six
+from django.utils.http import urlencode
 from django.utils.safestring import mark_safe
-from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 from ..bootstrap import (
     css_url,
@@ -295,7 +294,7 @@ def bootstrap_jquery(jquery=True):
     else:
         jquery = get_bootstrap_setting("jquery_url")
 
-    if isinstance(jquery, six.string_types):
+    if isinstance(jquery, str):
         jquery = dict(src=jquery)
     else:
         jquery = jquery.copy()
@@ -847,9 +846,8 @@ def bootstrap_messages(context, *args, **kwargs):
 
     """
 
-    # Force Django 1.8+ style, so dicts and not Context
-    # TODO: This may be due to a bug in Django 1.8/1.9+
-    if Context and isinstance(context, Context):
+    # Force Context to dict
+    if isinstance(context, Context):
         context = context.flatten()
     context.update({"message_constants": message_constants})
     return render_template_file("bootstrap4/messages.html", context=context)
