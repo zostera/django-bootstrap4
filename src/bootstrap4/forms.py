@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from django.contrib.admin.widgets import AdminFileWidget
 from django.forms import (
     CheckboxSelectMultiple,
@@ -15,12 +13,7 @@ from django.forms import (
 from django.forms.widgets import CheckboxInput
 from django.utils.safestring import mark_safe
 
-from .bootstrap import (
-    get_bootstrap_setting,
-    get_field_renderer,
-    get_form_renderer,
-    get_formset_renderer,
-)
+from .bootstrap import get_bootstrap_setting, get_field_renderer, get_form_renderer, get_formset_renderer
 from .exceptions import BootstrapError
 from .text import text_value
 from .utils import add_css_class, render_tag
@@ -109,9 +102,7 @@ def render_button(
     elif size == "md" or size == "medium":
         pass
     elif size:
-        raise BootstrapError(
-            'Parameter "size" should be "xs", "sm", "lg" or ' + 'empty ("{}" given).'.format(size)
-        )
+        raise BootstrapError('Parameter "size" should be "xs", "sm", "lg" or empty ("{}" given).'.format(size))
 
     if button_type:
         if button_type not in ("submit", "reset", "button", "link"):
@@ -129,9 +120,7 @@ def render_button(
         tag = "a"
         if button_type and button_type != "link":
             raise BootstrapError(
-                'Button of type "{button_type}" is not allowed a "href" parameter.'.format(
-                    button_type=button_type
-                )
+                'Button of type "{button_type}" is not allowed a "href" parameter.'.format(button_type=button_type)
             )
         attrs["href"] = href
         # Specify role for link with button appearance
@@ -150,9 +139,7 @@ def render_button(
     return render_tag(tag, attrs=attrs, content=mark_safe(content))
 
 
-def render_field_and_label(
-    field, label, field_class="", label_for=None, label_class="", layout="", **kwargs
-):
+def render_field_and_label(field, label, field_class="", label_for=None, label_class="", layout="", **kwargs):
     """
     Render a field with its label
     """
@@ -185,9 +172,7 @@ def is_widget_required_attribute(widget):
     """
     if not widget.is_required:
         return False
-    if isinstance(
-        widget, (AdminFileWidget, HiddenInput, FileInput, CheckboxInput, CheckboxSelectMultiple)
-    ):
+    if isinstance(widget, (AdminFileWidget, HiddenInput, FileInput, CheckboxInput, CheckboxSelectMultiple)):
         return False
     return True
 
@@ -198,6 +183,4 @@ def is_widget_with_placeholder(widget):
 
     Only text, text area, number, e-mail, url, password, number and derived inputs have placeholders.
     """
-    return isinstance(
-        widget, (TextInput, Textarea, NumberInput, EmailInput, URLInput, PasswordInput)
-    )
+    return isinstance(widget, (TextInput, Textarea, NumberInput, EmailInput, URLInput, PasswordInput))

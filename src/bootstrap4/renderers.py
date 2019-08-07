@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from django.forms import (
     CheckboxInput,
     CheckboxSelectMultiple,
@@ -71,9 +69,7 @@ class BaseRenderer(object):
             return "large"
         if size in ("md", "medium", ""):
             return "medium"
-        raise BootstrapError(
-            'Invalid value "%s" for parameter "size" (expected "sm", "md", "lg" or "").' % size
-        )
+        raise BootstrapError('Invalid value "%s" for parameter "size" (expected "sm", "md", "lg" or "").' % size)
 
     def get_size_class(self, prefix="form-control"):
         if self.size == "small":
@@ -140,9 +136,7 @@ class FormsetRenderer(BaseRenderer):
         return ""
 
     def _render(self):
-        return "{}{}{}".format(
-            self.render_errors(), self.render_management_form(), self.render_forms()
-        )
+        return "{}{}{}".format(self.render_errors(), self.render_management_form(), self.render_forms())
 
 
 class FormRenderer(BaseRenderer):
@@ -202,12 +196,7 @@ class FormRenderer(BaseRenderer):
         if form_errors:
             return render_template_file(
                 "bootstrap4/form_errors.html",
-                context={
-                    "errors": form_errors,
-                    "form": self.form,
-                    "layout": self.layout,
-                    "type": type,
-                },
+                context={"errors": form_errors, "form": self.form, "layout": self.layout, "type": type},
             )
 
         return ""
@@ -233,9 +222,7 @@ class FieldRenderer(BaseRenderer):
         self.widget = field.field.widget
         self.is_multi_widget = isinstance(field.field.widget, MultiWidget)
         self.initial_attrs = self.widget.attrs.copy()
-        self.field_help = (
-            text_value(mark_safe(field.help_text)) if self.show_help and field.help_text else ""
-        )
+        self.field_help = text_value(mark_safe(field.help_text)) if self.show_help and field.help_text else ""
         self.field_errors = [conditional_escape(text_value(error)) for error in field.errors]
 
         if "placeholder" in kwargs:
@@ -267,9 +254,7 @@ class FieldRenderer(BaseRenderer):
         if error_css_class is not None:
             self.error_css_class = error_css_class
         else:
-            self.error_css_class = getattr(
-                field.form, "error_css_class", get_bootstrap_setting("error_css_class")
-            )
+            self.error_css_class = getattr(field.form, "error_css_class", get_bootstrap_setting("error_css_class"))
         if required_css_class is not None:
             self.required_css_class = required_css_class
         else:
@@ -279,9 +264,7 @@ class FieldRenderer(BaseRenderer):
         if bound_css_class is not None:
             self.success_css_class = bound_css_class
         else:
-            self.success_css_class = getattr(
-                field.form, "bound_css_class", get_bootstrap_setting("success_css_class")
-            )
+            self.success_css_class = getattr(field.form, "bound_css_class", get_bootstrap_setting("success_css_class"))
 
         # If the form is marked as form.empty_permitted, do not set required class
         if self.field.form.empty_permitted:
@@ -294,9 +277,7 @@ class FieldRenderer(BaseRenderer):
         if widget is None:
             widget = self.widget
         classes = widget.attrs.get("class", "")
-        if ReadOnlyPasswordHashWidget is not None and isinstance(
-            widget, ReadOnlyPasswordHashWidget
-        ):
+        if ReadOnlyPasswordHashWidget is not None and isinstance(widget, ReadOnlyPasswordHashWidget):
             # Render this is a static control
             classes = add_css_class(classes, "form-control-static", prepend=True)
         elif not isinstance(widget, self.WIDGETS_NO_FORM_CONTROL):
@@ -394,9 +375,7 @@ class FieldRenderer(BaseRenderer):
 
         """
         # TODO This needs improvement
-        return '<div class="row bootstrap4-multi-input"><div class="col-12">{html}</div></div>'.format(
-            html=html
-        )
+        return '<div class="row bootstrap4-multi-input"><div class="col-12">{html}</div></div>'.format(html=html)
 
     def post_widget_render(self, html):
         if isinstance(self.widget, RadioSelect):
@@ -423,40 +402,23 @@ class FieldRenderer(BaseRenderer):
             return ""
 
         content = (
-            '<span class="{input_class}">{addon}</span>'.format(
-                input_class=inner_class, addon=content
-            )
+            '<span class="{input_class}">{addon}</span>'.format(input_class=inner_class, addon=content)
             if inner_class
             else content
         )
 
-        return '<div class="{addon_class}">{addon}</div>'.format(
-            addon_class=outer_class, addon=content
-        )
+        return '<div class="{addon_class}">{addon}</div>'.format(addon_class=outer_class, addon=content)
 
     @property
     def is_input_group(self):
-        allowed_widget_types = (
-            TextInput,
-            PasswordInput,
-            DateInput,
-            NumberInput,
-            Select,
-            EmailInput,
-        )
-        return (self.addon_before or self.addon_after) and isinstance(
-            self.widget, allowed_widget_types
-        )
+        allowed_widget_types = (TextInput, PasswordInput, DateInput, NumberInput, Select, EmailInput)
+        return (self.addon_before or self.addon_after) and isinstance(self.widget, allowed_widget_types)
 
     def make_input_group(self, html):
         if self.is_input_group:
             html = "{before}{html}{after}".format(
-                before=self.make_input_group_addon(
-                    self.addon_before_class, "input-group-prepend", self.addon_before
-                ),
-                after=self.make_input_group_addon(
-                    self.addon_after_class, "input-group-append", self.addon_after
-                ),
+                before=self.make_input_group_addon(self.addon_before_class, "input-group-prepend", self.addon_before),
+                after=self.make_input_group_addon(self.addon_after_class, "input-group-append", self.addon_after),
                 html=html,
             )
             html = self.append_errors(html)
@@ -549,12 +511,7 @@ class FieldRenderer(BaseRenderer):
     def add_label(self, html):
         label = self.get_label()
         if label:
-            html = (
-                render_label(
-                    label, label_for=self.field.id_for_label, label_class=self.get_label_class()
-                )
-                + html
-            )
+            html = render_label(label, label_for=self.field.id_for_label, label_class=self.get_label_class()) + html
         return html
 
     def get_form_group_class(self):

@@ -189,9 +189,7 @@ latex_elements = {
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
-latex_documents = [
-    ("index", "django-bootstrap4.tex", "django-bootstrap4 Documentation", "Dylan Verheul", "manual")
-]
+latex_documents = [("index", "django-bootstrap4.tex", "django-bootstrap4 Documentation", "Dylan Verheul", "manual")]
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
@@ -218,9 +216,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    ("index", "django-bootstrap4", "django-bootstrap4 Documentation", ["Dylan Verheul"], 1)
-]
+man_pages = [("index", "django-bootstrap4", "django-bootstrap4 Documentation", ["Dylan Verheul"], 1)]
 
 # If true, show URL addresses after external links.
 # man_show_urls = False
