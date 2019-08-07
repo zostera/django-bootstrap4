@@ -3,23 +3,23 @@ from __future__ import unicode_literals
 
 from django.contrib.admin.widgets import AdminFileWidget
 from django.forms import (
-    HiddenInput,
-    FileInput,
     CheckboxSelectMultiple,
-    TextInput,
-    Textarea,
-    NumberInput,
     EmailInput,
-    URLInput,
+    FileInput,
+    HiddenInput,
+    NumberInput,
     PasswordInput,
+    Textarea,
+    TextInput,
+    URLInput,
 )
 from django.forms.widgets import CheckboxInput
 from django.utils.safestring import mark_safe
 
 from .bootstrap import (
     get_bootstrap_setting,
-    get_form_renderer,
     get_field_renderer,
+    get_form_renderer,
     get_formset_renderer,
 )
 from .exceptions import BootstrapError

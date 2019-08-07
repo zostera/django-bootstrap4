@@ -408,7 +408,6 @@ class FormTest(TestCase):
 
 
 class FieldTest(TestCase):
-
     def _select_one_element(self, html, selector, err_msg):
         """
         Select exactly one html element in an BeautifulSoup html fragment.
@@ -469,9 +468,7 @@ class FieldTest(TestCase):
             res, ".form-group", "Checkbox should be rendered inside a .form-group."
         )
         form_check = self._select_one_element(
-            form_group,
-            ".form-check",
-            "There should be a .form-check inside .form-group",
+            form_group, ".form-check", "There should be a .form-check inside .form-group"
         )
         checkbox = self._select_one_element(
             form_check, "input", "The checkbox should be inside the .form-check"
@@ -562,34 +559,33 @@ class FieldTest(TestCase):
         See issue #89.
         """
         # invalid form data:
-        data = {'subject': ''}
+        data = {"subject": ""}
         res = render_template_with_form(
-            '{% bootstrap_field form.subject addon_before=None addon_after="after" %}',
-            data=data,
+            '{% bootstrap_field form.subject addon_before=None addon_after="after" %}', data=data
         )  # noqa
         res = BeautifulSoup(res, "html.parser")
         self._select_one_element(
             res,
-            '.input-group > .invalid-feedback',
-            'The invalid-feedback message, complaining that this field is '
-            'required, must be placed inside the input-group',
+            ".input-group > .invalid-feedback",
+            "The invalid-feedback message, complaining that this field is "
+            "required, must be placed inside the input-group",
         )
         self._select_one_element(
             res,
-            '.form-group > .form-text',
-            'The form-text message must be placed inside the form-group',
+            ".form-group > .form-text",
+            "The form-text message must be placed inside the form-group",
         )
         self.assertEqual(
-            len(res.select('.form-group > .invalid-feedback')),
+            len(res.select(".form-group > .invalid-feedback")),
             0,
-            'The invalid-feedback message must be placed inside the '
-            'input-group and not inside the form-group',
+            "The invalid-feedback message must be placed inside the "
+            "input-group and not inside the form-group",
         )
         self.assertEqual(
-            len(res.select('.input-group > .form-text')),
+            len(res.select(".input-group > .form-text")),
             0,
-            'The form-text message must be placed inside the form-group and '
-            'not inside the input-group',
+            "The form-text message must be placed inside the form-group and "
+            "not inside the input-group",
         )
 
     def test_size(self):
