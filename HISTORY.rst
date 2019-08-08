@@ -10,7 +10,8 @@ History
 - Template tag `bootstrap_field` now allows 3 values for `show_label`: `True`, `False` / `'sr-only'` and `'skip'`. In the case of `False` / `'sr-only'` the label is hidden but present for screen readers. When `show_label` is set to `'skip'`, the label is not generated at all.
 - Fix validation on input groups (#122)
 - No longer duplicate jquery in bootstrap4.html (#139, #140)
-- Apply form-check, form-check-label and form-check-input classes to appropriate tags for RadioSelect and CheckboxSelectMultiple widgets (#141)
+- Apply `form-check`, `form-check-label` and `form-check-input` classes to appropriate tags for `RadioSelect` and `CheckboxSelectMultiple` widgets (#141)
+- Errors on file inputs are shown (#146)
 
 0.0.8 (2019-03-12)
 ++++++++++++++++++
