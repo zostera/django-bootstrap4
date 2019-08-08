@@ -157,14 +157,12 @@ def render_field(field, context=None):
 class MediaTest(TestCase):
     def expected_css(self, tag):
         template = '<link href="{href}" integrity="{integrity}" crossorigin="{crossorigin}" rel="stylesheet">'
-
         setting = get_bootstrap_setting(tag + "_url")
         return template.format(**setting)
 
     def expected_js(self, tag):
         template = '<script src="{url}" integrity="{integrity}" crossorigin="{crossorigin}"></script>'
         setting = get_bootstrap_setting(tag + "_url")
-
         return template.format(**setting)
 
     def test_bootstrap_jquery(self):
@@ -205,23 +203,23 @@ class MediaTest(TestCase):
         # Theme
         self.assertInHTML('<link rel="stylesheet" href="//example.com/theme.css">', html)
 
-    def test_settings_filter(self):
+    def test_bootstrap_setting_filter(self):
         res = render_template_with_form('{{ "required_css_class"|bootstrap_setting }}')
         self.assertEqual(res.strip(), "bootstrap4-req")
         res = render_template_with_form('{% if "javascript_in_head"|bootstrap_setting %}head{% else %}body{% endif %}')
         self.assertEqual(res.strip(), "head")
 
-    def test_required_class(self):
+    def test_bootstrap_required_class(self):
         form = TestForm()
         res = render_template_with_form("{% bootstrap_form form %}", {"form": form})
         self.assertIn("bootstrap4-req", res)
 
-    def test_error_class(self):
+    def test_bootstrap_error_class(self):
         form = TestForm({})
         res = render_template_with_form("{% bootstrap_form form %}", {"form": form})
         self.assertIn("bootstrap4-err", res)
 
-    def test_bound_class(self):
+    def test_bootstrap_bound_class(self):
         form = TestForm({"sender": "sender"})
         res = render_template_with_form("{% bootstrap_form form %}", {"form": form})
         self.assertIn("bootstrap4-bound", res)
@@ -236,7 +234,7 @@ class TemplateTest(TestCase):
         res = render_template_with_form("some text")
         self.assertEqual(res.strip(), "some text")
 
-    def test_bootstrap_template(self):
+    def test_bootstrap4_html_template(self):
         res = render_template(
             '{% extends "bootstrap4/bootstrap4.html" %}'
             + "{% block bootstrap4_content %}"
@@ -245,24 +243,24 @@ class TemplateTest(TestCase):
         )
         self.assertIn("test_bootstrap4_content", res)
 
-    def test_javascript_without_jquery(self):
+    def test_bootstrap_javascript_without_jquery(self):
         res = render_template_with_form("{% bootstrap_javascript %}")
         self.assertIn("bootstrap", res)
         self.assertNotIn("jquery", res)
 
-    def test_javascript_with_jquery(self):
+    def test_bootstrap_javascript_with_jquery(self):
         res = render_template_with_form("{% bootstrap_javascript jquery=True %}")
         self.assertIn("bootstrap", res)
         self.assertIn("jquery", res)
 
 
-class FormSetTest(TestCase):
+class BootstrapFormSetTest(TestCase):
     def test_illegal_formset(self):
         with self.assertRaises(BootstrapError):
             render_formset(formset="illegal")
 
 
-class FormTest(TestCase):
+class BootstrapFormTest(TestCase):
     def test_illegal_form(self):
         with self.assertRaises(BootstrapError):
             render_form(form="illegal")
@@ -585,7 +583,7 @@ class FieldTest(TestCase):
 
 
 class ComponentsTest(TestCase):
-    def test_alert(self):
+    def test_bootstrap_alert(self):
         res = render_template_with_form('{% bootstrap_alert "content" alert_type="danger" %}')
         self.assertEqual(
             res.strip(),
@@ -597,7 +595,7 @@ class ComponentsTest(TestCase):
 
 
 class MessagesTest(TestCase):
-    def test_messages(self):
+    def test_bootstrap_messages(self):
         class FakeMessage(object):
             """
             Follows the `django.contrib.messages.storage.base.Message` API.
