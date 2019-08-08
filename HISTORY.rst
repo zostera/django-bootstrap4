@@ -12,6 +12,7 @@ History
 - No longer duplicate jquery in bootstrap4.html (#139, #140)
 - Apply `form-check`, `form-check-label` and `form-check-input` classes to appropriate tags for `RadioSelect` and `CheckboxSelectMultiple` widgets (#141)
 - Errors on file inputs are shown (#146)
+- Only display non-field errors in form alert block (#161)
 
 0.0.8 (2019-03-12)
 ++++++++++++++++++
