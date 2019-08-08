@@ -491,7 +491,7 @@ class ComponentsTest(TestCase):
         res = render_template_with_form('{% bootstrap_alert "content" alert_type="danger" %}')
         self.assertEqual(
             res.strip(),
-            '<div class="alert alert-danger alert-dismissable" role="alert">'
+            '<div class="alert alert-danger alert-dismissible" role="alert">'
             + '<button type="button" class="close" data-dismiss="alert" '
             + 'aria-label="close">'
             + "&times;</button>content</div>",
@@ -519,7 +519,7 @@ class MessagesTest(TestCase):
         messages = [FakeMessage(DEFAULT_MESSAGE_LEVELS.WARNING, "hello")]
         res = render_template_with_form("{% bootstrap_messages messages %}", {"messages": messages})
         expected = """
-    <div class="alert alert-warning alert-dismissable fade show" role="alert">
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert"
             aria-label="close">&#215;</button>
         hello
@@ -530,7 +530,7 @@ class MessagesTest(TestCase):
         messages = [FakeMessage(DEFAULT_MESSAGE_LEVELS.ERROR, "hello")]
         res = render_template_with_form("{% bootstrap_messages messages %}", {"messages": messages})
         expected = """
-    <div class="alert alert-danger alert-dismissable fade show" role="alert">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert"
             aria-label="close">&#215;</button>
         hello
@@ -541,7 +541,7 @@ class MessagesTest(TestCase):
         messages = [FakeMessage(None, "hello")]
         res = render_template_with_form("{% bootstrap_messages messages %}", {"messages": messages})
         expected = """
-    <div class="alert alert-danger alert-dismissable fade show" role="alert">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert"
             aria-label="close">&#215;</button>
         hello
@@ -553,7 +553,7 @@ class MessagesTest(TestCase):
         messages = [FakeMessage(DEFAULT_MESSAGE_LEVELS.ERROR, "hello http://example.com")]
         res = render_template_with_form("{% bootstrap_messages messages %}", {"messages": messages})
         expected = """
-    <div class="alert alert-danger alert-dismissable fade show" role="alert">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="close">&#215;</button>
         hello http://example.com
     </div>        """
@@ -565,7 +565,7 @@ class MessagesTest(TestCase):
         messages = [FakeMessage(DEFAULT_MESSAGE_LEVELS.ERROR, "hello\nthere")]
         res = render_template_with_form("{% bootstrap_messages messages %}", {"messages": messages})
         expected = """
-    <div class="alert alert-danger alert-dismissable fade show" role="alert">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert"
             aria-label="close">&#215;</button>
         hello there

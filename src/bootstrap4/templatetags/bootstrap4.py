@@ -723,7 +723,7 @@ def bootstrap_button(*args, **kwargs):
 
 
 @register.simple_tag
-def bootstrap_alert(content, alert_type="info", dismissable=True):
+def bootstrap_alert(content, alert_type="info", dismissible=True):
     """
     Render an alert.
 
@@ -744,8 +744,8 @@ def bootstrap_alert(content, alert_type="info", dismissable=True):
 
             :default: ``'info'``
 
-        dismissable
-            boolean, is alert dismissable
+        dismissible
+            boolean, is alert dismissible
 
             :default: ``True``
 
@@ -757,7 +757,7 @@ def bootstrap_alert(content, alert_type="info", dismissable=True):
 
         {% bootstrap_alert "Something went wrong" alert_type='error' %}
     """
-    return render_alert(content, alert_type, dismissable)
+    return render_alert(content, alert_type, dismissible)
 
 
 @register.tag("buttons")
@@ -824,7 +824,7 @@ def bootstrap_messages(context, *args, **kwargs):
     """
     Show django.contrib.messages Messages in Bootstrap alert containers.
 
-    In order to make the alerts dismissable (with the close button),
+    In order to make the alerts dismissible (with the close button),
     we have to set the jquery parameter too when using the
     bootstrap_javascript tag.
 

@@ -8,7 +8,7 @@ class ComponentsTest(TestCase):
         alert = render_alert("content")
         self.assertEqual(
             alert,
-            '<div class="alert alert-info alert-dismissable" role="alert">'
+            '<div class="alert alert-info alert-dismissible" role="alert">'
             + '<button type="button" class="close" data-dismiss="alert" '
             + 'aria-label="close">'
             + "&times;</button>content</div>",
