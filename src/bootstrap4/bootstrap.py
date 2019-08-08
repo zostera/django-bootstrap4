@@ -50,9 +50,7 @@ BOOTSTRAP4_DEFAULTS = {
 
 
 def get_bootstrap_setting(name, default=None):
-    """
-    Read a setting
-    """
+    """Read a setting."""
     # Start with a copy of default settings
     BOOTSTRAP4 = BOOTSTRAP4_DEFAULTS.copy()
 
@@ -66,22 +64,18 @@ def get_bootstrap_setting(name, default=None):
 
 
 def jquery_url():
-    """
-    Return the full url to jQuery library file to use
-    """
+    """Return the full url to jQuery library file to use."""
     return get_bootstrap_setting("jquery_url")
 
 
 def jquery_slim_url():
-    """
-    Return the full url to slim jQuery library file to use
-    """
+    """Return the full url to slim jQuery library file to use."""
     return get_bootstrap_setting("jquery_slim_url")
 
 
 def include_jquery():
     """
-    Return whether to include jquery
+    Return whether to include jquery.
 
     Setting could be False, True|'full', or 'slim'
     """
@@ -89,37 +83,27 @@ def include_jquery():
 
 
 def popper_url():
-    """
-    Return the full url to Popper file
-    """
+    """Return the full url to Popper file."""
     return get_bootstrap_setting("popper_url")
 
 
 def javascript_url():
-    """
-    Return the full url to the Bootstrap JavaScript file
-    """
+    """Return the full url to the Bootstrap JavaScript file."""
     return get_bootstrap_setting("javascript_url")
 
 
 def css_url():
-    """
-    Return the full url to the Bootstrap CSS file
-    """
+    """Return the full url to the Bootstrap CSS file."""
     return get_bootstrap_setting("css_url")
 
 
 def theme_url():
-    """
-    Return the full url to the theme CSS file
-    """
+    """Return the full url to the theme CSS file."""
     return get_bootstrap_setting("theme_url")
 
 
 def i18n_enabled():
-    """
-    Return the projects i18n setting
-    """
+    """Return the projects i18n setting."""
     return getattr(settings, "USE_I18N", False)
 
 

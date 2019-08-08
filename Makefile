@@ -16,7 +16,11 @@ tox:
 	rm -rf .tox
 	tox
 
+doclint:
+	pydocstyle --add-ignore=D1 src/bootstrap4 example tests *.py
+
 reformat:
+	docformatter -ir --pre-summary-newline --wrap-summaries=0 --wrap-descriptions=0 src/bootstrap4 example tests *.py
 	isort -rc src/bootstrap4
 	isort -rc example
 	isort -rc tests

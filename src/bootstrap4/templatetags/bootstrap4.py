@@ -52,18 +52,17 @@ register = template.Library()
 @register.filter
 def bootstrap_setting(value):
     """
+    Get a setting.
+
     A simple way to read bootstrap settings in a template.
-    Please consider this filter private for now, do not use it in your own
-    templates.
+    Please consider this filter private for now, do not use it in your own templates.
     """
     return get_bootstrap_setting(value)
 
 
 @register.filter
 def bootstrap_message_classes(message):
-    """
-    Return the message classes for a message
-    """
+    """Return the message classes for a message."""
     extra_tags = None
     try:
         extra_tags = message.extra_tags
@@ -87,6 +86,8 @@ def bootstrap_message_classes(message):
 @register.simple_tag
 def bootstrap_jquery_url():
     """
+    Return url to full version of jQuery.
+
     **Tag name**::
 
         bootstrap_jquery_url
@@ -111,6 +112,8 @@ def bootstrap_jquery_url():
 @register.simple_tag
 def bootstrap_jquery_slim_url():
     """
+    Return url to slim version of jQuery.
+
     **Tag name**::
 
         bootstrap_jquery_slim_url
@@ -135,7 +138,7 @@ def bootstrap_jquery_slim_url():
 @register.simple_tag
 def bootstrap_popper_url():
     """
-    Return the full url to the Popper plugin to use
+    Return the full url to the Popper plugin to use.
 
     Default value: ``None``
 
@@ -159,7 +162,7 @@ def bootstrap_popper_url():
 @register.simple_tag
 def bootstrap_javascript_url():
     """
-    Return the full url to the Bootstrap JavaScript library
+    Return the full url to the Bootstrap JavaScript library.
 
     Default value: ``None``
 
@@ -183,7 +186,7 @@ def bootstrap_javascript_url():
 @register.simple_tag
 def bootstrap_css_url():
     """
-    Return the full url to the Bootstrap CSS library
+    Return the full url to the Bootstrap CSS library.
 
     Default value: ``None``
 
@@ -207,7 +210,7 @@ def bootstrap_css_url():
 @register.simple_tag
 def bootstrap_theme_url():
     """
-    Return the full url to a Bootstrap theme CSS library
+    Return the full url to a Bootstrap theme CSS library.
 
     Default value: ``None``
 
@@ -231,10 +234,7 @@ def bootstrap_theme_url():
 @register.simple_tag
 def bootstrap_css():
     """
-    Return HTML for Bootstrap CSS.
-    Adjust url in settings. If no url is returned, we don't want this statement
-    to return any HTML.
-    This is intended behavior.
+    Return HTML for Bootstrap CSS. Adjust url in settings. If no url is returned, we don't want this statement to return any HTML. This is intended behavior.
 
     Default value: ``None``
 
@@ -330,7 +330,6 @@ def bootstrap_javascript(jquery=False):
 
         {% bootstrap_javascript jquery="slim" %}
     """
-
     # List of JS tags to include
     javascript_tags = []
 
@@ -358,8 +357,7 @@ def bootstrap_javascript(jquery=False):
 @register.simple_tag
 def bootstrap_formset(*args, **kwargs):
     """
-    Render a formset
-
+    Render a formset.
 
     **Tag name**::
 
@@ -380,7 +378,6 @@ def bootstrap_formset(*args, **kwargs):
     **Example**::
 
         {% bootstrap_formset formset layout='horizontal' %}
-
     """
     return render_formset(*args, **kwargs)
 
@@ -388,7 +385,7 @@ def bootstrap_formset(*args, **kwargs):
 @register.simple_tag
 def bootstrap_formset_errors(*args, **kwargs):
     """
-    Render formset errors
+    Render formset errors.
 
     **Tag name**::
 
@@ -416,7 +413,7 @@ def bootstrap_formset_errors(*args, **kwargs):
 @register.simple_tag
 def bootstrap_form(*args, **kwargs):
     """
-    Render a form
+    Render a form.
 
     **Tag name**::
 
@@ -447,7 +444,7 @@ def bootstrap_form(*args, **kwargs):
 @register.simple_tag
 def bootstrap_form_errors(*args, **kwargs):
     """
-    Render form errors
+    Render form errors.
 
     **Tag name**::
 
@@ -486,7 +483,7 @@ def bootstrap_form_errors(*args, **kwargs):
 @register.simple_tag
 def bootstrap_field(*args, **kwargs):
     """
-    Render a field
+    Render a field.
 
     **Tag name**::
 
@@ -617,7 +614,7 @@ def bootstrap_field(*args, **kwargs):
 @register.simple_tag()
 def bootstrap_label(*args, **kwargs):
     """
-    Render a label
+    Render a label.
 
     **Tag name**::
 
@@ -644,7 +641,6 @@ def bootstrap_label(*args, **kwargs):
     **Example**::
 
         {% bootstrap_label "Email address" label_for="exampleInputEmail1" %}
-
     """
     return render_label(*args, **kwargs)
 
@@ -652,7 +648,7 @@ def bootstrap_label(*args, **kwargs):
 @register.simple_tag
 def bootstrap_button(*args, **kwargs):
     """
-    Render a button
+    Render a button.
 
     **Tag name**::
 
@@ -718,7 +714,7 @@ def bootstrap_button(*args, **kwargs):
 @register.simple_tag
 def bootstrap_alert(content, alert_type="info", dismissable=True):
     """
-    Render an alert
+    Render an alert.
 
     **Tag name**::
 
@@ -749,7 +745,6 @@ def bootstrap_alert(content, alert_type="info", dismissable=True):
     **Example**::
 
         {% bootstrap_alert "Something went wrong" alert_type='error' %}
-
     """
     return render_alert(content, alert_type, dismissable)
 
@@ -757,7 +752,7 @@ def bootstrap_alert(content, alert_type="info", dismissable=True):
 @register.tag("buttons")
 def bootstrap_buttons(parser, token):
     """
-    Render buttons for form
+    Render buttons for form.
 
     **Tag name**::
 
@@ -778,7 +773,6 @@ def bootstrap_buttons(parser, token):
     **Example**::
 
         {% buttons submit='OK' reset="Cancel" %}{% endbuttons %}
-
     """
     kwargs = parse_token_contents(parser, token)
     kwargs["nodelist"] = parser.parse(("endbuttons",))
@@ -841,9 +835,7 @@ def bootstrap_messages(context, *args, **kwargs):
 
         {% bootstrap_javascript jquery=True %}
         {% bootstrap_messages %}
-
     """
-
     # Force Context to dict
     if isinstance(context, Context):
         context = context.flatten()
@@ -854,7 +846,7 @@ def bootstrap_messages(context, *args, **kwargs):
 @register.inclusion_tag("bootstrap4/pagination.html")
 def bootstrap_pagination(page, **kwargs):
     """
-    Render pagination for a page
+    Render pagination for a page.
 
     **Tag name**::
 
@@ -902,9 +894,7 @@ def bootstrap_pagination(page, **kwargs):
     **Example**::
 
         {% bootstrap_pagination lines url="/pagination?page=1" size="large" %}
-
     """
-
     pagination_kwargs = kwargs.copy()
     pagination_kwargs["page"] = page
     return get_pagination_context(**pagination_kwargs)
@@ -918,9 +908,7 @@ def bootstrap_url_replace_param(url, name, value):
 def get_pagination_context(
     page, pages_to_show=11, url=None, size=None, justify_content=None, extra=None, parameter_name="page"
 ):
-    """
-    Generate Bootstrap pagination context from a page object
-    """
+    """Generate Bootstrap pagination context from a page object."""
     pages_to_show = int(pages_to_show)
     if pages_to_show < 1:
         raise ValueError(f"Pagination pages_to_show should be a positive integer, you specified {pages_to_show}.")

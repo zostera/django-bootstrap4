@@ -7,9 +7,7 @@ from .text import text_value
 
 
 def render_alert(content, alert_type=None, dismissable=True):
-    """
-    Render a Bootstrap alert
-    """
+    """Render a Bootstrap alert."""
     button = ""
     if not alert_type:
         alert_type = "info"

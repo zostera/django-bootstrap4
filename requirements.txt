@@ -9,6 +9,8 @@ black
 isort
 autoflake
 flake8
+pydocstyle
+docformatter
 
 # Tests
 beautifulsoup4

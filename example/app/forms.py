@@ -15,9 +15,7 @@ MEDIA_CHOICES = (
 
 
 class TestForm(forms.Form):
-    """
-    Form with a variety of widgets to test bootstrap4 rendering.
-    """
+    """Form with a variety of widgets to test bootstrap4 rendering."""
 
     date = forms.DateField(required=False)
     datetime = forms.SplitDateTimeField(widget=AdminSplitDateTime(), required=False)

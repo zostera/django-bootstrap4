@@ -24,9 +24,7 @@ QUOTED_STRING = re.compile(r'^["\'](?P<noquotes>.+)["\']$')
 
 
 def handle_var(value, context):
-    """
-    Handle template tag variable
-    """
+    """Handle template tag variable."""
     # Resolve FilterExpression and Variable immediately
     if isinstance(value, FilterExpression) or isinstance(value, Variable):
         return value.resolve(context)
@@ -43,9 +41,7 @@ def handle_var(value, context):
 
 
 def parse_token_contents(parser, token):
-    """
-    Parse template tag contents
-    """
+    """Parse template tag contents."""
     bits = token.split_contents()
     tag = bits.pop(0)
     args = []
@@ -68,17 +64,13 @@ def parse_token_contents(parser, token):
 
 
 def split_css_classes(css_classes):
-    """
-    Turn string into a list of CSS classes
-    """
+    """Turn string into a list of CSS classes."""
     classes_list = text_value(css_classes).split(" ")
     return [c for c in classes_list if c]
 
 
 def add_css_class(css_classes, css_class, prepend=False):
-    """
-    Add a CSS class to a string of CSS classes
-    """
+    """Add a CSS class to a string of CSS classes."""
     classes_list = split_css_classes(css_classes)
     classes_to_add = [c for c in split_css_classes(css_class) if c not in classes_list]
     if prepend:
@@ -89,27 +81,21 @@ def add_css_class(css_classes, css_class, prepend=False):
 
 
 def remove_css_class(css_classes, css_class):
-    """
-    Remove a CSS class from a string of CSS classes
-    """
+    """Remove a CSS class from a string of CSS classes."""
     remove = set(split_css_classes(css_class))
     classes_list = [c for c in split_css_classes(css_classes) if c not in remove]
     return " ".join(classes_list)
 
 
 def render_script_tag(url):
-    """
-    Build a script tag
-    """
+    """Build a script tag."""
     url_dict = sanitize_url_dict(url)
     url_dict.setdefault("src", url_dict.pop("url", None))
     return render_tag("script", url_dict)
 
 
 def render_link_tag(url, rel="stylesheet", media=None):
-    """
-    Build a link tag
-    """
+    """Build a link tag."""
     url_dict = sanitize_url_dict(url, url_attr="href")
     url_dict.setdefault("href", url_dict.pop("url", None))
     url_dict["rel"] = rel
@@ -119,9 +105,7 @@ def render_link_tag(url, rel="stylesheet", media=None):
 
 
 def render_tag(tag, attrs=None, content=None, close=True):
-    """
-    Render a HTML tag
-    """
+    """Render a HTML tag."""
     builder = "<{tag}{attrs}>{content}"
     if content or close:
         builder += "</{tag}>"
@@ -129,18 +113,14 @@ def render_tag(tag, attrs=None, content=None, close=True):
 
 
 def render_template_file(template, context=None):
-    """
-    Render a Template to unicode
-    """
+    """Render a Template to unicode."""
     assert isinstance(context, Mapping)
     template = get_template(template)
     return template.render(context)
 
 
 def url_replace_param(url, name, value):
-    """
-    Replace a GET parameter in an URL
-    """
+    """Replace a GET parameter in an URL."""
     url_components = urlparse(force_str(url))
 
     params = parse_qs(url_components.query)
@@ -165,9 +145,7 @@ def url_replace_param(url, name, value):
 
 
 def sanitize_url_dict(url, url_attr="src"):
-    """
-    Sanitize url dict as used in django-bootstrap4 settings
-    """
+    """Sanitize url dict as used in django-bootstrap4 settings."""
     if isinstance(url, str):
         return {url_attr: url}
     return url.copy()

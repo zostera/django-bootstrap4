@@ -1,13 +1,11 @@
 """
-A standalone test runner script, configuring the minimum settings
-required for django-marina tests to execute.
+A standalone test runner script, configuring the minimum settings required for django-marina tests to execute.
 
 Re-use at your own risk: many Django applications will require full
 settings and/or templates in order to execute their tests, while
 django-marina does not.
 
 Adapted from James Bennett's https://github.com/ubernostrum/pwned-passwords-django
-
 """
 
 import os
