@@ -15,6 +15,7 @@ History
 - Only display non-field errors in form alert block (#161)
 - Reinstate `bootstrap4_title` block to `bootstrap4.html` (#156)
 - Fix typo in `alert-dismissible` class (#142)
+- Honor the `form_group_class` parameter in the `buttons` tag (#162)
 
 0.0.8 (2019-03-12)
 ++++++++++++++++++
