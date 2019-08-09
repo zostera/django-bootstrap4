@@ -21,6 +21,6 @@ def render_alert(content, alert_type=None, dismissible=True):
         render_tag(
             "div",
             attrs={"class": " ".join(css_classes), "role": "alert"},
-            content=button_placeholder + text_value(content),
+            content=mark_safe(button_placeholder) + text_value(content),
         ).replace(button_placeholder, button)
     )
