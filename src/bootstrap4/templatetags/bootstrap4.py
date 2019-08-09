@@ -811,7 +811,9 @@ class ButtonsNode(template.Node):
             buttons.append(bootstrap_button(reset, "reset"))
         buttons = " ".join(buttons) + self.nodelist.render(context)
         output_kwargs.update({"label": None, "field": buttons})
-        output = render_form_group(render_field_and_label(**output_kwargs))
+        css_class = output_kwargs.pop("form_group_class", "form-group")
+        output = render_form_group(render_field_and_label(**output_kwargs),
+                                  css_class=css_class)
         if self.asvar:
             context[self.asvar] = output
             return ""
