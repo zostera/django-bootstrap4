@@ -252,7 +252,9 @@ def bootstrap_css():
 
         {% bootstrap_css %}
     """
-    rendered_urls = [render_link_tag(bootstrap_css_url())]
+    rendered_urls = []
+    if bootstrap_css_url():
+        rendered_urls.append(render_link_tag(bootstrap_css_url()))
     if bootstrap_theme_url():
         rendered_urls.append(render_link_tag(bootstrap_theme_url()))
     return mark_safe("".join([url for url in rendered_urls]))
