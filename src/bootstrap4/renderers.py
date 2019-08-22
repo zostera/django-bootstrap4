@@ -1,4 +1,3 @@
-from bs4 import BeautifulSoup
 from django.forms import (
     CheckboxInput,
     CheckboxSelectMultiple,
