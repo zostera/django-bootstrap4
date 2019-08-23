@@ -31,7 +31,7 @@ setup(
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     include_package_data=True,
-    install_requires=[],
+    install_requires=["beautifulsoup4"],
     license="Apache License 2.0",
     zip_safe=False,
     keywords="django-bootstrap4",
