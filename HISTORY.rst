@@ -3,6 +3,12 @@
 History
 -------
 
+1.0.1 (2019-08-30)
+++++++++++++++++++
+- Fix support for Python 3.5 (#168)
+- Set correct Python versions in setup.py
+- Fix `make test` command
+
 1.0.0 (2019-08-30)
 ++++++++++++++++++
 - Set default class for buttons to `btn-primary` (#150)
