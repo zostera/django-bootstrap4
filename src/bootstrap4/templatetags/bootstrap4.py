@@ -925,7 +925,11 @@ def get_pagination_context(
     """Generate Bootstrap pagination context from a page object."""
     pages_to_show = int(pages_to_show)
     if pages_to_show < 1:
-        raise ValueError(f"Pagination pages_to_show should be a positive integer, you specified {pages_to_show}.")
+        raise ValueError(
+            "Pagination pages_to_show should be a positive integer, you specified {pages_to_show}.".format(
+                pages_to_show=pages_to_show
+            )
+        )
     num_pages = page.paginator.num_pages
     current_page = page.number
     half_page_num = int(floor(pages_to_show / 2))

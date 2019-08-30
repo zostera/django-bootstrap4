@@ -86,12 +86,14 @@ def render_button(
     elif size == "md" or size == "medium":
         pass
     elif size:
-        raise BootstrapError(f'Parameter "size" should be "xs", "sm", "lg" or empty ("{size}" given).')
+        raise BootstrapError('Parameter "size" should be "xs", "sm", "lg" or empty ("{size}" given).'.format(size=size))
 
     if button_type:
         if button_type not in ("submit", "reset", "button", "link"):
             raise BootstrapError(
-                f'Parameter "button_type" should be "submit", "reset", "button", "link" or empty  ("{button_type}" given).'
+                'Parameter "button_type" should be "submit", "reset", "button", "link" or empty  ("{button_type}" given).'.format(
+                    button_type=button_type
+                )
             )
         if button_type != "link":
             attrs["type"] = button_type
@@ -102,7 +104,9 @@ def render_button(
     if href:
         tag = "a"
         if button_type and button_type != "link":
-            raise BootstrapError(f'Button of type "{button_type}" is not allowed a "href" parameter.')
+            raise BootstrapError(
+                'Button of type "{button_type}" is not allowed a "href" parameter.'.format(button_type=button_type)
+            )
         attrs["href"] = href
         # Specify role for link with button appearance
         attrs.setdefault("role", "button")
@@ -132,7 +136,7 @@ def render_field_and_label(field, label, field_class="", label_for=None, label_c
         label_class = add_css_class(label_class, "control-label")
     html = field
     if field_class:
-        html = f'<div class="{field_class}">{html}</div>'
+        html = '<div class="{field_class}">{html}</div>'.format(field_class=field_class, html=html)
     if label:
         html = render_label(label, label_for=label_for, label_class=label_class) + html
     return html
@@ -140,7 +144,7 @@ def render_field_and_label(field, label, field_class="", label_for=None, label_c
 
 def render_form_group(content, css_class=FORM_GROUP_CLASS):
     """Render a Bootstrap form group."""
-    return f'<div class="{css_class}">{content}</div>'
+    return '<div class="{css_class}">{content}</div>'.format(css_class=css_class, content=content)
 
 
 def is_widget_with_placeholder(widget):
