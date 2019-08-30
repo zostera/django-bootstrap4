@@ -10,7 +10,7 @@ clean:
 	rm -rf build dist *.egg-info
 
 test:
-	python manage.py test
+	python runtests.py
 
 tox:
 	rm -rf .tox

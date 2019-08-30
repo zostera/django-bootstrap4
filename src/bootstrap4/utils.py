@@ -54,7 +54,7 @@ def parse_token_contents(parser, token):
         for bit in bits:
             match = kwarg_re.match(bit)
             if not match:
-                raise TemplateSyntaxError(f'Malformed arguments to tag "{tag}"')
+                raise TemplateSyntaxError('Malformed arguments to tag "{tag}"'.format(tag=tag))
             name, value = match.groups()
             if name:
                 kwargs[name] = parser.compile_filter(value)
