@@ -3,8 +3,8 @@
 History
 -------
 
-1.0.0 (in development)
-++++++++++++++++++++++
+1.0.0 (2019-08-30)
+++++++++++++++++++
 - Set default class for buttons to `btn-primary` (#150)
 - Drop support for Python 2 and Django 1.11, 2.0 and 2.1 (#155)
 - Template tag `bootstrap_field` now allows 3 values for `show_label`: `True`, `False` / `'sr-only'` and `'skip'`. In the case of `False` / `'sr-only'` the label is hidden but present for screen readers. When `show_label` is set to `'skip'`, the label is not generated at all.
