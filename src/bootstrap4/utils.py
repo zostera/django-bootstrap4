@@ -1,3 +1,4 @@
+# -*- coding: future_fstrings -*-
 import re
 from urllib.parse import parse_qs, urlparse, urlunparse
 

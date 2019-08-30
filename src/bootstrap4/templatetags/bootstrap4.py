@@ -1,3 +1,4 @@
+# -*- coding: future_fstrings -*-
 from math import floor
 from urllib.parse import parse_qs, urlparse, urlunparse
 

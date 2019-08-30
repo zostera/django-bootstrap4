@@ -32,7 +32,7 @@ setup(
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     include_package_data=True,
-    install_requires=["beautifulsoup4"],
+    install_requires=["beautifulsoup4", "future-fstrings"],
     zip_safe=False,
     keywords="django-bootstrap4",
     classifiers=[

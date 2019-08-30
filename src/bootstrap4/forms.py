@@ -1,3 +1,4 @@
+# -*- coding: future_fstrings -*-
 from django.forms import (
     CheckboxSelectMultiple,
     EmailInput,

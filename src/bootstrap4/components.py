@@ -1,3 +1,4 @@
+# -*- coding: future_fstrings -*-
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
