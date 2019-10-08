@@ -72,6 +72,11 @@ def render_button(
     title=None,
     extra_classes="",
     id="",
+    formaction=None,
+    formenctype=None,
+    formmethod=None,
+    formnovalidate=None,
+    formtarget=None,
 ):
     """Render a button with content."""
     attrs = {}
@@ -121,6 +126,16 @@ def render_button(
         attrs["value"] = value
     if title:
         attrs["title"] = title
+    if formaction:
+        attrs["formaction"] = formaction
+    if formenctype:
+        attrs["formenctype"] = formenctype
+    if formmethod:
+        attrs["formmethod"] = formmethod
+    if formnovalidate:
+        attrs["formnovalidate"] = formnovalidate
+    if formtarget:
+        attrs["formtarget"] = formtarget
     return render_tag(tag, attrs=attrs, content=mark_safe(content))
 
 
