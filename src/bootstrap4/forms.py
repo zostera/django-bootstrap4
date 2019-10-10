@@ -112,6 +112,8 @@ def render_button(
             raise BootstrapError(
                 'Button of type "{button_type}" is not allowed a "href" parameter.'.format(button_type=button_type)
             )
+        if formaction or formenctype or formmethod or formnovalidate or formtarget:
+            raise BootstrapError('Button specifying form submission attribute(s) is not allowed a "href" parameter.')
         attrs["href"] = href
         # Specify role for link with button appearance
         attrs.setdefault("role", "button")
