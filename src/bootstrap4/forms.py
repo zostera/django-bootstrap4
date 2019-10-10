@@ -133,7 +133,8 @@ def render_button(
     if formmethod:
         attrs["formmethod"] = formmethod
     if formnovalidate:
-        attrs["formnovalidate"] = formnovalidate
+        # this is a boolean attribute
+        attrs["formnovalidate"] = "formnovalidate"
     if formtarget:
         attrs["formtarget"] = formtarget
     return render_tag(tag, attrs=attrs, content=mark_safe(content))
