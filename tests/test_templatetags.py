@@ -603,6 +603,17 @@ class UtilsTest(TestCase):
 
 class ButtonTest(TestCase):
     def test_button(self):
+        res = render_template_with_form("{% bootstrap_button 'button' size='lg' formaction='/test/path' %}")
+        self.assertEqual(res.strip(), '<button class="btn btn-primary btn-lg" formaction="/test/path">button</button>')
+
+        res = render_template_with_form(
+            "{% bootstrap_button 'button' size='lg' formaction='/test/path' formenctype='text/plain' formmethod='GET' formnovalidate=True formtarget='_blank' %}"
+        )
+        self.assertEqual(
+            res.strip(),
+            '<button class="btn btn-primary btn-lg" formaction="/test/path" formenctype="text/plain" formnovalidate="formnovalidate" formtarget="_blank">button</button>',
+        )
+
         res = render_template_with_form("{% bootstrap_button 'button' size='lg' %}")
         self.assertEqual(res.strip(), '<button class="btn btn-primary btn-lg">button</button>')
 
