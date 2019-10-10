@@ -625,6 +625,10 @@ class ButtonTest(TestCase):
         self.assertIn(res.strip(), link_button)
         with self.assertRaises(BootstrapError):
             res = render_template_with_form("{% bootstrap_button 'button' button_type='button' href='#' %}")
+        with self.assertRaises(BootstrapError):
+            res = render_template_with_form(
+                "{% bootstrap_button 'button' button_type='link' href='#' formaction='/test/path' %}"
+            )
 
 
 class ShowLabelTest(TestCase):
