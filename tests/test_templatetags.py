@@ -611,7 +611,7 @@ class ButtonTest(TestCase):
         )
         self.assertEqual(
             res.strip(),
-            '<button class="btn btn-primary btn-lg" formaction="/test/path" formenctype="text/plain" formnovalidate="formnovalidate" formtarget="_blank">button</button>',
+            '<button class="btn btn-primary btn-lg" formaction="/test/path" formenctype="text/plain" formmethod="GET" formnovalidate="formnovalidate" formtarget="_blank">button</button>',
         )
 
         res = render_template_with_form("{% bootstrap_button 'button' size='lg' %}")
