@@ -1,5 +1,8 @@
 from bs4 import BeautifulSoup
 from django.forms import (
+    BaseForm,
+    BaseFormSet,
+    BoundField,
     CheckboxInput,
     CheckboxSelectMultiple,
     ClearableFileInput,
@@ -11,11 +14,9 @@ from django.forms import (
     PasswordInput,
     RadioSelect,
     Select,
+    SelectDateWidget,
     TextInput,
 )
-from django.forms.forms import BaseForm, BoundField
-from django.forms.formsets import BaseFormSet
-from django.forms.widgets import SelectDateWidget
 from django.utils.html import conditional_escape, escape, strip_tags
 from django.utils.safestring import mark_safe
 
@@ -333,7 +334,17 @@ class FieldRenderer(BaseRenderer):
         soup = BeautifulSoup(html, features="html.parser")
         for label in soup.find_all("label"):
             label.attrs["class"] = label.attrs.get("class", []) + ["form-check-label"]
-            label.input.attrs["class"] = label.input.attrs.get("class", []) + ["form-check-input"]
+            label_input = None
+            input_id = label.attrs.get("for")
+            if input_id:
+                label_input = soup.find(id=input_id)
+            else:
+                try:
+                    label_input = label.input
+                except AttributeError:
+                    pass
+            if label_input:
+                label_input.attrs["class"] = label_input.attrs.get("class", []) + ["form-check-input"]
         return str(soup)
 
     def add_checkbox_label(self, html):

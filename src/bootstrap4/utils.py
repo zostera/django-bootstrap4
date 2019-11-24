@@ -1,9 +1,9 @@
 import re
+from collections.abc import Mapping
 from urllib.parse import parse_qs, urlparse, urlunparse
 
 from django.forms.utils import flatatt
-from django.template import Variable, VariableDoesNotExist
-from django.template.base import FilterExpression, TemplateSyntaxError, kwarg_re
+from django.template.base import FilterExpression, TemplateSyntaxError, Variable, VariableDoesNotExist, kwarg_re
 from django.template.loader import get_template
 from django.utils.encoding import force_str
 from django.utils.html import format_html
@@ -11,13 +11,6 @@ from django.utils.http import urlencode
 from django.utils.safestring import mark_safe
 
 from .text import text_value
-
-try:
-    from collections.abc import Mapping
-except ImportError:
-    # py27 fallback, remove if support for python 2.7 is dropped
-    from collections import Mapping
-
 
 # RegEx for quoted string
 QUOTED_STRING = re.compile(r'^["\'](?P<noquotes>.+)["\']$')

@@ -3,6 +3,20 @@
 History
 -------
 
+1.1.0 (2019-12-06)
+++++++++++++++++++
+- Update default Bootstrap to v4.3.1
+- Add support for Python 3.8, Django 3 and Django master
+- Switch to Django `manage.py` for test running
+- Update Makefile commands
+- Update tox configuration
+- Use correct license (BSD-3-Clause)
+- Fix typo's in docstrings
+- Update Travis configuration
+- Drop MANIFEST.in, use setuptools_scm
+- Stop using _version.py, use git tags for versioning
+- Fixed issues with labels and input (#174 and #181)
+
 1.0.1 (2019-08-30)
 ++++++++++++++++++
 - Fix support for Python 3.5 (#168)
