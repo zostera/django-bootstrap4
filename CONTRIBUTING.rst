@@ -104,7 +104,7 @@ Before you submit a pull request, check that it meets these guidelines:
 3. The pull request should pass the Continuous Integration tests. Check
    https://travis-ci.org/dyve/django-bootstrap4/pull_requests
    and make sure that all tests pass. You can run the tests locally
-   using `make tox`.
+   using `tox`.
 
 Tips
 ----
