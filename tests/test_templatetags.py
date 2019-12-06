@@ -1,7 +1,6 @@
 import re
 
 from bs4 import BeautifulSoup
-from django import get_version
 from django.contrib.messages import constants as DEFAULT_MESSAGE_LEVELS
 from django.core.paginator import Paginator
 from django.forms import formset_factory
@@ -15,8 +14,6 @@ from bootstrap4.utils import add_css_class, render_tag, url_replace_param
 from tests.utils import html_39x27
 
 from .test_templates import TestForm, render_template, render_template_with_form
-
-DJANGO3 = get_version() >= "3"
 
 
 def render_formset(formset=None, context=None):
@@ -310,12 +307,12 @@ class FieldTest(TestCase):
 
         expect = html_39x27(
             '<label for="id_xss_field">'
-            "XSS&quot; onmouseover=&quot;alert(&#39;Hello, XSS&#39;)&quot; foo=&quot;</label>"
+            "XSS&quot; onmouseover=&quot;alert(&#x27;Hello, XSS&#x27;)&quot; foo=&quot;</label>"
         )
         self.assertIn(
             expect, res,
         )
-        expect = html_39x27('placeholder="XSS&quot; onmouseover=&quot;alert(&#39;Hello, XSS&#39;)&quot; foo=&quot;"')
+        expect = html_39x27('placeholder="XSS&quot; onmouseover=&quot;alert(&#x27;Hello, XSS&#x27;)&quot; foo=&quot;"')
         self.assertIn(expect, res)
 
     def test_password(self):
