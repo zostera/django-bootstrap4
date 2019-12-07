@@ -1,19 +1,16 @@
-Django>=2.2
+# Developer requirements
 
-# Documentation
-Sphinx
-sphinx_rtd_theme
+# Django is in docs requirements
+-r docs/requirements.txt
 
-# Code style
 black
-isort
-autoflake
-flake8
-pydocstyle
-docformatter
-
-# Tests
-beautifulsoup4
-
-# PyPI
-twine
+isort==4.3.21
+autoflake==1.3.1
+flake8==3.7.9
+pydocstyle==4.0.1
+docformatter==1.3.1
+beautifulsoup4==4.8.1
+twine==3.1.1
+pur==5.2.2
+wheel==0.33.6
+tox==3.14.2

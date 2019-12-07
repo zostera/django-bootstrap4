@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.admin.widgets import AdminSplitDateTime
-from django.forms.formsets import BaseFormSet, formset_factory
+from django.forms import BaseFormSet, formset_factory
 
 from bootstrap4.widgets import RadioSelectButtonGroup
 
