@@ -1,8 +1,4 @@
-# Developer requirements
-
-# Django is in docs requirements
--r docs/requirements.txt
-
+Django==3.0
 black
 isort==4.3.21
 autoflake==1.3.1
