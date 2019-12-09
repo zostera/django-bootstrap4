@@ -33,4 +33,3 @@ build: clean docs
 
 publish: build
 	twine upload dist/*
-	git tag -a v$(version) -m 'tagging v$(version)'
