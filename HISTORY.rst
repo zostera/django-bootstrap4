@@ -3,7 +3,7 @@
 History
 -------
 
-1.1.0 (2019-12-06)
+1.1.0 (2019-12-09)
 ++++++++++++++++++
 - Update default Bootstrap to v4.3.1
 - Add support for Python 3.8, Django 3 and Django master
