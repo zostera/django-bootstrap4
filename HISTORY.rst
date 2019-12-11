@@ -3,6 +3,12 @@
 History
 -------
 
+1.1.1 (2019-12-11)
+++++++++++++++++++
+- Remove tag command from Makefile
+- Reinstate `bootstrap4.__version__` (#186)
+- Add test for using a different jQuery version (#184)
+
 1.1.0 (2019-12-09)
 ++++++++++++++++++
 - Update default Bootstrap to v4.3.1
