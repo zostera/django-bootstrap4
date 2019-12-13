@@ -3,6 +3,11 @@
 History
 -------
 
+1.1.2 (2019-12-13)
+++++++++++++++++++
+- Restructure tox and Makefile
+- Add test for `bootstrap4.__version__`
+
 1.1.1 (2019-12-11)
 ++++++++++++++++++
 - Remove tag command from Makefile
