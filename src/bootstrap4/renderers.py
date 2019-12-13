@@ -5,7 +5,6 @@ from django.forms import (
     BoundField,
     CheckboxInput,
     CheckboxSelectMultiple,
-    ClearableFileInput,
     DateInput,
     EmailInput,
     FileInput,

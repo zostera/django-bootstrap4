@@ -234,7 +234,7 @@ def bootstrap_theme_url():
 @register.simple_tag
 def bootstrap_css():
     """
-    Return HTML for Bootstrap CSS. Adjust url in settings. If no url is returned, we don't want this statement to return any HTML. This is intended behavior.
+    Return HTML for Bootstrap CSS. If no CSS url is available, return empty string.
 
     Default value: ``None``
 
