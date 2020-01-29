@@ -24,7 +24,10 @@ setup(
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     include_package_data=True,
-    install_requires=["beautifulsoup4"],
+    install_requires=[
+        "Django >= 2.1",
+        "beautifulsoup4",
+    ],
     zip_safe=False,
     keywords="django-bootstrap4",
     classifiers=[
@@ -39,6 +42,7 @@ setup(
         "Topic :: Software Development :: Libraries",
         "Topic :: Utilities",
         "Environment :: Web Environment",
-        "Framework :: Django",
+        "Framework :: Django :: 2",
+        "Framework :: Django :: 3",
     ],
 )
