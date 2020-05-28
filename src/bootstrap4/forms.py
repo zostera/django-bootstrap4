@@ -1,14 +1,4 @@
-from django.forms import (
-    CheckboxSelectMultiple,
-    EmailInput,
-    FileInput,
-    HiddenInput,
-    NumberInput,
-    PasswordInput,
-    Textarea,
-    TextInput,
-    URLInput,
-)
+from django.forms import EmailInput, NumberInput, PasswordInput, Textarea, TextInput, URLInput
 from django.utils.safestring import mark_safe
 
 from .bootstrap import get_bootstrap_setting, get_field_renderer, get_form_renderer, get_formset_renderer
@@ -91,9 +81,10 @@ def render_button(
     if button_type:
         if button_type not in ("submit", "reset", "button", "link"):
             raise BootstrapError(
-                'Parameter "button_type" should be "submit", "reset", "button", "link" or empty  ("{button_type}" given).'.format(
-                    button_type=button_type
-                )
+                (
+                    'Parameter "button_type" should be "submit", "reset", "button", "link" or empty '
+                    '("{button_type}" given).'
+                ).format(button_type=button_type)
             )
         if button_type != "link":
             attrs["type"] = button_type

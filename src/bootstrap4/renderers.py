@@ -1,8 +1,10 @@
 from bs4 import BeautifulSoup
 from django.forms import (
+    BaseForm,
+    BaseFormSet,
+    BoundField,
     CheckboxInput,
     CheckboxSelectMultiple,
-    ClearableFileInput,
     DateInput,
     EmailInput,
     FileInput,
@@ -11,11 +13,9 @@ from django.forms import (
     PasswordInput,
     RadioSelect,
     Select,
+    SelectDateWidget,
     TextInput,
 )
-from django.forms.forms import BaseForm, BoundField
-from django.forms.formsets import BaseFormSet
-from django.forms.widgets import SelectDateWidget
 from django.utils.html import conditional_escape, escape, strip_tags
 from django.utils.safestring import mark_safe
 

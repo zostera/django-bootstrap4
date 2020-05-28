@@ -234,7 +234,7 @@ def bootstrap_theme_url():
 @register.simple_tag
 def bootstrap_css():
     """
-    Return HTML for Bootstrap CSS. Adjust url in settings. If no url is returned, we don't want this statement to return any HTML. This is intended behavior.
+    Return HTML for Bootstrap CSS. If no CSS url is available, return empty string.
 
     Default value: ``None``
 
@@ -275,7 +275,7 @@ def bootstrap_jquery(jquery=True):
 
         bootstrap_jquery
 
-    **Parameters**:
+    **Parameters**::
 
         :jquery: False|"slim"|True (default=True)
 
@@ -320,7 +320,7 @@ def bootstrap_javascript(jquery=False):
 
         bootstrap_javascript
 
-    **Parameters**:
+    **Parameters**::
 
         :jquery: False|"slim"|True (default=False)
 
@@ -365,7 +365,7 @@ def bootstrap_formset(*args, **kwargs):
 
         bootstrap_formset
 
-    **Parameters**:
+    **Parameters**::
 
         formset
             The formset that is being rendered
@@ -393,7 +393,7 @@ def bootstrap_formset_errors(*args, **kwargs):
 
         bootstrap_formset_errors
 
-    **Parameters**:
+    **Parameters**::
 
         formset
             The formset that is being rendered
@@ -421,7 +421,7 @@ def bootstrap_form(*args, **kwargs):
 
         bootstrap_form
 
-    **Parameters**:
+    **Parameters**::
 
         form
             The form that is to be rendered
@@ -463,7 +463,7 @@ def bootstrap_form_errors(*args, **kwargs):
 
         bootstrap_form_errors
 
-    **Parameters**:
+    **Parameters**::
 
         form
             The form that is to be rendered
@@ -502,7 +502,7 @@ def bootstrap_field(*args, **kwargs):
 
         bootstrap_field
 
-    **Parameters**:
+    **Parameters**::
 
 
         field
@@ -636,7 +636,7 @@ def bootstrap_label(*args, **kwargs):
 
         bootstrap_label
 
-    **Parameters**:
+    **Parameters**::
 
         content
             The label's text
@@ -670,7 +670,7 @@ def bootstrap_button(*args, **kwargs):
 
         bootstrap_button
 
-    **Parameters**:
+    **Parameters**::
 
         content
             The text to be displayed in the button
@@ -736,7 +736,7 @@ def bootstrap_alert(content, alert_type="info", dismissible=True):
 
         bootstrap_alert
 
-    **Parameters**:
+    **Parameters**::
 
         content
             HTML content of alert
@@ -774,7 +774,7 @@ def bootstrap_buttons(parser, token):
 
         buttons
 
-    **Parameters**:
+    **Parameters**::
 
         submit
             Text for a submit button
@@ -840,7 +840,7 @@ def bootstrap_messages(context, *args, **kwargs):
 
         bootstrap_messages
 
-    **Parameters**:
+    **Parameters**::
 
         None.
 
@@ -869,7 +869,7 @@ def bootstrap_pagination(page, **kwargs):
 
         bootstrap_pagination
 
-    **Parameters**:
+    **Parameters**::
 
         page
             The page of results to show.

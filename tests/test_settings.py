@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from bootstrap4.bootstrap import get_bootstrap_setting, include_jquery, jquery_slim_url, jquery_url
 
@@ -17,6 +17,25 @@ class SettingsTest(TestCase):
             {
                 "url": "https://code.jquery.com/jquery-3.3.1.min.js",
                 "integrity": "sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT",
+                "crossorigin": "anonymous",
+            },
+        )
+
+    @override_settings(
+        BOOTSTRAP4={
+            "jquery_url": {
+                "url": "https://example.com/jquery.js",
+                "integrity": "we-want-a-different-jquery",
+                "crossorigin": "anonymous",
+            },
+        }
+    )
+    def test_jquery_url_from_settings(self):
+        self.assertEqual(
+            jquery_url(),
+            {
+                "url": "https://example.com/jquery.js",
+                "integrity": "we-want-a-different-jquery",
                 "crossorigin": "anonymous",
             },
         )

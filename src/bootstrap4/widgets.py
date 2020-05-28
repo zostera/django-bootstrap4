@@ -1,4 +1,4 @@
-from django.forms.widgets import RadioSelect
+from django.forms import RadioSelect
 
 
 class RadioSelectButtonGroup(RadioSelect):

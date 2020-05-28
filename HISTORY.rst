@@ -8,6 +8,31 @@ Development
 - Fix form-check-{label,input} classes applied too broadly. These should only be applied to labels and inputs found underneath the enclosing widget div for radio and checkbox select, not on the whole document.
 - Allow to display radio and checkbox elements inline using the form-check classes.
 
+1.1.2 (2019-12-13)
+++++++++++++++++++
+- Restructure tox and Makefile
+- Add test for `bootstrap4.__version__`
+
+1.1.1 (2019-12-11)
+++++++++++++++++++
+- Remove tag command from Makefile
+- Reinstate `bootstrap4.__version__` (#186)
+- Add test for using a different jQuery version (#184)
+
+1.1.0 (2019-12-09)
+++++++++++++++++++
+- Update default Bootstrap to v4.3.1
+- Add support for Python 3.8, Django 3 and Django master
+- Switch to Django `manage.py` for test running
+- Update Makefile commands
+- Update tox configuration
+- Use correct license (BSD-3-Clause)
+- Fix typo's in docstrings
+- Update Travis configuration
+- Drop MANIFEST.in, use setuptools_scm
+- Stop using _version.py, use git tags for versioning
+- Fixed issues with labels and input (#174 and #181)
+
 1.0.1 (2019-08-30)
 ++++++++++++++++++
 - Fix support for Python 3.5 (#168)
