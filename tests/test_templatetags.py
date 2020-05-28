@@ -182,6 +182,13 @@ class BootstrapFormTest(TestCase):
         self.assertIn("hlabel", res)
         self.assertIn("hfield", res)
 
+    def test_form_check_class(self):
+        form = TestForm()
+        res = render_template_with_form(
+            "{% bootstrap_form form form_check_class='form-check form-check-inline' %}", {"form": form}
+        )
+        self.assertIn('div class="form-check form-check-inline"', res)
+
     def test_buttons_tag(self):
         form = TestForm()
         res = render_template_with_form('{% buttons layout="horizontal" %}{% endbuttons %}', {"form": form})
@@ -231,9 +238,7 @@ class BootstrapFormTest(TestCase):
     def test_radio_select_button_group(self):
         form = TestForm()
         res = render_template_with_form("{% bootstrap_form form %}", {"form": form})
-        self.assertIn(
-            'input class="form-check-input" id="id_category5_0_0" name="category5" required="" type="radio"', res
-        )
+        self.assertIn('input id="id_category5_0_0" name="category5" required="" type="radio"', res)
 
     def test_alert_error_type(self):
         form = TestForm({"sender": "sender"})

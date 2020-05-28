@@ -148,6 +148,7 @@ class FormRenderer(BaseRenderer):
         self.required_css_class = kwargs.get("required_css_class", None)
         self.bound_css_class = kwargs.get("bound_css_class", None)
         self.alert_error_type = kwargs.get("alert_error_type", "non_fields")
+        self.form_check_class = kwargs.get("form_check_class", "form-check")
 
     def render_fields(self):
         rendered_fields = []
@@ -159,6 +160,7 @@ class FormRenderer(BaseRenderer):
                     form_group_class=self.form_group_class,
                     field_class=self.field_class,
                     label_class=self.label_class,
+                    form_check_class=self.form_check_class,
                     show_label=self.show_label,
                     show_help=self.show_help,
                     exclude=self.exclude,
@@ -218,6 +220,7 @@ class FieldRenderer(BaseRenderer):
         self.initial_attrs = self.widget.attrs.copy()
         self.field_help = text_value(mark_safe(field.help_text)) if self.show_help and field.help_text else ""
         self.field_errors = [conditional_escape(text_value(error)) for error in field.errors]
+        self.form_check_class = kwargs.get("form_check_class", "form-check")
 
         if "placeholder" in kwargs:
             # Find the placeholder in kwargs, even if it's empty
@@ -321,7 +324,7 @@ class FieldRenderer(BaseRenderer):
         mapping = [
             ("<ul", '<div class="{classes}"'.format(classes=classes)),
             ("</ul>", "</div>"),
-            ("<li", '<div class="form-check"'),
+            ("<li", '<div class="{form_check_class}"'.format(form_check_class=self.form_check_class)),
             ("</li>", "</div>"),
         ]
         for k, v in mapping:
@@ -331,19 +334,11 @@ class FieldRenderer(BaseRenderer):
         # A simple 'replace' isn't enough as we don't want to have several 'class' attr definition, which would happen
         # if we tried to 'html.replace("input", "input class=...")'
         soup = BeautifulSoup(html, features="html.parser")
-        for label in soup.find_all("label"):
-            label.attrs["class"] = label.attrs.get("class", []) + ["form-check-label"]
-            label_input = None
-            input_id = label.attrs.get("for")
-            if input_id:
-                label_input = soup.find(id=input_id)
-            else:
-                try:
-                    label_input = label.input
-                except AttributeError:
-                    pass
-            if label_input:
-                label_input.attrs["class"] = label_input.attrs.get("class", []) + ["form-check-input"]
+        enclosing_div = soup.find("div", {"class": classes})
+        if enclosing_div:
+            for label in enclosing_div.find_all("label"):
+                label.attrs["class"] = label.attrs.get("class", []) + ["form-check-label"]
+                label.input.attrs["class"] = label.input.attrs.get("class", []) + ["form-check-input"]
         return str(soup)
 
     def add_checkbox_label(self, html):
