@@ -5,6 +5,8 @@ History
 
 Development
 +++++++++++
+- Use poetry (https://python-poetry.org/) for dependency management and packaging.
+- Drop support for Python 3.5.
 - Fix form-check-{label,input} classes applied too broadly. These should only be applied to labels and inputs found underneath the enclosing widget div for radio and checkbox select, not on the whole document.
 - Allow to display radio and checkbox elements inline using the form-check classes.
 
