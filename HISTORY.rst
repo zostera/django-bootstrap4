@@ -3,7 +3,7 @@
 History
 -------
 
-2.0.1 (2020-mm-dd)
+2.0.1 (2020-06-02)
 ++++++++++++++++++
 - Set beautifulsoup4 requirement to >= 4.8.0 (fixes #216).
 - Do not assume all inputs are inside labels (fixes #215).
