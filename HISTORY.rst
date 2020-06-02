@@ -3,6 +3,11 @@
 History
 -------
 
+2.0.1 (2020-mm-dd)
+++++++++++++++++++
+- Set beautifulsoup4 requirement to >= 4.8.0 (fixes #216).
+- Do not assume all inputs are inside labels (fixes #215).
+
 2.0.0 (2020-06-01)
 ++++++++++++++++++
 - Use poetry (https://python-poetry.org/) for dependency management and packaging.
