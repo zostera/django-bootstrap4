@@ -338,7 +338,10 @@ class FieldRenderer(BaseRenderer):
         if enclosing_div:
             for label in enclosing_div.find_all("label"):
                 label.attrs["class"] = label.attrs.get("class", []) + ["form-check-label"]
-                label.input.attrs["class"] = label.input.attrs.get("class", []) + ["form-check-input"]
+                try:
+                    label.input.attrs["class"] = label.input.attrs.get("class", []) + ["form-check-input"]
+                except AttributeError:
+                    pass
         return str(soup)
 
     def add_checkbox_label(self, html):
