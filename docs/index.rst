@@ -15,4 +15,4 @@ Contents:
    widgets
    contributing
    authors
-   history
+   changelog
