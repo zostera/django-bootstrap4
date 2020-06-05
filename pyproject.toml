@@ -7,7 +7,7 @@ repository = "https://github.com/zostera/django-bootstrap4"
 documentation = "https://django-bootstrap4.readthedocs.io/"
 authors = ["Dylan Verheul <dylan@zostera.nl>"]
 license = "BSD-3-Clause"
-readme = "README.rst"
+readme = "README.md"
 keywords= ["django", "django-bootstrap4", "bootstrap4", "bootstrap"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
