@@ -13,6 +13,5 @@ Contents:
    settings
    templates
    widgets
-   contributing
    authors
-   history
+   changelog
