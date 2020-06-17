@@ -13,7 +13,7 @@ The goal of this project is to seamlessly blend Django and Bootstrap 4.
 
 ## Requirements
 
-- Django >= 2.1 (and `compatible Python versions <https://docs.djangoproject.com/en/2.2/faq/install/#what-python-version-can-i-use-with-django>`_)
+Django 2.2 or 3.0 with Python 3.6 or higher.
 
 ## Documentation
 
