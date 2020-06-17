@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## [2.1.0] - (2020-06-02)
 
 - Convert HISTORY.rst to Markdown and rename to CHANGELOG.md.
 - Convert README.rst, AUTHORS.rst and CONTRIBUTING.rst to Markdown, and change extension to .md.
