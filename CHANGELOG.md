@@ -5,6 +5,7 @@
 - Convert HISTORY.rst to Markdown and rename to CHANGELOG.md.
 - Convert README.rst, AUTHORS.rst and CONTRIBUTING.rst to Markdown, and change extension to .md.
 - Update CONTRIBUTING.md to reflect use of `poetry`.
+- Drop contributing.rst from documentation.
 
 ## [2.0.1] - (2020-06-02)
 
