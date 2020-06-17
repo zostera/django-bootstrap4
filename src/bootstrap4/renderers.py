@@ -359,6 +359,10 @@ class FieldRenderer(BaseRenderer):
         html = html.replace("</select>", "</select>" + div2)
         return '<div class="row bootstrap4-multi-input">{html}</div>'.format(html=html)
 
+    def fix_file_input_label(self, html):
+        html = "<br>" + html
+        return html
+
     def post_widget_render(self, html):
         if isinstance(self.widget, RadioSelect):
             html = self.list_to_class(html, "radio radio-success")
@@ -368,6 +372,8 @@ class FieldRenderer(BaseRenderer):
             html = self.fix_date_select_input(html)
         elif isinstance(self.widget, CheckboxInput):
             html = self.add_checkbox_label(html)
+        elif isinstance(self.widget, FileInput):
+            html = self.fix_file_input_label(html)
         return html
 
     def wrap_widget(self, html):
