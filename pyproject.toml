@@ -52,7 +52,7 @@ coverage = {extras = ["toml"], version = "^5.0.4"}
 m2r = "^0.2.1"
 
 [tool.poetry.extras]
-docs = ["sphinx", "sphinx_rts_theme", "m2r"]
+docs = ["sphinx", "sphinx_rtd_theme", "m2r"]
 
 [tool.black]
 line-length = 120
