@@ -1,6 +1,11 @@
 # Changelog
 
-## [2.1.0] - (2020-06-02)
+## [2.1.1] - (2020-06-18)
+
+- Fix date in CHANGELOG.
+- Fix typo in pyproject.toml (#222).
+
+## [2.1.0] - (2020-06-17)
 
 - Convert HISTORY.rst to Markdown and rename to CHANGELOG.md.
 - Convert README.rst, AUTHORS.rst and CONTRIBUTING.rst to Markdown, and change extension to .md.
