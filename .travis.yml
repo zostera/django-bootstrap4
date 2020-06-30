@@ -20,4 +20,5 @@ services: postgresql
 before_install: pip install poetry
 install: pip install tox-travis
 script: tox
-after_success: poetry run coveralls
+after_success:
+  - if [ "$TRAVIS_PYTHON_VERSION" = "3.8" ]; then poetry run coverage combine && poetry run coveralls; fi
