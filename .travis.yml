@@ -20,3 +20,4 @@ services: postgresql
 before_install: pip install poetry
 install: pip install tox-travis
 script: tox
+after_success: poetry run coveralls
