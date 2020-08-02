@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-bootstrap4"
-version = "2.2.0"
+version = "2.3.0"
 description = "Bootstrap support for Django projects"
 homepage = "https://github.com/zostera/django-bootstrap4"
 repository = "https://github.com/zostera/django-bootstrap4"

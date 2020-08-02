@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.3.0] - In development
+
+- Updated CSS/JavaScript URLs to newer versions (thanks @emmceemoore).
+
 ## [2.2.0] - 2020-07-01
 
 - Fix coveralls.
