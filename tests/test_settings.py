@@ -15,8 +15,8 @@ class SettingsTest(TestCase):
         self.assertEqual(
             jquery_url(),
             {
-                "url": "https://code.jquery.com/jquery-3.3.1.min.js",
-                "integrity": "sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT",
+                "url": "https://code.jquery.com/jquery-3.5.1.min.js",
+                "integrity": "sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2",
                 "crossorigin": "anonymous",
             },
         )
@@ -44,8 +44,8 @@ class SettingsTest(TestCase):
         self.assertEqual(
             jquery_slim_url(),
             {
-                "url": "https://code.jquery.com/jquery-3.3.1.slim.min.js",
-                "integrity": "sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo",
+                "url": "https://code.jquery.com/jquery-3.5.1.slim.min.js",
+                "integrity": "sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj",
                 "crossorigin": "anonymous",
             },
         )
