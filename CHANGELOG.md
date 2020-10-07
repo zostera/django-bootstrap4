@@ -2,7 +2,13 @@
 
 ## [2.3.0] - In development
 
+- Updated default Bootstrap to 4.5.2.
 - Updated CSS/JavaScript URLs to newer versions (thanks @emmceemoore).
+- Replace `m2r` with `m2r2` to support Sphinx3.
+- Update Sphinx dependency because of security update.
+- Use Django 3.1 in `tox` matrix, fix warning in tests.
+- Add `tox` to development dependencies.
+- Accept importlib-metadata 2.x.x (thanks @dbaty).
 
 ## [2.2.0] - 2020-07-01
 

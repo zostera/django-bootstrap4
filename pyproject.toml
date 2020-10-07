@@ -39,7 +39,7 @@ beautifulsoup4 = "^4.8.0"
 # docs
 sphinx = { version = "^2.4", optional = true }
 sphinx_rtd_theme = { version = "^0.4.3", optional = true }
-m2r = { version = "^0.2.1", optional = true }
+m2r2 = { version = "^0.2.5", optional = true }
 
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"
@@ -49,10 +49,11 @@ flake8 = "^3.7.9"
 docformatter = "^1.3.1"
 pydocstyle = "^5.0.2"
 coverage = {extras = ["toml"], version = "^5.0.4"}
-m2r = "^0.2.1"
+m2r2 = "^0.2.1"
+tox = "^3.19.0"
 
 [tool.poetry.extras]
-docs = ["sphinx", "sphinx_rtd_theme", "m2r"]
+docs = ["sphinx", "sphinx_rtd_theme", "m2r2"]
 
 [tool.black]
 line-length = 120
@@ -67,4 +68,4 @@ skip_covered = true
 
 [build-system]
 requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+build-backend = "poetry.core.masonry.api"
