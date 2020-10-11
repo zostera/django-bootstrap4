@@ -9,11 +9,12 @@
 - Use Django 3.1 in `tox` matrix, fix warning in tests.
 - Add `tox` to development dependencies.
 - Accept importlib-metadata 2.x.x (thanks @dbaty).
+- Add Python 3.9 to tox matrix.
 
 ## [2.2.0] - 2020-07-01
 
 - Fix coveralls.
-- Explicitly support Django 3.1 in tox matrix.
+- Add Django 3.1 to tox matrix.
 
 ## [2.1.1] - 2020-06-18
 
