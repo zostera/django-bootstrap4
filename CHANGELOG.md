@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.3.0] - In development
+## [2.3.0] - 2020-10-11
 
 - Updated default Bootstrap to 4.5.2.
 - Updated CSS/JavaScript URLs to newer versions (thanks @emmceemoore).
