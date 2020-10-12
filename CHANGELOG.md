@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.3.1] - In development
+
+- Fix CHANGELOG.
+- Fix poetry build system configuration.
+
 ## [2.3.0] - 2020-10-11
 
 - Updated default Bootstrap to 4.5.2.
