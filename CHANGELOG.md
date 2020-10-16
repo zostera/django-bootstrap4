@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.3.1] - In development
+## [2.3.1] - 2020-10-16
 
 - Fix CHANGELOG.
 - Fix poetry build system configuration.
