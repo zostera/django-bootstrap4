@@ -1,16 +1,13 @@
 # Changelog
 
-## [2.3.2] - In development
+## [2.3.2] - 2020-10-16
 
-- Fix CHANGELOG.
 - Fix poetry build system configuration.
 - Add Python 3.9 to Travis CI.
 
 ## [2.3.1] - 2020-10-16
 
 - Fix CHANGELOG.
-- Fix poetry build system configuration.
-- Add Python 3.9 to Travis CI.
 
 ## [2.3.0] - 2020-10-11
 
