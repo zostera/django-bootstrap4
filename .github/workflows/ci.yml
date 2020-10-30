@@ -7,6 +7,17 @@ jobs:
   test:
     name: Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:10.8
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: test1234
+          POSTGRES_DB: model-translation
+        ports:
+          - 5432:5432
+
     strategy:
       max-parallel: 5
       matrix:
