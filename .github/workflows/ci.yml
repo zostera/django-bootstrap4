@@ -10,11 +10,11 @@ jobs:
 
     services:
       postgres:
-        image: postgres:10.8
+        image: postgis/postgis:10-2.5
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: test1234
-          POSTGRES_DB: model-translation
+          POSTGRES_DB: dbs4
         ports:
           - 5432:5432
 
