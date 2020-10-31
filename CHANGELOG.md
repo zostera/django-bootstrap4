@@ -5,6 +5,7 @@
 - Fix poetry build system configuration.
 - Add Python 3.9 to Travis CI.
 - Add docs and tests to sdist.
+- Use GitHub Actions for CI.
 
 ## [2.3.1] - 2020-10-16
 
