@@ -1,7 +1,7 @@
 # django-bootstrap 4
 
-[![image](https://travis-ci.org/zostera/django-bootstrap4.svg?branch=main)](https://travis-ci.org/zostera/django-bootstrap4)
-[![image](https://coveralls.io/repos/github/zostera/django-bootstrap4/badge.svg?branch=main)](https://coveralls.io/github/zostera/django-bootstrap4?branch=main)
+[![CI](https://github.com/zostera/django-bootstrap4/workflows/CI/badge.svg?branch=main)](https://github.com/zostera/django-bootstrap4/actions?workflow=CI)
+[![Coverage Status](https://coveralls.io/repos/github/zostera/django-bootstrap4/badge.svg?branch=main)](https://coveralls.io/github/zostera/django-bootstrap4?branch=main)
 [![Latest PyPI version](https://img.shields.io/pypi/v/django-bootstrap4.svg)](https://pypi.python.org/pypi/django-bootstrap4)
 [![Any color you like](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
