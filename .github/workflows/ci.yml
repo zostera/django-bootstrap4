@@ -14,6 +14,11 @@ jobs:
         python-version: [3.6, 3.7, 3.8, 3.9]
 
     steps:
+      - uses: huaxk/postgis-action@v1
+        with:
+          postgresql version: '11'
+          postgresql password: secret
+
       - name: Checkout code
         uses: actions/checkout@v2
 
