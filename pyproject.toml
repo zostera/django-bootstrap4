@@ -61,7 +61,11 @@ line-length = 120
 target-version = ["py36"]
 
 [tool.coverage.run]
-source = ["src/django_bootstrap4"]
+branch = true
+source = ["django_bootstrap4"]
+
+[tool.coverage.paths]
+source = ["src", ".tox/*/site-packages"]
 
 [tool.coverage.report]
 show_missing = true
