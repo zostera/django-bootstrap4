@@ -60,3 +60,6 @@ local_settings.py
 # pyenv
 .python-version
 reports
+
+# example database
+example/db.sqlite3

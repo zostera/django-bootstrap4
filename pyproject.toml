@@ -62,7 +62,7 @@ target-version = ["py36"]
 
 [tool.coverage.run]
 branch = true
-source = ["django_bootstrap4"]
+source = ["bootstrap4"]
 
 [tool.coverage.paths]
 source = ["src", ".tox/*/site-packages"]
