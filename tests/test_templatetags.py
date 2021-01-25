@@ -492,6 +492,12 @@ class FieldTest(TestCase):
         res = render_template_with_form('{% bootstrap_label "foobar" label_for="subject" %}')
         self.assertEqual('<label for="subject">foobar</label>', res)
 
+    def test_tag_class(self):
+        res = render_template_with_form('{% bootstrap_field form.subject tag_class="foobar" %}')
+        res = BeautifulSoup(res, "html.parser")
+        tag = self._select_one_element(res, "input", "There should be an input tag inside .form-group")
+        self.assertIn("foobar", tag["class"], "The input tag should have the class 'foobar'")
+
     def test_attributes_consistency(self):
         form = TestForm()
         attrs = form.fields["addon"].widget.attrs.copy()

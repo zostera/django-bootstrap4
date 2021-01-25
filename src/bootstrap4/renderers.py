@@ -47,6 +47,7 @@ class BaseRenderer(object):
         self.form_group_class = kwargs.get("form_group_class", FORM_GROUP_CLASS)
         self.field_class = kwargs.get("field_class", "")
         self.label_class = kwargs.get("label_class", "")
+        self.tag_class = kwargs.get("tag_class", "")
         self.show_help = kwargs.get("show_help", True)
         self.show_label = kwargs.get("show_label", True)
         self.exclude = kwargs.get("exclude", "")
@@ -109,6 +110,7 @@ class FormsetRenderer(BaseRenderer):
                     form_group_class=self.form_group_class,
                     field_class=self.field_class,
                     label_class=self.label_class,
+                    tag_class=self.tag_class,
                     show_label=self.show_label,
                     show_help=self.show_help,
                     exclude=self.exclude,
@@ -160,6 +162,7 @@ class FormRenderer(BaseRenderer):
                     form_group_class=self.form_group_class,
                     field_class=self.field_class,
                     label_class=self.label_class,
+                    tag_class=self.tag_class,
                     form_check_class=self.form_check_class,
                     show_label=self.show_label,
                     show_help=self.show_help,
@@ -274,6 +277,7 @@ class FieldRenderer(BaseRenderer):
         if widget is None:
             widget = self.widget
         classes = widget.attrs.get("class", "")
+        classes = add_css_class(classes, self.tag_class)
         if ReadOnlyPasswordHashWidget is not None and isinstance(widget, ReadOnlyPasswordHashWidget):
             # Render this is a static control
             classes = add_css_class(classes, "form-control-static", prepend=True)

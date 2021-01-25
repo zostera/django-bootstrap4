@@ -7,6 +7,7 @@
 - Add docs and tests to sdist.
 - Use GitHub Actions for CI.
 - Fix example by not installing editable version.
+- Add `tag_class` parameter to fields.
 
 ## [2.3.1] - 2020-10-16
 
