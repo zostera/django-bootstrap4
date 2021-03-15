@@ -1,8 +1,12 @@
 # Changelog
 
-## [2.3.2] - In development
+## [3.0.0] - In development
 
-- Fix poetry build system configuration.
+- Use bundled Bootstrap JavaScript, no need for separate popper.js. 
+- Updated default Bootstrap to 4.6.0.
+- Add Dependabot for updates to dependencies.
+- Rename AUTHORS.md to AUTHORS, remove authors section from documentation.
+- Revert to setuptools for packaging.
 - Add Python 3.9 to Travis CI.
 - Add docs and tests to sdist.
 - Use GitHub Actions for CI.

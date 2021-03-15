@@ -85,8 +85,6 @@ class MediaTest(TestCase):
         html = render_template_with_form("{% bootstrap_javascript jquery=True %}")
         # jQuery
         self.assertInHTML(self.expected_js("jquery"), html)
-        # Popper
-        self.assertInHTML(self.expected_js("popper"), html)
         # Bootstrap
         self.assertInHTML(self.expected_js("javascript"), html)
 
