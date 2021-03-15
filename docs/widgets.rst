@@ -2,7 +2,7 @@
 Widgets
 =======
 
-A form widget is available for displaying radio buttons as a Bootstrap 4 button group(https://getbootstrap.com/docs/4.1/components/button-group/).
+A form widget is available for displaying radio buttons as a Bootstrap 4 button group(https://getbootstrap.com/docs/4.5/components/button-group/).
 
 
 RadioSelectButtonGroup
