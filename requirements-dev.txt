@@ -10,5 +10,5 @@ autoflake==1.4
 tox==3.23.0
 pur==5.3.0
 wheel==0.36.2
-setuptools==54.1.1
+setuptools==54.1.2
 twine==3.3.0
