@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.3.2] - In development
+## [3.0.0] - In development
 
 - Use bundled Bootstrap JavaScript, no need for separate popper.js. 
 - Updated default Bootstrap to 4.6.0.
