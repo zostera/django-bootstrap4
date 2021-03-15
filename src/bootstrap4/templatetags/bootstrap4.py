@@ -7,15 +7,7 @@ from django.template import Context
 from django.utils.http import urlencode
 from django.utils.safestring import mark_safe
 
-from ..bootstrap import (
-    css_url,
-    get_bootstrap_setting,
-    javascript_url,
-    jquery_slim_url,
-    jquery_url,
-    popper_url,
-    theme_url,
-)
+from ..bootstrap import css_url, get_bootstrap_setting, javascript_url, jquery_slim_url, jquery_url, theme_url
 from ..components import render_alert
 from ..forms import (
     render_button,
@@ -133,30 +125,6 @@ def bootstrap_jquery_slim_url():
         {% bootstrap_jquery_slim_url %}
     """
     return jquery_slim_url()
-
-
-@register.simple_tag
-def bootstrap_popper_url():
-    """
-    Return the full url to the Popper plugin to use.
-
-    Default value: ``None``
-
-    This value is configurable, see Settings section
-
-    **Tag name**::
-
-        bootstrap_popper_url
-
-    **Usage**::
-
-        {% bootstrap_popper_url %}
-
-    **Example**::
-
-        {% bootstrap_popper_url %}
-    """
-    return popper_url()
 
 
 @register.simple_tag
@@ -341,11 +309,6 @@ def bootstrap_javascript(jquery=False):
     # Include jQuery if the option is passed
     if jquery:
         javascript_tags.append(bootstrap_jquery(jquery=jquery))
-
-    # Popper.js library
-    popper_url = bootstrap_popper_url()
-    if popper_url:
-        javascript_tags.append(render_script_tag(popper_url))
 
     # Bootstrap 4 JavaScript
     bootstrap_js_url = bootstrap_javascript_url()
