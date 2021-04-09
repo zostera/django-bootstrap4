@@ -1,7 +1,7 @@
 .PHONY: test tox reformat lint docs porcelain branch build publish
 
 PROJECT_DIR=src/bootstrap4
-PYTHON_SOURCES=${PROJECT_DIR} tests example *.py
+PYTHON_SOURCES=${PROJECT_DIR} tests *.py
 
 test:
 	coverage run manage.py test
