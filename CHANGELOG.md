@@ -1,6 +1,6 @@
 # Changelog
 
-## [3.0.0] - In development
+## [3.0.0] - 2021-04-09
 
 - Drop support for Django 3.0, extended support stopped on 2021-04-01).
 - Add support for Django 3.2.
