@@ -39,7 +39,7 @@ INSTALLED_APPS = (
 )
 ```
 
-3. In your templates, load the `bootstrap4` library and use the `bootstrap_*` tags:
+3. In your templates, load the `bootstrap4` library and use the `bootstrap_*` tags. See example below.
 
 ## Example template
 
@@ -57,28 +57,21 @@ INSTALLED_APPS = (
 </form>
 ```
 
-Demo
-----
+## Demo
 
 A demo app is provided in `demo`. You can run it from your virtualenv with `python manage.py runserver`.
 
-
-Bugs and suggestions
---------------------
+## Bugs and suggestions
 
 If you have found a bug or if you have a request for additional functionality, please use the issue tracker on GitHub.
 
 https://github.com/zostera/django-bootstrap4/issues
 
-
-License
--------
+## License
 
 You can use this under BSD-3-Clause. See [LICENSE](LICENSE) file for details.
 
-
-Author
-------
+## Author
 
 Developed and maintained by [Zostera](https://zostera.nl).
 
