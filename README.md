@@ -23,27 +23,27 @@ The full documentation is at https://django-bootstrap4.readthedocs.io/
 
 1. Install using pip:
 
-    ```shell script
-    pip install django-bootstrap4
-    ```
+```bash
+pip install django-bootstrap4
+```
    
    Alternatively, you can install download or clone this repo and call ``pip install -e .``.
 
 2. Add to `INSTALLED_APPS` in your `settings.py`:
 
-   ```python
-   INSTALLED_APPS = (
-       # ...
-       "bootstrap4",
-       # ...
-   )
-   ````
+```python
+INSTALLED_APPS = (
+  # ...
+  "bootstrap4",
+  # ...
+)
+```
 
 3. In your templates, load the `bootstrap4` library and use the `bootstrap_*` tags:
 
 ## Example template
 
-```djangotemplate
+```jinja
 {% load bootstrap4 %}
 
 {# Display a form #}
