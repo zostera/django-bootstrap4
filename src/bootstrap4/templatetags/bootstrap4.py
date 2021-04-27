@@ -874,6 +874,12 @@ def bootstrap_pagination(page, **kwargs):
     **Example**::
 
         {% bootstrap_pagination lines url="/pagination?page=1" size="large" %}
+    
+    **Tip**::
+    
+      If you want to repeat the query string arguments in subsequent pagination links, use the "extra" parameter with "request.GET.urlencode":
+        
+        {% bootstrap_pagination page_obj extra=request.GET.urlencode %}
     """
     pagination_kwargs = kwargs.copy()
     pagination_kwargs["page"] = page
