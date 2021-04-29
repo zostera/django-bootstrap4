@@ -360,6 +360,9 @@ class FieldRenderer(BaseRenderer):
         return '<div class="row bootstrap4-multi-input">{html}</div>'.format(html=html)
 
     def fix_file_input_label(self, html):
+        if self.layout == "horizontal":
+            return html
+        
         html = "<br>" + html
         return html
 
