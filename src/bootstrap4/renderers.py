@@ -15,6 +15,7 @@ from django.forms import (
     Select,
     SelectDateWidget,
     TextInput,
+    URLInput,
 )
 from django.utils.html import conditional_escape, escape, strip_tags
 from django.utils.safestring import mark_safe
@@ -393,7 +394,7 @@ class FieldRenderer(BaseRenderer):
 
     @property
     def is_input_group(self):
-        allowed_widget_types = (TextInput, PasswordInput, DateInput, NumberInput, Select, EmailInput)
+        allowed_widget_types = (TextInput, PasswordInput, DateInput, NumberInput, Select, EmailInput, URLInput)
         return (self.addon_before or self.addon_after) and isinstance(self.widget, allowed_widget_types)
 
     def make_input_group(self, html):
