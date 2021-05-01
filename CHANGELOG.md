@@ -1,8 +1,9 @@
 # Changelog
 
-## In development
+## [3.0.1] - 2021-05-01
 
 - No line break in FileInput in horizontal layout.
+- Actually use the bundles JavaScript.
 
 ## [3.0.0] - 2021-04-09
 
