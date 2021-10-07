@@ -723,7 +723,7 @@ def bootstrap_alert(content, alert_type="info", dismissible=True):
 
     **Example**::
 
-        {% bootstrap_alert "Something went wrong" alert_type='error' %}
+        {% bootstrap_alert "Something went wrong" alert_type='danger' %}
     """
     return render_alert(content, alert_type, dismissible)
 
