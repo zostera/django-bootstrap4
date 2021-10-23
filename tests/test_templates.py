@@ -4,7 +4,12 @@ from django.contrib.gis import forms as gisforms
 from django.template import engines
 from django.test import TestCase
 
-from bootstrap4.widgets import RadioSelectButtonGroup
+from bootstrap4.widgets import(
+    RadioSelectButtonGroup,
+    DateTimeWidget,
+    DateWidget,
+    TimeWidget
+)
 
 RADIO_CHOICES = (("1", "Radio 1"), ("2", "Radio 2"))
 
@@ -31,6 +36,11 @@ class TestForm(forms.Form):
     message = forms.CharField(required=False, help_text="<i>my_help_text</i>")
     sender = forms.EmailField(label="Sender © unicode", help_text='E.g., "me@example.com"')
     secret = forms.CharField(initial=42, widget=forms.HiddenInput)
+
+    datetime = forms.DateTimeField(widget=DateTimeWidget, initial=datetime.now())
+    date = forms.DateField(widget=DateWidget, initial=datetime.now().date())
+    time = forms.TimeField(widget=TimeWidget, initial=datetime.now().time())
+
     cc_myself = forms.BooleanField(
         required=False, help_text='cc stands for "carbon copy." You will get a copy in your mailbox.'
     )
