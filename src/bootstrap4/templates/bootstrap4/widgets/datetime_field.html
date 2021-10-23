@@ -1,1 +1,1 @@
-<input type="datetime-local" name="{{ widget.name }}" id="{{ widget.attrs.id }}" value="{{ widget.value|default:'' }}"{% if widget.required %} required{% endif %}/>
+<input type="datetime-local" class="{{ widget.attrs.class|default:'form-control' }}" name="{{ widget.name }}" id="{{ widget.attrs.id }}" value="{{ widget.value|default:'' }}"{% if widget.required %} required{% endif %}/>
