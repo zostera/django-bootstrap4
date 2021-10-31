@@ -1,5 +1,7 @@
 SECRET_KEY = "Thanks for using django-bootstrap4!"
 
+USE_TZ = True
+
 DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}}
 
 INSTALLED_APPS = (
