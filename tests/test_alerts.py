@@ -2,11 +2,11 @@ from django.test import TestCase
 from django.utils.safestring import mark_safe
 
 from bootstrap4.components import render_alert
-from bootstrap4.exceptions import BootstrapError
-from bootstrap4.forms import render_button
+
+from .utils import render_template_with_bootstrap
 
 
-class AlertsTest(TestCase):
+class RenderAlertTestCase(TestCase):
     def test_render_alert_without_type(self):
         self.assertEqual(
             render_alert("content"),
@@ -51,17 +51,13 @@ class AlertsTest(TestCase):
         )
 
 
-class ButtonsTest(TestCase):
-    def test_button(self):
-        self.assertEqual(render_button("button"), '<button class="btn btn-primary">button</button>')
-
-    def test_button_with_illegal_type(self):
-        try:
-            self.assertEqual(
-                render_button("button", button_type="illegal"), '<button class="btn btn-primary">button</button>'
-            )
-        except BootstrapError as e:
-            self.assertEqual(
-                str(e),
-                'Parameter "button_type" should be "submit", "reset", "button", "link" or empty ("illegal" given).',
-            )
+class BootstrapAlertTestCase(TestCase):
+    def test_bootstrap_alert(self):
+        res = render_template_with_bootstrap('{% bootstrap_alert "content" alert_type="danger" %}')
+        self.assertEqual(
+            res.strip(),
+            '<div class="alert alert-danger alert-dismissible" role="alert">'
+            + '<button type="button" class="close" data-dismiss="alert" '
+            + 'aria-label="close">'
+            + "&times;</button>content</div>",
+        )
