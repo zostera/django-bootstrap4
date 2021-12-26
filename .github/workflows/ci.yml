@@ -36,7 +36,7 @@ jobs:
     strategy:
       max-parallel: 5
       matrix:
-        python-version: [ "3.6", "3.7", "3.8", "3.9", "3.10" ]
+        python-version: [ "3.7", "3.8", "3.9", "3.10" ]
 
     steps:
       - name: Checkout code
@@ -52,10 +52,10 @@ jobs:
           sudo apt-get install binutils libproj-dev gdal-bin
 
       - run: pip install -U pip
-      - run: pip install -U tox coverage[toml] coveralls
+      - run: pip install -U tox tox-gh-actions coverage[toml] coveralls
 
       - name: Test with tox
-        run: tox -e py
+        run: tox
 
       - name: Coverage combine
         run: coverage combine
