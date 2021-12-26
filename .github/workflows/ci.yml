@@ -1,6 +1,8 @@
 name: CI
 
-on: [ push ]
+on:
+  - push
+  - pull_request
 
 jobs:
 
@@ -55,7 +57,7 @@ jobs:
       - run: pip install -U tox coverage[toml] coveralls
 
       - name: Test with tox
-        run: tox -e py
+        run: tox
 
       - name: Coverage combine
         run: coverage combine
