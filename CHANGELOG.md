@@ -3,8 +3,8 @@
 ## 21.2 (2021-12-27)
 
 - Drop support for Django 4 (#398).
-- Drop support for Django 3.1 (EOL).
-- Drop support for Python 3.6 (EOL).
+- Drop support for Django 3.1 (EOL, #399).
+- Drop support for Python 3.6 (EOL, #399).
 - Fix CI.
 
 ## 21.1 (2021-11-03)
