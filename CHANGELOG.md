@@ -1,5 +1,9 @@
 # Changelog
 
+## 22.1 (in development)
+
+- Fix urls in example (#418, #444)
+
 ## 21.2 (2021-12-27)
 
 - Drop support for Django 4 (#398).
