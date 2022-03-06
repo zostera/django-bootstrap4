@@ -2,20 +2,10 @@ from bs4 import BeautifulSoup
 from django.test import TestCase
 
 from .forms import TestForm
-from .utils import render_form, render_formset, render_template_with_form
-
-
-class BootstrapFormSetTest(TestCase):
-    def test_illegal_formset(self):
-        with self.assertRaises(ValueError):
-            render_formset(formset="illegal")
+from .utils import render_form, render_template_with_form
 
 
 class BootstrapFormTest(TestCase):
-    def test_illegal_form(self):
-        with self.assertRaises(ValueError):
-            render_form(form="illegal")
-
     def test_field_names(self):
         form = TestForm()
         res = render_form(form)
