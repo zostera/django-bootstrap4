@@ -48,7 +48,7 @@ class TestForm(forms.Form):
     addon = forms.CharField(widget=forms.TextInput(attrs={"addon_before": "before", "addon_after": "after"}))
     polygon = gisforms.PointField()
 
-    required_css_class = "bootstrap4-req"
+    required_css_class = "django_bootstrap4-req"
     non_field_error_message = "This is a non field error."
 
     # Set this to allow tests to work properly in Django 1.10+

@@ -74,7 +74,7 @@ class BootstrapFormTest(TestCase):
     def test_required_class(self):
         form = TestForm({"sender": "sender"})
         res = render_template_with_form("{% bootstrap_form form %}", {"form": form})
-        self.assertIn("bootstrap4-req", res)
+        self.assertIn("django_bootstrap4-req", res)
 
         res = render_template_with_form(
             '{% bootstrap_form form required_css_class="successful-test" %}', {"form": form}
@@ -82,7 +82,7 @@ class BootstrapFormTest(TestCase):
         self.assertIn("successful-test", res)
 
         res = render_template_with_form('{% bootstrap_form form required_css_class="" %}', {"form": form})
-        self.assertNotIn("bootstrap4-req", res)
+        self.assertNotIn("django_bootstrap4-req", res)
 
     def test_bound_class(self):
         form = TestForm({"sender": "sender"})

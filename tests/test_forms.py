@@ -3,8 +3,7 @@ from django.forms import formset_factory
 from django.test import TestCase
 from django.utils.html import escape
 
-from tests.utils import html_39x27
-
+from .base import html_39x27
 from .forms import TestForm
 from .utils import render_field, render_form_field, render_template_with_form
 
@@ -113,7 +112,7 @@ class FieldTest(TestCase):
         self.assertIn("text-muted", help_text["class"], "The help text should have the class 'text-muted'.")
 
     def test_required_field(self):
-        required_css_class = "bootstrap4-req"
+        required_css_class = "django_bootstrap4-req"
         required_field = render_form_field("subject")
         self.assertIn(required_css_class, required_field)
         not_required_field = render_form_field("message")
@@ -127,7 +126,7 @@ class FieldTest(TestCase):
 
     def test_empty_permitted(self):
         """If a form has empty_permitted, no fields should get the CSS class for required."""
-        required_css_class = "bootstrap4-req"
+        required_css_class = "django_bootstrap4-req"
         form = TestForm()
         res = render_form_field("subject", {"form": form})
         self.assertIn(required_css_class, res)

@@ -24,6 +24,7 @@ class MediaTestCase(BootstrapTestCase):
             )
 
     def test_bootstrap_css_tag(self):
+        self.maxDiff = None
         self.assertHTMLEqual(
             self.render("{% bootstrap_css %}"),
             self.expected_bootstrap_css,

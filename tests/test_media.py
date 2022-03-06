@@ -55,14 +55,14 @@ class MediaTest(TestCase):
 
     def test_bootstrap_setting_filter(self):
         res = render_template_with_form('{{ "required_css_class"|bootstrap_setting }}')
-        self.assertEqual(res.strip(), "bootstrap4-req")
+        self.assertEqual(res.strip(), "django_bootstrap4-req")
         res = render_template_with_form('{% if "javascript_in_head"|bootstrap_setting %}head{% else %}body{% endif %}')
         self.assertEqual(res.strip(), "head")
 
     def test_bootstrap_required_class(self):
         form = TestForm()
         res = render_template_with_form("{% bootstrap_form form %}", {"form": form})
-        self.assertIn("bootstrap4-req", res)
+        self.assertIn("django_bootstrap4-req", res)
 
     def test_bootstrap_error_class(self):
         form = TestForm({})

@@ -48,7 +48,7 @@ class TestForm(forms.Form):
     category5 = forms.ChoiceField(widget=RadioSelectButtonGroup, choices=MEDIA_CHOICES)
     addon = forms.CharField(widget=forms.TextInput(attrs={"addon_before": "before", "addon_after": "after"}))
 
-    required_css_class = "bootstrap4-req"
+    required_css_class = "django_bootstrap4-req"
 
     # Set this to allow tests to work properly in Django 1.10+
     # More information, see issue #337
