@@ -2,8 +2,6 @@ from django.test import TestCase
 from django.utils.safestring import mark_safe
 
 from bootstrap4.components import render_alert
-from bootstrap4.exceptions import BootstrapError
-from bootstrap4.forms import render_button
 
 
 class AlertsTest(TestCase):
@@ -49,19 +47,3 @@ class AlertsTest(TestCase):
                 "</div>"
             ),
         )
-
-
-class ButtonsTest(TestCase):
-    def test_button(self):
-        self.assertEqual(render_button("button"), '<button class="btn btn-primary">button</button>')
-
-    def test_button_with_illegal_type(self):
-        try:
-            self.assertEqual(
-                render_button("button", button_type="illegal"), '<button class="btn btn-primary">button</button>'
-            )
-        except BootstrapError as e:
-            self.assertEqual(
-                str(e),
-                'Parameter "button_type" should be "submit", "reset", "button", "link" or empty ("illegal" given).',
-            )
