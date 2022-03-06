@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.admin.widgets import AdminSplitDateTime
 from django.contrib.gis import forms as gisforms
 
-from bootstrap4.widgets import RadioSelectButtonGroup
+from django_bootstrap4.widgets import RadioSelectButtonGroup
 
 RADIO_CHOICES = (("1", "Radio 1"), ("2", "Radio 2"))
 

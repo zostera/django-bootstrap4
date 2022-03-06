@@ -1,3 +1,4 @@
+{% load django_bootstrap4 %}
 <div{% if widget.attrs.id %} id="{{ widget.attrs.id }}"{% endif %} class="btn-group btn-group-toggle" data-toggle="buttons">
     {% for group, options, index in widget.optgroups %}
         {% for option in options %}

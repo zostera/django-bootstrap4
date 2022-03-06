@@ -3,7 +3,7 @@ from django.forms import formset_factory
 from django.test import TestCase
 from django.utils.html import escape
 
-from bootstrap4.exceptions import BootstrapError
+from django_bootstrap4.exceptions import BootstrapError
 from tests.utils import html_39x27
 
 from .forms import TestForm

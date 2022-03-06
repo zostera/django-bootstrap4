@@ -1,6 +1,6 @@
 from django.test import TestCase, override_settings
 
-from bootstrap4.bootstrap import get_bootstrap_setting
+from django_bootstrap4.bootstrap import get_bootstrap_setting
 
 from .forms import TestForm
 from .utils import render_template_with_form

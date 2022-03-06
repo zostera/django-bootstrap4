@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from bootstrap4.text import text_concat, text_value
-from bootstrap4.utils import add_css_class, render_tag
+from django_bootstrap4.text import text_concat, text_value
+from django_bootstrap4.utils import add_css_class, render_tag
 
 
 class UtilsTest(TestCase):

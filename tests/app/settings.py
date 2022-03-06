@@ -14,7 +14,7 @@ INSTALLED_APPS = (
     "django.contrib.staticfiles",
     "django.contrib.gis",
     # Our tests
-    "bootstrap4",
+    "django_bootstrap4",
     "tests",
 )
 

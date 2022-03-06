@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.utils.safestring import mark_safe
 
-from bootstrap4.components import render_alert
+from django_bootstrap4.components import render_alert
 
 
 class AlertsTest(TestCase):

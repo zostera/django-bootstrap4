@@ -77,4 +77,4 @@ def render_template_with_bootstrap(text, context=None):
     """Create a template ``text`` that first loads bootstrap4."""
     if not context:
         context = {}
-    return render_template("{% load bootstrap4 %}" + text, context)
+    return render_template("{% load django_bootstrap4 %}" + text, context)

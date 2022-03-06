@@ -7,35 +7,20 @@ from django.template import Context
 from django.utils.http import urlencode
 from django.utils.safestring import mark_safe
 
-from ..bootstrap import css_url, get_bootstrap_setting, javascript_url, jquery_slim_url, jquery_url, theme_url
-from ..components import render_alert
-from ..forms import (
-    render_button,
-    render_field,
-    render_field_and_label,
-    render_form,
-    render_form_errors,
-    render_form_group,
-    render_formset,
-    render_formset_errors,
-    render_label,
-)
-from ..utils import (
-    handle_var,
-    parse_token_contents,
-    render_link_tag,
-    render_script_tag,
-    render_tag,
-    render_template_file,
-    url_replace_param,
-)
+from ..components import render_alert, render_button
+from ..core import css_url, get_bootstrap_setting, javascript_url, theme_url
+from ..css import _css_class_list, merge_css_classes
+from ..forms import render_field, render_form, render_form_errors, render_formset, render_formset_errors, render_label
+from ..html import render_link_tag, render_script_tag
+from ..size import get_size_class
+from ..utils import render_template_file, url_replace_param
 
-MESSAGE_LEVEL_CLASSES = {
-    message_constants.DEBUG: "alert alert-warning",
-    message_constants.INFO: "alert alert-info",
-    message_constants.SUCCESS: "alert alert-success",
-    message_constants.WARNING: "alert alert-warning",
-    message_constants.ERROR: "alert alert-danger",
+MESSAGE_ALERT_TYPES = {
+    message_constants.DEBUG: "warning",
+    message_constants.INFO: "info",
+    message_constants.SUCCESS: "success",
+    message_constants.WARNING: "warning",
+    message_constants.ERROR: "danger",
 }
 
 register = template.Library()
@@ -44,87 +29,50 @@ register = template.Library()
 @register.filter
 def bootstrap_setting(value):
     """
-    Get a setting.
+    Return django-bootstrap4 setting for use in in a template.
 
-    A simple way to read bootstrap settings in a template.
-    Please consider this filter private for now, do not use it in your own templates.
+    Please consider this filter private, do not use it in your own templates.
     """
     return get_bootstrap_setting(value)
 
 
-@register.filter
-def bootstrap_message_classes(message):
-    """Return the message classes for a message."""
-    extra_tags = None
+@register.simple_tag
+def bootstrap_server_side_validation_class(widget):
+    """
+    Return server side validation class from a widget.
+
+    Please consider this tag private, do not use it in your own templates.
+    """
     try:
-        extra_tags = message.extra_tags
-    except AttributeError:
-        pass
-    if not extra_tags:
-        extra_tags = ""
-    classes = [extra_tags]
+        css_classes = _css_class_list([widget["attrs"]["class"]])
+    except KeyError:
+        return ""
+    return " ".join([css_class for css_class in css_classes if css_class in ["is-valid", "is-invalid"]])
+
+
+@register.simple_tag
+def bootstrap_classes(*args):
+    """
+    Return list of classes.
+
+    Please consider this filter private, do not use it in your own templates.
+    """
+    return merge_css_classes(*args)
+
+
+@register.filter
+def bootstrap_message_alert_type(message):
+    """Return the alert type for a message, defaults to `info`."""
     try:
         level = message.level
     except AttributeError:
         pass
     else:
         try:
-            classes.append(MESSAGE_LEVEL_CLASSES[level])
+            return MESSAGE_ALERT_TYPES[level]
         except KeyError:
-            classes.append("alert alert-danger")
-    return " ".join(classes).strip()
-
-
-@register.simple_tag
-def bootstrap_jquery_url():
-    """
-    Return url to full version of jQuery.
-
-    **Tag name**::
-
-        bootstrap_jquery_url
-
-    Return the full url to jQuery plugin to use
-
-    Default value: ``https://code.jquery.com/jquery-3.2.1.min.js``
-
-    This value is configurable, see Settings section
-
-    **Usage**::
-
-        {% bootstrap_jquery_url %}
-
-    **Example**::
-
-        {% bootstrap_jquery_url %}
-    """
-    return jquery_url()
-
-
-@register.simple_tag
-def bootstrap_jquery_slim_url():
-    """
-    Return url to slim version of jQuery.
-
-    **Tag name**::
-
-        bootstrap_jquery_slim_url
-
-    Return the full url to slim jQuery plugin to use
-
-    Default value: ``https://code.jquery.com/jquery-3.2.1.slim.min.js``
-
-    This value is configurable, see Settings section
-
-    **Usage**::
-
-        {% bootstrap_jquery_slim_url %}
-
-    **Example**::
-
-        {% bootstrap_jquery_slim_url %}
-    """
-    return jquery_slim_url()
+            pass
+    return "info"
 
 
 @register.simple_tag
@@ -202,7 +150,7 @@ def bootstrap_theme_url():
 @register.simple_tag
 def bootstrap_css():
     """
-    Return HTML for Bootstrap CSS. If no CSS url is available, return empty string.
+    Return HTML for Bootstrap CSS, or empty string if no CSS url is available.
 
     Default value: ``None``
 
@@ -229,52 +177,9 @@ def bootstrap_css():
 
 
 @register.simple_tag
-def bootstrap_jquery(jquery=True):
+def bootstrap_javascript():
     """
-    Return HTML for jQuery tag.
-
-    Adjust the url dict in settings.
-    If no url is returned, we don't want this statement to return any HTML. This is intended behavior.
-
-    This value is configurable, see Settings section. Note that any value that evaluates to True and is
-    not "slim" will be interpreted as True.
-
-    **Tag name**::
-
-        bootstrap_jquery
-
-    **Parameters**::
-
-        :jquery: False|"slim"|True (default=True)
-
-    **Usage**::
-
-        {% bootstrap_jquery %}
-
-    **Example**::
-
-        {% bootstrap_jquery jquery='slim' %}
-    """
-    if not jquery:
-        return ""
-    elif jquery == "slim":
-        jquery = get_bootstrap_setting("jquery_slim_url")
-    else:
-        jquery = get_bootstrap_setting("jquery_url")
-
-    if isinstance(jquery, str):
-        jquery = dict(src=jquery)
-    else:
-        jquery = jquery.copy()
-        jquery.setdefault("src", jquery.pop("url", None))
-
-    return render_tag("script", attrs=jquery)
-
-
-@register.simple_tag
-def bootstrap_javascript(jquery=False):
-    """
-    Return HTML for Bootstrap JavaScript.
+    Return HTML for Bootstrap JavaScript, or empty string if no JavaScript URL is available.
 
     Adjust url in settings.
     If no url is returned, we don't want this statement to return any HTML. This is intended behavior.
@@ -288,29 +193,18 @@ def bootstrap_javascript(jquery=False):
 
         bootstrap_javascript
 
-    **Parameters**::
-
-        :jquery: False|"slim"|True (default=False)
-
     **Usage**::
 
         {% bootstrap_javascript %}
 
     **Example**::
 
-        {% bootstrap_javascript jquery="slim" %}
+        {% bootstrap_javascript %}
     """
     # List of JS tags to include
     javascript_tags = []
 
-    # Get jquery value from setting or leave default.
-    jquery = jquery or get_bootstrap_setting("include_jquery", False)
-
-    # Include jQuery if the option is passed
-    if jquery:
-        javascript_tags.append(bootstrap_jquery(jquery=jquery))
-
-    # Bootstrap 4 JavaScript
+    # Bootstrap JavaScript
     bootstrap_js_url = bootstrap_javascript_url()
     if bootstrap_js_url:
         javascript_tags.append(render_script_tag(bootstrap_js_url))
@@ -362,7 +256,7 @@ def bootstrap_formset_errors(*args, **kwargs):
             The formset that is being rendered
 
         layout
-            Context value that is available in the template ``bootstrap4/form_errors.html`` as ``layout``.
+            Context value that is available in the template ``django_bootstrap4/form_errors.html`` as ``layout``.
 
     **Usage**::
 
@@ -443,7 +337,7 @@ def bootstrap_form_errors(*args, **kwargs):
             :default: ``'all'``
 
         layout
-            Context value that is available in the template ``bootstrap4/form_errors.html`` as ``layout``.
+            Context value that is available in the template ``django_bootstrap4/form_errors.html`` as ``layout``.
 
     **Usage**::
 
@@ -472,10 +366,12 @@ def bootstrap_field(*args, **kwargs):
             The form field to be rendered
 
         layout
-            If set to ``'horizontal'`` then the field and label will be rendered side-by-side, as long as there
-            is no ``field_class`` set as well.
+            If set to ``'horizontal'`` then the field and label will be rendered side-by-side.
+            If set to ``'floating'`` then support widgets will use floating labels.
+            Layout set in ``'bootstrap_form'`` takes precedence over layout set in ``'bootstrap_formset'``.
+            Layout set in ``'bootstrap_field'`` takes precedence over layout set in ``'bootstrap_form'``.
 
-        form_group_class
+        wrapper_class
             CSS class of the ``div`` that wraps the field and label.
 
             :default: ``'form-group'``
@@ -486,9 +382,6 @@ def bootstrap_field(*args, **kwargs):
         label_class
             CSS class of the ``label`` element. Will always have ``control-label`` as the last CSS class.
 
-        form_check_class
-            CSS class of the ``div`` element wrapping the label and input when rendering checkboxes and radio buttons.
-
         show_help
             Show the field's help text, if the field has help text.
 
@@ -498,7 +391,7 @@ def bootstrap_field(*args, **kwargs):
             Whether the show the label of the field.
 
                 * ``True``
-                * ``False``/``'sr-only'``
+                * ``False``/``'visually-hidden'``
                 * ``'skip'``
 
             :default: ``True``
@@ -574,8 +467,8 @@ def bootstrap_field(*args, **kwargs):
 
             :default: ``''``. Can be changed :doc:`settings`
 
-        bound_css_class
-            CSS class used when the field is bound
+        success_css_class
+            CSS class used when the field has valid data
 
             :default: ``'has-success'``. Can be changed :doc:`settings`
 
@@ -590,7 +483,7 @@ def bootstrap_field(*args, **kwargs):
     return render_field(*args, **kwargs)
 
 
-@register.simple_tag()
+@register.simple_tag
 def bootstrap_label(*args, **kwargs):
     """
     Render a label.
@@ -667,7 +560,6 @@ def bootstrap_button(*args, **kwargs):
                 * ``'lg'``
                 * ``'large'``
 
-
         href
             Render the button as an ``<a>`` element. The ``href`` attribute is set with this value.
             If a ``button_type`` other than ``link`` is defined, specifying a ``href`` will throw a
@@ -678,6 +570,9 @@ def bootstrap_button(*args, **kwargs):
 
         value
             Value of the ``value`` attribute of the rendered element.
+
+        **kwargs
+            All other keywords arguments will be passed on as HTML attributes.
 
     **Usage**::
 
@@ -691,7 +586,7 @@ def bootstrap_button(*args, **kwargs):
 
 
 @register.simple_tag
-def bootstrap_alert(content, alert_type="info", dismissible=True):
+def bootstrap_alert(content, alert_type="info", dismissible=True, extra_classes=""):
     """
     Render an alert.
 
@@ -717,75 +612,20 @@ def bootstrap_alert(content, alert_type="info", dismissible=True):
 
             :default: ``True``
 
+        extra_classes
+            string, extra CSS classes for alert
+
+            :default: ""
+
     **Usage**::
 
         {% bootstrap_alert content %}
 
     **Example**::
 
-        {% bootstrap_alert "Something went wrong" alert_type='danger' %}
+        {% bootstrap_alert "Something went wrong" alert_type="error" %}
     """
-    return render_alert(content, alert_type, dismissible)
-
-
-@register.tag("buttons")
-def bootstrap_buttons(parser, token):
-    """
-    Render buttons for form.
-
-    **Tag name**::
-
-        buttons
-
-    **Parameters**::
-
-        submit
-            Text for a submit button
-
-        reset
-            Text for a reset button
-
-    **Usage**::
-
-        {% buttons %}{% endbuttons %}
-
-    **Example**::
-
-        {% buttons submit='OK' reset="Cancel" %}{% endbuttons %}
-    """
-    kwargs = parse_token_contents(parser, token)
-    kwargs["nodelist"] = parser.parse(("endbuttons",))
-    parser.delete_first_token()
-    return ButtonsNode(**kwargs)
-
-
-class ButtonsNode(template.Node):
-    def __init__(self, nodelist, args, kwargs, asvar, **kwargs2):
-        self.nodelist = nodelist
-        self.args = args
-        self.kwargs = kwargs
-        self.asvar = asvar
-
-    def render(self, context):
-        output_kwargs = {}
-        for key in self.kwargs:
-            output_kwargs[key] = handle_var(self.kwargs[key], context)
-        buttons = []
-        submit = output_kwargs.get("submit", None)
-        reset = output_kwargs.get("reset", None)
-        if submit:
-            buttons.append(bootstrap_button(submit, "submit"))
-        if reset:
-            buttons.append(bootstrap_button(reset, "reset"))
-        buttons = " ".join(buttons) + self.nodelist.render(context)
-        output_kwargs.update({"label": None, "field": buttons})
-        css_class = output_kwargs.pop("form_group_class", "form-group")
-        output = render_form_group(render_field_and_label(**output_kwargs), css_class=css_class)
-        if self.asvar:
-            context[self.asvar] = output
-            return ""
-        else:
-            return output
+    return render_alert(content, alert_type, dismissible, extra_classes)
 
 
 @register.simple_tag(takes_context=True)
@@ -793,11 +633,7 @@ def bootstrap_messages(context, *args, **kwargs):
     """
     Show django.contrib.messages Messages in Bootstrap alert containers.
 
-    In order to make the alerts dismissible (with the close button),
-    we have to set the jquery parameter too when using the
-    bootstrap_javascript tag.
-
-    Uses the template ``bootstrap4/messages.html``.
+    Uses the template ``django_bootstrap4/messages.html``.
 
     **Tag name**::
 
@@ -813,17 +649,15 @@ def bootstrap_messages(context, *args, **kwargs):
 
     **Example**::
 
-        {% bootstrap_javascript jquery=True %}
         {% bootstrap_messages %}
     """
-    # Force Context to dict
     if isinstance(context, Context):
         context = context.flatten()
     context.update({"message_constants": message_constants})
-    return render_template_file("bootstrap4/messages.html", context=context)
+    return render_template_file("django_bootstrap4/messages.html", context=context)
 
 
-@register.inclusion_tag("bootstrap4/pagination.html")
+@register.inclusion_tag("django_bootstrap4/pagination.html")
 def bootstrap_pagination(page, **kwargs):
     """
     Render pagination for a page.
@@ -874,13 +708,6 @@ def bootstrap_pagination(page, **kwargs):
     **Example**::
 
         {% bootstrap_pagination lines url="/pagination?page=1" size="large" %}
-
-    **Tip**::
-
-      If you want to repeat the query string arguments in subsequent pagination links,
-      use the "extra" parameter with "request.GET.urlencode":
-
-        {% bootstrap_pagination page_obj extra=request.GET.urlencode %}
     """
     pagination_kwargs = kwargs.copy()
     pagination_kwargs["page"] = page
@@ -898,34 +725,24 @@ def get_pagination_context(
     """Generate Bootstrap pagination context from a page object."""
     pages_to_show = int(pages_to_show)
     if pages_to_show < 1:
-        raise ValueError(
-            "Pagination pages_to_show should be a positive integer, you specified {pages_to_show}.".format(
-                pages_to_show=pages_to_show
-            )
-        )
+        raise ValueError(f"Pagination pages_to_show should be a positive integer, you specified {pages_to_show}.")
+
     num_pages = page.paginator.num_pages
     current_page = page.number
-    half_page_num = int(floor(pages_to_show / 2))
-    if half_page_num < 0:
-        half_page_num = 0
-    first_page = current_page - half_page_num
-    if first_page <= 1:
-        first_page = 1
-    if first_page > 1:
-        pages_back = first_page - half_page_num
-        if pages_back < 1:
-            pages_back = 1
-    else:
-        pages_back = None
+
+    delta_pages = int(floor(pages_to_show / 2))
+
+    first_page = max(1, current_page - delta_pages)
+    pages_back = max(1, first_page - delta_pages) if first_page > 1 else None
+
     last_page = first_page + pages_to_show - 1
     if pages_back is None:
         last_page += 1
     if last_page > num_pages:
         last_page = num_pages
+
     if last_page < num_pages:
-        pages_forward = last_page + half_page_num
-        if pages_forward > num_pages:
-            pages_forward = num_pages
+        pages_forward = min(last_page + delta_pages, num_pages)
     else:
         pages_forward = None
         if first_page > 1:
@@ -934,36 +751,33 @@ def get_pagination_context(
             pages_back -= 1
         else:
             pages_back = None
+
     pages_shown = []
     for i in range(first_page, last_page + 1):
         pages_shown.append(i)
 
-    # parse the url
     parts = urlparse(url or "")
     params = parse_qs(parts.query)
-
-    # append extra querystring parameters to the url.
     if extra:
         params.update(parse_qs(extra))
-
-    # build url again.
     url = urlunparse(
         [parts.scheme, parts.netloc, parts.path, parts.params, urlencode(params, doseq=True), parts.fragment]
     )
 
-    # Set CSS classes, see http://getbootstrap.com/components/#pagination
     pagination_css_classes = ["pagination"]
-    if size == "small":
-        pagination_css_classes.append("pagination-sm")
-    elif size == "large":
-        pagination_css_classes.append("pagination-lg")
+    if size:
+        pagination_size_class = get_size_class(size, prefix="pagination", skip="md")
+        if pagination_size_class:
+            pagination_css_classes.append(pagination_size_class)
 
-    if justify_content == "start":
-        pagination_css_classes.append("justify-content-start")
-    elif justify_content == "center":
-        pagination_css_classes.append("justify-content-center")
-    elif justify_content == "end":
-        pagination_css_classes.append("justify-content-end")
+    if justify_content:
+        if justify_content in ["start", "center", "end"]:
+            pagination_css_classes.append(f"justify-content-{justify_content}")
+        else:
+            raise ValueError(
+                f"Invalid value '{justify_content}' for pagination justification."
+                " Valid values are 'start', 'center', 'end'."
+            )
 
     return {
         "bootstrap_pagination_url": url,

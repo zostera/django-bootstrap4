@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-{% load bootstrap4 %}
-{% if 'use_i18n'|bootstrap_setting %}
-    {% load i18n %}
-    {% get_current_language as LANGUAGE_CODE %}
-{% endif %}
+{% load django_bootstrap4 %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE|default:'en_us' }}">
 
 <head>

@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator
 from django.test import TestCase
 
-from bootstrap4.utils import url_replace_param
+from django_bootstrap4.utils import url_replace_param
 
 from .utils import render_template
 
@@ -15,7 +15,7 @@ class PaginatorTest(TestCase):
     def bootstrap_pagination(self, page, extra=""):
         """Helper to test bootstrap_pagination tag."""
         template = """
-            {% load bootstrap4 %}
+            {% load django_bootstrap4 %}
             {% bootstrap_pagination page {extra} %}
         """.replace(
             "{extra}", extra
