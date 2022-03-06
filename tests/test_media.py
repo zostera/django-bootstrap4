@@ -1,6 +1,6 @@
 from django.test import TestCase, override_settings
 
-from django_bootstrap4.bootstrap import get_bootstrap_setting
+from django_bootstrap4.core import get_bootstrap_setting
 
 from .forms import TestForm
 from .utils import render_template_with_form
@@ -8,7 +8,7 @@ from .utils import render_template_with_form
 
 class MediaTest(TestCase):
     def expected_css(self, tag):
-        template = '<link href="{href}" integrity="{integrity}" crossorigin="{crossorigin}" rel="stylesheet">'
+        template = '<link href="{url}" integrity="{integrity}" crossorigin="{crossorigin}" rel="stylesheet">'
         setting = get_bootstrap_setting(tag + "_url")
         return template.format(**setting)
 

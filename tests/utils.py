@@ -66,7 +66,7 @@ def html_39x27(html):
 
 
 def render_template(text, context=None):
-    """Create a template ``text`` that first loads bootstrap4."""
+    """Create a template with content ``text``."""
     template = engines["django"].from_string(text)
     if not context:
         context = {}
@@ -74,7 +74,7 @@ def render_template(text, context=None):
 
 
 def render_template_with_bootstrap(text, context=None):
-    """Create a template ``text`` that first loads bootstrap4."""
+    """Create a template ``text`` that first loads django_bootstrap4."""
     if not context:
         context = {}
     return render_template("{% load django_bootstrap4 %}" + text, context)

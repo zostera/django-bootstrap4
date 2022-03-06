@@ -2,8 +2,8 @@ from importlib import import_module
 
 from django.conf import settings
 
-BOOTSTRAP4 = {"foo": "bar"}
-BOOTSTRAP4_DEFAULTS = {
+BOOTSTRAP4 = {}
+BOOTSTRAP5_DEFAULTS = {
     "css_url": {
         "url": "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css",
         "integrity": "sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3",
@@ -32,6 +32,44 @@ BOOTSTRAP4_DEFAULTS = {
     "form_renderers": {"default": "django_bootstrap4.renderers.FormRenderer"},
     "field_renderers": {
         "default": "django_bootstrap4.renderers.FieldRenderer",
+    },
+}
+BOOTSTRAP4_DEFAULTS = {
+    "css_url": {
+        "url": "https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css",
+        "integrity": "sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l",
+        "crossorigin": "anonymous",
+    },
+    "javascript_url": {
+        "url": "https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js",
+        "integrity": "sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns",
+        "crossorigin": "anonymous",
+    },
+    "theme_url": None,
+    "jquery_url": {
+        "url": "https://code.jquery.com/jquery-3.5.1.min.js",
+        "integrity": "sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2",
+        "crossorigin": "anonymous",
+    },
+    "jquery_slim_url": {
+        "url": "https://code.jquery.com/jquery-3.5.1.slim.min.js",
+        "integrity": "sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj",
+        "crossorigin": "anonymous",
+    },
+    "javascript_in_head": False,
+    "include_jquery": False,
+    "use_i18n": False,
+    "horizontal_label_class": "col-md-3",
+    "horizontal_field_class": "col-md-9",
+    "set_placeholder": True,
+    "required_css_class": "",
+    "error_css_class": "is-invalid",
+    "success_css_class": "is-valid",
+    "formset_renderers": {"default": "bootstrap4.renderers.FormsetRenderer"},
+    "form_renderers": {"default": "bootstrap4.renderers.FormRenderer"},
+    "field_renderers": {
+        "default": "bootstrap4.renderers.FieldRenderer",
+        "inline": "bootstrap4.renderers.InlineFieldRenderer",
     },
 }
 

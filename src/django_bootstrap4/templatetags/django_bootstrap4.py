@@ -229,9 +229,46 @@ def bootstrap_css():
 
 
 @register.simple_tag
-def bootstrap_javascript():
+def bootstrap_jquery(jquery=True):
     """
-    Return HTML for Bootstrap JavaScript, or empty string if no JavaScript URL is available.
+    Return HTML for jQuery tag.
+
+    Adjust the url dict in settings.
+    If no url is returned, we don't want this statement to return any HTML. This is intended behavior.
+
+    This value is configurable, see Settings section. Note that any value that evaluates to True and is
+    not "slim" will be interpreted as True.
+
+    **Tag name**::
+
+        bootstrap_jquery
+
+    **Parameters**::
+
+        :jquery: False|"slim"|True (default=True)
+
+    **Usage**::
+
+        {% bootstrap_jquery %}
+
+    **Example**::
+
+        {% bootstrap_jquery jquery='slim' %}
+    """
+    if not jquery:
+        return ""
+    elif jquery == "slim":
+        jquery = get_bootstrap_setting("jquery_slim_url")
+    else:
+        jquery = get_bootstrap_setting("jquery_url")
+
+    return render_script_tag(jquery) if jquery else ""
+
+
+@register.simple_tag
+def bootstrap_javascript(jquery=False):
+    """
+    Return HTML for Bootstrap JavaScript.
 
     Adjust url in settings.
     If no url is returned, we don't want this statement to return any HTML. This is intended behavior.
@@ -245,18 +282,29 @@ def bootstrap_javascript():
 
         bootstrap_javascript
 
+    **Parameters**::
+
+        :jquery: False|"slim"|True (default=False)
+
     **Usage**::
 
         {% bootstrap_javascript %}
 
     **Example**::
 
-        {% bootstrap_javascript %}
+        {% bootstrap_javascript jquery="slim" %}
     """
     # List of JS tags to include
     javascript_tags = []
 
-    # Bootstrap JavaScript
+    # Get jquery value from setting or leave default.
+    jquery = jquery or get_bootstrap_setting("include_jquery", False)
+
+    # Include jQuery if the option is passed
+    if jquery:
+        javascript_tags.append(bootstrap_jquery(jquery=jquery))
+
+    # Bootstrap 4 JavaScript
     bootstrap_js_url = bootstrap_javascript_url()
     if bootstrap_js_url:
         javascript_tags.append(render_script_tag(bootstrap_js_url))

@@ -12,7 +12,7 @@ This renders a form ChoiceField as a Bootstrap 4 button group in the `primary` B
 
 .. code:: django
 
-    from bootstrap4.widgets import RadioSelectButtonGroup
+    from django_bootstrap4.widgets import RadioSelectButtonGroup
 
     class MyForm(forms.Form):
         media_type = forms.ChoiceField(
