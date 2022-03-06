@@ -20,7 +20,7 @@ class FieldTest(TestCase):
         return lst[0]
 
     def test_illegal_field(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             render_field(field="illegal")
 
     def test_show_help(self):
@@ -43,16 +43,20 @@ class FieldTest(TestCase):
         self.assertIn('placeholder="placeholdertest"', res)
 
     def test_xss_field(self):
-        res = render_form_field("xss_field")
-        self.assertIn('type="text"', res)
-
-        expect = html_39x27(
-            '<label for="id_xss_field">'
-            "XSS&quot; onmouseover=&quot;alert(&#x27;Hello, XSS&#x27;)&quot; foo=&quot;</label>"
+        html = html_39x27(render_form_field("xss_field"))
+        self.assertHTMLEqual(
+            html,
+            (
+                '<div class="django_bootstrap4-req">'
+                '<label class="form-label" for="id_xss_field">'
+                "XSS&quot; onmouseover=&quot;alert(&#x27;Hello, XSS&#x27;)&quot; foo=&quot;"
+                "</label>"
+                '<input type="text" name="xss_field" maxlength="100"'
+                ' class="form-control" placeholder="XSS&quot;'
+                ' onmouseover=&quot;alert(&#x27;Hello, XSS&#x27;)&quot; foo=&quot;" id="id_xss_field">'
+                "</div>"
+            ),
         )
-        self.assertIn(expect, res)
-        expect = html_39x27('placeholder="XSS&quot; onmouseover=&quot;alert(&#x27;Hello, XSS&#x27;)&quot; foo=&quot;"')
-        self.assertIn(expect, res)
 
     def test_password(self):
         res = render_form_field("password")
