@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 from django.test import TestCase
 
-
 from .forms import TestForm
 from .utils import render_form, render_formset, render_template_with_form
 
