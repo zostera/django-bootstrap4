@@ -5,12 +5,13 @@ SIZE_SM = "sm"
 SIZE_MD = "md"
 SIZE_LG = "lg"
 SIZES = [SIZE_SM, SIZE_MD, SIZE_LG]
+SIZE_MAP = {"small": "sm", "medium": "md", "large": "lg"}
 DEFAULT_SIZE = SIZE_MD
 
 
 def parse_size(value, default=None):
     """Return size if it is valid, default size if size is empty, or throws exception."""
-    size = text_value(value or default)
+    size = text_value(SIZE_MAP.get(value, value) or default)
     if size not in SIZES:
         valid_sizes = ", ".join(SIZES)
         raise ValueError(f'Invalid value "{size}" for parameter "size" (valid values are {valid_sizes}).')

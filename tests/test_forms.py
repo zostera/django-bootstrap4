@@ -51,10 +51,7 @@ class FieldTest(TestCase):
             '<label for="id_xss_field">'
             "XSS&quot; onmouseover=&quot;alert(&#x27;Hello, XSS&#x27;)&quot; foo=&quot;</label>"
         )
-        self.assertIn(
-            expect,
-            res,
-        )
+        self.assertIn(expect, res)
         expect = html_39x27('placeholder="XSS&quot; onmouseover=&quot;alert(&#x27;Hello, XSS&#x27;)&quot; foo=&quot;"')
         self.assertIn(expect, res)
 
