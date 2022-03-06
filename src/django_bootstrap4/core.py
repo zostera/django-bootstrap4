@@ -3,7 +3,7 @@ from importlib import import_module
 from django.conf import settings
 
 BOOTSTRAP4 = {}
-BOOTSTRAP5_DEFAULTS = {
+BOOTSTRAP_keep_for_noew_5_DEFAULTS = {
     "css_url": {
         "url": "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css",
         "integrity": "sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3",

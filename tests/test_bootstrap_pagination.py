@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
-from django_bootstrap5.utils import url_replace_param
 
+from django_bootstrap4.utils import url_replace_param
 from tests.base import BootstrapTestCase
 
 

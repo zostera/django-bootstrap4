@@ -21,6 +21,6 @@ class BootstrapTestCase(TestCase):
 
     def render(self, text, context=None, load_bootstrap=True):
         """Return rendered result of template with given context."""
-        prefix = "{% load django_bootstrap5 %}" if load_bootstrap else ""
+        prefix = "{% load django_bootstrap4 %}" if load_bootstrap else ""
         template = engines["django"].from_string(f"{prefix}{text}")
         return template.render(context or {})

@@ -19,7 +19,7 @@ class InputTypeTextTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render("{% bootstrap_field form.test %}", context={"form": form}),
             (
-                '<div class="django_bootstrap5-req mb-3">'
+                '<div class="django_bootstrap4-req mb-3">'
                 '<label for="id_test" class="form-label">Test</label>'
                 '<input class="form-control" id="id_test" name="test" placeholder="Test" required type="text">'
                 "</div>"
@@ -30,7 +30,7 @@ class InputTypeTextTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render("{% bootstrap_field form.test %}", context={"form": form}),
             (
-                '<div class="django_bootstrap5-err django_bootstrap5-req mb-3">'
+                '<div class="django_bootstrap4-err django_bootstrap4-req mb-3">'
                 '<label class="form-label" for="id_test">Test</label>'
                 '<input type="text" name="test"'
                 ' class="form-control is-invalid" placeholder="Test" required id="id_test">'
@@ -47,7 +47,7 @@ class InputTypeTextTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render('{% bootstrap_field form.test addon_before="foo" %}', context={"form": form}),
             (
-                '<div class="django_bootstrap5-req mb-3">'
+                '<div class="django_bootstrap4-req mb-3">'
                 '<label for="id_test" class="form-label">Test</label>'
                 '<div class="input-group">'
                 '<span class="input-group-text">foo</span>'
@@ -60,7 +60,7 @@ class InputTypeTextTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render('{% bootstrap_field form.test addon_before="foo" layout="floating" %}', context={"form": form}),
             (
-                '<div class="django_bootstrap5-req mb-3">'
+                '<div class="django_bootstrap4-req mb-3">'
                 '<label for="id_test" class="form-label">Test</label>'
                 '<div class="input-group">'
                 '<span class="input-group-text">foo</span>'
@@ -73,7 +73,7 @@ class InputTypeTextTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render("{% bootstrap_field form.test layout='horizontal' %}", context={"form": form}),
             (
-                '<div class="django_bootstrap5-req mb-3 row">'
+                '<div class="django_bootstrap4-req mb-3 row">'
                 '<label class="col-form-label col-sm-2" for="id_test">'
                 "Test"
                 '</label><div class="col-sm-10">'
@@ -86,7 +86,7 @@ class InputTypeTextTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render("{% bootstrap_field form.test layout='floating' %}", context={"form": form}),
             (
-                '<div class="django_bootstrap5-req mb-3 form-floating">'
+                '<div class="django_bootstrap4-req mb-3 form-floating">'
                 '<input class="form-control" id="id_test" name="test" placeholder="Test" required type="text">'
                 '<label for="id_test" class="form-label">Test</label>'
                 "</div>"
@@ -101,13 +101,13 @@ class InputTypeTextTestCase(BootstrapTestCase):
 
         form = InputTypeTestForm()
         default_html = (
-            '<div class="django_bootstrap5-req mb-3">'
+            '<div class="django_bootstrap4-req mb-3">'
             '<label for="id_test" class="form-label">Test</label>'
             f'<input class="form-control" id="id_test" name="test" placeholder="Test" required type="{input_type}">'
             "</div>"
         )
         horizontal_html = (
-            '<div class="django_bootstrap5-req mb-3 row">'
+            '<div class="django_bootstrap4-req mb-3 row">'
             '<label class="col-form-label col-sm-2" for="id_test">'
             "Test"
             '</label><div class="col-sm-10">'
@@ -116,7 +116,7 @@ class InputTypeTextTestCase(BootstrapTestCase):
             "</div>"
         )
         floating_html = (
-            '<div class="django_bootstrap5-req mb-3 form-floating">'
+            '<div class="django_bootstrap4-req mb-3 form-floating">'
             f'<input class="form-control" id="id_test" name="test" placeholder="Test" required type="{input_type}">'
             '<label for="id_test" class="form-label">Test</label>'
             "</div>"
@@ -159,7 +159,7 @@ class InputTypeTextTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render("{% bootstrap_field form.test %}", context={"form": form}),
             (
-                '<div class="django_bootstrap5-req mb-3">'
+                '<div class="django_bootstrap4-req mb-3">'
                 '<label for="id_test" class="form-label">Test</label>'
                 '<input class="form-control" id="id_test" name="test" placeholder="Test" required type="password">'
                 "</div>"
@@ -169,7 +169,7 @@ class InputTypeTextTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render("{% bootstrap_field form.test layout='horizontal' %}", context={"form": form}),
             (
-                '<div class="django_bootstrap5-req mb-3 row">'
+                '<div class="django_bootstrap4-req mb-3 row">'
                 '<label class="col-form-label col-sm-2" for="id_test">'
                 "Test"
                 '</label><div class="col-sm-10">'
@@ -182,7 +182,7 @@ class InputTypeTextTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render("{% bootstrap_field form.test layout='floating' %}", context={"form": form}),
             (
-                '<div class="django_bootstrap5-req mb-3 form-floating">'
+                '<div class="django_bootstrap4-req mb-3 form-floating">'
                 '<input class="form-control" id="id_test" name="test" placeholder="Test" required type="password">'
                 '<label for="id_test" class="form-label">Test</label>'
                 "</div>"

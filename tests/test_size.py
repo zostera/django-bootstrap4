@@ -1,5 +1,6 @@
 from django.test import TestCase
-from django_bootstrap5.size import get_size_class, parse_size
+
+from django_bootstrap4.size import get_size_class, parse_size
 
 
 class SizeTestCase(TestCase):

@@ -30,7 +30,7 @@ class BootstrapFieldSelectTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render("{% bootstrap_field form.test %}", context={"form": SelectTestForm()}),
             (
-                '<div class="django_bootstrap5-req mb-3">'
+                '<div class="django_bootstrap4-req mb-3">'
                 '<label class="form-label">Test</label>'
                 '<div class="" required id="id_test">'
                 '<div class="form-check">'
@@ -51,7 +51,7 @@ class BootstrapFieldSelectTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render('{% bootstrap_field form.test layout="horizontal" %}', context={"form": SelectTestForm()}),
             (
-                '<div class="django_bootstrap5-req row mb-3">'
+                '<div class="django_bootstrap4-req row mb-3">'
                 '<label class="col-sm-2 col-form-label">Test</label>'
                 '<div class="col-sm-10">'
                 '<div class="" required id="id_test">'
@@ -74,7 +74,7 @@ class BootstrapFieldSelectTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render('{% bootstrap_field form.test layout="floating" %}', context={"form": SelectTestForm()}),
             (
-                '<div class="django_bootstrap5-req mb-3">'
+                '<div class="django_bootstrap4-req mb-3">'
                 '<label class="form-label">Test</label>'
                 '<div class="" required id="id_test">'
                 '<div class="form-check">'
@@ -96,7 +96,7 @@ class BootstrapFieldSelectTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render("{% bootstrap_field form.test %}", context={"form": DisabledSelectTestForm()}),
             (
-                '<div class="django_bootstrap5-req mb-3">'
+                '<div class="django_bootstrap4-req mb-3">'
                 '<label class="form-label">Test</label>'
                 '<div class="" disabled required id="id_test">'
                 '<div class="form-check">'

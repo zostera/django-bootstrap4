@@ -25,7 +25,7 @@ class InputTypeFileTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render("{% bootstrap_field form.test %}", context={"form": FileFieldTestForm()}),
             (
-                '<div class="django_bootstrap5-req mb-3">'
+                '<div class="django_bootstrap4-req mb-3">'
                 '<label for="id_test" class="form-label">Test</label>'
                 '<input class="form-control" id="id_test" name="test" required type="file">'
                 "</div>"
@@ -50,7 +50,7 @@ class InputTypeFileTestCase(BootstrapTestCase):
                 context={"form": ClearableFileInputTestForm({}, {"test": SimpleUploadedFile("test.txt", b"test")})},
             ),
             (
-                '<div class="django_bootstrap5-success mb-3">'
+                '<div class="django_bootstrap4-success mb-3">'
                 '<label class="form-label" for="id_test">Test</label>'
                 '<input type="file" name="test" class="form-control is-valid" id="id_test">'
                 "</div>"
@@ -61,7 +61,7 @@ class InputTypeFileTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render("{% bootstrap_field form.test %}", context={"form": ImageFieldTestForm()}),
             (
-                '<div class="django_bootstrap5-req mb-3">'
+                '<div class="django_bootstrap4-req mb-3">'
                 '<label for="id_test" class="form-label">Test</label>'
                 '<input accept="image/*" class="form-control" id="id_test" name="test" required type="file">'
                 "</div>"
@@ -77,7 +77,7 @@ class InputTypeFileTestCase(BootstrapTestCase):
                 context={"form": form},
             ),
             (
-                '<div class="django_bootstrap5-success django_bootstrap5-req mb-3">'
+                '<div class="django_bootstrap4-success django_bootstrap4-req mb-3">'
                 '<label class="form-label" for="id_test">Test</label>'
                 '<input type="file" name="test" accept="image/*" class="form-control is-valid"'
                 ' required id="id_test">'

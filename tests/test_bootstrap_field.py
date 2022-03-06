@@ -46,11 +46,11 @@ class FieldTestCase(BootstrapTestCase):
         form = SubjectTestForm()
 
         html = self.render("{% bootstrap_field form.subject %}", {"form": form})
-        self.assertIn("django_bootstrap5-req", html)
+        self.assertIn("django_bootstrap4-req", html)
 
         form.empty_permitted = True
         html = self.render("{% bootstrap_field form.subject %}", {"form": form})
-        self.assertNotIn("django_bootstrap5-req", html)
+        self.assertNotIn("django_bootstrap4-req", html)
 
     def test_size(self):
         def _test_size(param, klass):

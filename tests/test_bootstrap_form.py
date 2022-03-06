@@ -32,7 +32,7 @@ class BootstrapFormTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             html,
             (
-                '<div class="mb-3 django_bootstrap5-req">'
+                '<div class="mb-3 django_bootstrap4-req">'
                 '<label class="form-label" for="id_required_text">Required text</label>'
                 '<input type="text" name="required_text" class="form-control"'
                 ' placeholder="Required text" required id="id_required_text">'
@@ -45,30 +45,30 @@ class BootstrapFormTestCase(BootstrapTestCase):
         form = FormTestForm({"optional_text": "my_message"})
 
         html = self.render("{% bootstrap_form form %}", {"form": form})
-        self.assertIn("django_bootstrap5-err", html)
+        self.assertIn("django_bootstrap4-err", html)
 
         html = self.render('{% bootstrap_form form error_css_class="custom-error-class" %}', {"form": form})
         self.assertIn("custom-error-class", html)
 
         html = self.render('{% bootstrap_form form error_css_class="" %}', {"form": form})
-        self.assertNotIn("django_bootstrap5-err", html)
+        self.assertNotIn("django_bootstrap4-err", html)
 
     def test_required_css_class(self):
         form = FormTestForm({"subject": "subject"})
         html = self.render("{% bootstrap_form form %}", {"form": form})
-        self.assertIn("django_bootstrap5-req", html)
+        self.assertIn("django_bootstrap4-req", html)
 
         html = self.render('{% bootstrap_form form required_css_class="custom-required-class" %}', {"form": form})
         self.assertIn("custom-required-class", html)
 
         html = self.render('{% bootstrap_form form required_css_class="" %}', {"form": form})
-        self.assertNotIn("django_bootstrap5-req", html)
+        self.assertNotIn("django_bootstrap4-req", html)
 
     def test_success_css_class(self):
         form = FormTestForm({"subject": "subject"})
 
         html = self.render("{% bootstrap_form form %}", {"form": form})
-        self.assertIn("django_bootstrap5-success", html)
+        self.assertIn("django_bootstrap4-success", html)
 
         form = FormTestForm({"subject": "subject"})
 
@@ -78,7 +78,7 @@ class BootstrapFormTestCase(BootstrapTestCase):
         form = FormTestForm({"subject": "subject"})
 
         html = self.render('{% bootstrap_form form success_css_class="" %}', {"form": form})
-        self.assertNotIn("django_bootstrap5-success", html)
+        self.assertNotIn("django_bootstrap4-success", html)
 
     def test_alert_error_type(self):
         form = NonFieldErrorTestForm({"subject": "subject"})

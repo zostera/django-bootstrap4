@@ -4,7 +4,8 @@ import urllib.request
 from base64 import b64decode
 
 from django.test import TestCase
-from django_bootstrap5.core import get_bootstrap_setting
+
+from django_bootstrap4.core import get_bootstrap_setting
 
 
 class UrlValidityTestCase(TestCase):

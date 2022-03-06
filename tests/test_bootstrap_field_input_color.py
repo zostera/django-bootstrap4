@@ -13,7 +13,7 @@ class InputTypeColorTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render("{% bootstrap_field form.test %}", context={"form": ColorTestForm()}),
             (
-                '<div class="django_bootstrap5-req mb-3">'
+                '<div class="django_bootstrap4-req mb-3">'
                 '<label for="id_test" class="form-label">Test</label>'
                 '<input class="form-control form-control-color" '
                 'id="id_test" name="test" placeholder="Test" required type="color">'
@@ -26,7 +26,7 @@ class InputTypeColorTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render('{% bootstrap_field form.test layout="horizontal" %}', context={"form": ColorTestForm()}),
             (
-                '<div class="django_bootstrap5-req row mb-3">'
+                '<div class="django_bootstrap4-req row mb-3">'
                 '<label for="id_test" class="col-form-label col-sm-2">Test</label>'
                 '<div class="col-sm-10">'
                 '<input class="form-control form-control-color" id="id_test"'
@@ -41,7 +41,7 @@ class InputTypeColorTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render('{% bootstrap_field form.test layout="floating" %}', context={"form": ColorTestForm()}),
             (
-                '<div class="django_bootstrap5-req mb-3">'
+                '<div class="django_bootstrap4-req mb-3">'
                 '<label for="id_test" class="form-label">Test</label>'
                 '<input class="form-control form-control-color" id="id_test"'
                 ' name="test" placeholder="Test" required type="color">'

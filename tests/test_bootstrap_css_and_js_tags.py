@@ -1,5 +1,4 @@
-from django_bootstrap5.core import get_bootstrap_setting
-
+from django_bootstrap4.core import get_bootstrap_setting
 from tests.base import BootstrapTestCase
 
 
@@ -18,7 +17,7 @@ class MediaTestCase(BootstrapTestCase):
             self.render("{% bootstrap_javascript %}"),
             self.expected_bootstrap_js,
         )
-        with self.settings(BOOTSTRAP5={"javascript_url": "//example.com/bootstrap.js"}):
+        with self.settings(BOOTSTRAP4={"javascript_url": "//example.com/bootstrap.js"}):
             self.assertHTMLEqual(
                 self.render("{% bootstrap_javascript %}"),
                 '<script src="//example.com/bootstrap.js">',
@@ -29,21 +28,21 @@ class MediaTestCase(BootstrapTestCase):
             self.render("{% bootstrap_css %}"),
             self.expected_bootstrap_css,
         )
-        with self.settings(BOOTSTRAP5={"css_url": "//example.com/bootstrap.css"}):
+        with self.settings(BOOTSTRAP4={"css_url": "//example.com/bootstrap.css"}):
             self.assertHTMLEqual(
                 self.render("{% bootstrap_css %}"),
                 '<link href="//example.com/bootstrap.css" rel="stylesheet">',
             )
 
     def test_bootstrap_css_tag_with_theme(self):
-        with self.settings(BOOTSTRAP5={"theme_url": "//example.com/theme.css"}):
+        with self.settings(BOOTSTRAP4={"theme_url": "//example.com/theme.css"}):
             self.assertHTMLEqual(
                 self.render("{% bootstrap_css %}"),
                 self.expected_bootstrap_css + '<link rel="stylesheet" href="//example.com/theme.css">',
             )
 
     def test_bootstrap_setting_filter(self):
-        self.assertEqual(self.render('{{ "required_css_class"|bootstrap_setting }}'), "django_bootstrap5-req")
+        self.assertEqual(self.render('{{ "required_css_class"|bootstrap_setting }}'), "django_bootstrap4-req")
         self.assertEqual(
             self.render('{% if "javascript_in_head"|bootstrap_setting %}head{% else %}body{% endif %}'), "head"
         )

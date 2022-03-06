@@ -13,7 +13,7 @@ class BootstrapFieldTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render("{% bootstrap_field form.test %}", context={"form": TestForm()}),
             (
-                '<div class="django_bootstrap5-req mb-3">'
+                '<div class="django_bootstrap4-req mb-3">'
                 '<label for="id_test" class="form-label">Test</label>'
                 '<textarea class="form-control" cols="40" id="id_test" name="test" placeholder="Test"'
                 ' required rows="10"></textarea>'
@@ -26,7 +26,7 @@ class BootstrapFieldTestCase(BootstrapTestCase):
         self.assertHTMLEqual(
             self.render('{% bootstrap_field form.test layout="floating" %}', context={"form": TestForm()}),
             (
-                '<div class="django_bootstrap5-req form-floating mb-3">'
+                '<div class="django_bootstrap4-req form-floating mb-3">'
                 '<textarea class="form-control" cols="40" id="id_test" name="test" placeholder="Test"'
                 ' required rows="10"></textarea>'
                 '<label for="id_test" class="form-label">Test</label>'
