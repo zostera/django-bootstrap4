@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 from django.test import TestCase
 
-from django_bootstrap4.exceptions import BootstrapError
 
 from .forms import TestForm
 from .utils import render_form, render_formset, render_template_with_form
@@ -9,13 +8,13 @@ from .utils import render_form, render_formset, render_template_with_form
 
 class BootstrapFormSetTest(TestCase):
     def test_illegal_formset(self):
-        with self.assertRaises(BootstrapError):
+        with self.assertRaises(ValueError):
             render_formset(formset="illegal")
 
 
 class BootstrapFormTest(TestCase):
     def test_illegal_form(self):
-        with self.assertRaises(BootstrapError):
+        with self.assertRaises(ValueError):
             render_form(form="illegal")
 
     def test_field_names(self):

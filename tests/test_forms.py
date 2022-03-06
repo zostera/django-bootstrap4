@@ -3,7 +3,7 @@ from django.forms import formset_factory
 from django.test import TestCase
 from django.utils.html import escape
 
-from django_bootstrap4.exceptions import BootstrapError
+from django_bootstrap4.exceptions import ValueError
 from tests.utils import html_39x27
 
 from .forms import TestForm
@@ -22,7 +22,7 @@ class FieldTest(TestCase):
         return lst[0]
 
     def test_illegal_field(self):
-        with self.assertRaises(BootstrapError):
+        with self.assertRaises(ValueError):
             render_field(field="illegal")
 
     def test_show_help(self):

@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from django_bootstrap4.exceptions import BootstrapError
+from django_bootstrap4.exceptions import ValueError
 from django_bootstrap4.forms import render_button
 
 from .utils import render_template_with_form
@@ -15,7 +15,7 @@ class ButtonsTest(TestCase):
             self.assertEqual(
                 render_button("button", button_type="illegal"), '<button class="btn btn-primary">button</button>'
             )
-        except BootstrapError as e:
+        except ValueError as e:
             self.assertEqual(
                 str(e),
                 'Parameter "button_type" should be "submit", "reset", "button", "link" or empty ("illegal" given).',
@@ -31,5 +31,5 @@ class ButtonsTest(TestCase):
         self.assertIn(res.strip(), link_button)
         res = render_template_with_form("{% bootstrap_button 'button' button_type='link' size='lg' href='#' %}")
         self.assertIn(res.strip(), link_button)
-        with self.assertRaises(BootstrapError):
+        with self.assertRaises(ValueError):
             res = render_template_with_form("{% bootstrap_button 'button' button_type='button' href='#' %}")
