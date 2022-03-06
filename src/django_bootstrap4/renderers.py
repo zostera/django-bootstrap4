@@ -349,13 +349,13 @@ class FieldRenderer(BaseRenderer):
     def get_label_class(self, horizontal=False):
         """Return CSS class for label."""
         label_classes = [text_value(self.label_class)]
-        if not self.show_label:
-            label_classes.append("visually-hidden")
+        if not self.show_label or self.show_label == "sr-only":
+            label_classes.append("sr-only")
         else:
             if isinstance(self.widget, CheckboxInput):
                 widget_label_class = "form-check-label"
             elif self.is_inline:
-                widget_label_class = "visually-hidden"
+                widget_label_class = "sr-only"
             elif horizontal:
                 widget_label_class = merge_css_classes(self.horizontal_label_class, "col-form-label")
             else:

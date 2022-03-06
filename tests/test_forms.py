@@ -3,7 +3,6 @@ from django.forms import formset_factory
 from django.test import TestCase
 from django.utils.html import escape
 
-from django_bootstrap4.exceptions import ValueError
 from tests.utils import html_39x27
 
 from .forms import TestForm
@@ -241,7 +240,7 @@ class ComponentsTest(TestCase):
         res = render_template_with_form('{% bootstrap_alert "content" alert_type="danger" %}')
         self.assertEqual(
             res.strip(),
-            '<div class="alert alert-danger alert-dismissible" role="alert">'
+            '<div class="alert alert-danger alert-dismissible fade show" role="alert">'
             + '<button type="button" class="close" data-dismiss="alert" '
             + 'aria-label="close">'
             + "&times;</button>content</div>",

@@ -491,7 +491,7 @@ def bootstrap_field(*args, **kwargs):
             Whether the show the label of the field.
 
                 * ``True``
-                * ``False``/``'visually-hidden'``
+                * ``False``/``'sr-only'``
                 * ``'skip'``
 
             :default: ``True``
