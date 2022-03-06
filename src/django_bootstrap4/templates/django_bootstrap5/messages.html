@@ -1,4 +1,0 @@
-{% load django_bootstrap4 %}
-{% for message in messages %}
-    {% bootstrap_alert message.message|default:"" alert_type=message|bootstrap_message_alert_type extra_classes=message.extra_tags %}
-{% endfor %}
