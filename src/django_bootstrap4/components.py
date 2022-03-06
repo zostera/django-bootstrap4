@@ -14,7 +14,7 @@ def render_alert(content, alert_type="info", dismissible=True, extra_classes="")
         raise ValueError(f"Value {alert_type} is not a valid alert type. Please choose from {', '.join(ALERT_TYPES)}.")
     css_classes = [f"alert alert-{alert_type}"]
     if dismissible:
-        css_classes.append("alert-dismissible")
+        css_classes.append("alert-dismissible fade show")
         button = f'<button type="button" class="close" data-dismiss="alert" aria-label="close">&times;</button>'
     css_classes = merge_css_classes(*css_classes, extra_classes)
     return render_tag(
