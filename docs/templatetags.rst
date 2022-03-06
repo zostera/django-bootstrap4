@@ -14,93 +14,93 @@ Template tags and filters
 bootstrap_form
 ~~~~~~~~~~~~~~
 
-.. autofunction:: bootstrap4.templatetags.bootstrap4.bootstrap_form
+.. autofunction:: django_bootstrap4.templatetags.django_bootstrap4.bootstrap_form
 
 
 bootstrap_form_errors
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. autofunction:: bootstrap4.templatetags.bootstrap4.bootstrap_form_errors
+.. autofunction:: django_bootstrap4.templatetags.django_bootstrap4.bootstrap_form_errors
 
 
 bootstrap_formset
 ~~~~~~~~~~~~~~~~~
 
-.. autofunction:: bootstrap4.templatetags.bootstrap4.bootstrap_formset
+.. autofunction:: django_bootstrap4.templatetags.django_bootstrap4.bootstrap_formset
 
 
 bootstrap_formset_errors
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. autofunction:: bootstrap4.templatetags.bootstrap4.bootstrap_formset_errors
+.. autofunction:: django_bootstrap4.templatetags.django_bootstrap4.bootstrap_formset_errors
 
 
 bootstrap_field
 ~~~~~~~~~~~~~~~
 
-.. autofunction:: bootstrap4.templatetags.bootstrap4.bootstrap_field
+.. autofunction:: django_bootstrap4.templatetags.django_bootstrap4.bootstrap_field
 
 
 bootstrap_label
 ~~~~~~~~~~~~~~~
 
-.. autofunction:: bootstrap4.templatetags.bootstrap4.bootstrap_label
+.. autofunction:: django_bootstrap4.templatetags.django_bootstrap4.bootstrap_label
 
 
 bootstrap_button
 ~~~~~~~~~~~~~~~~
 
-.. autofunction:: bootstrap4.templatetags.bootstrap4.bootstrap_button
+.. autofunction:: django_bootstrap4.templatetags.django_bootstrap4.bootstrap_button
 
 
 bootstrap_alert
 ~~~~~~~~~~~~~~~
 
-.. autofunction:: bootstrap4.templatetags.bootstrap4.bootstrap_alert
+.. autofunction:: django_bootstrap4.templatetags.django_bootstrap4.bootstrap_alert
 
 buttons
 ~~~~~~~
 
-.. autofunction:: bootstrap4.templatetags.bootstrap4.bootstrap_buttons
+.. autofunction:: django_bootstrap4.templatetags.django_bootstrap4.bootstrap_buttons
 
 
 bootstrap_messages
 ~~~~~~~~~~~~~~~~~~
 
-.. autofunction:: bootstrap4.templatetags.bootstrap4.bootstrap_messages
+.. autofunction:: django_bootstrap4.templatetags.django_bootstrap4.bootstrap_messages
 
 
 bootstrap_pagination
 ~~~~~~~~~~~~~~~~~~~~
 
-.. autofunction:: bootstrap4.templatetags.bootstrap4.bootstrap_pagination
+.. autofunction:: django_bootstrap4.templatetags.django_bootstrap4.bootstrap_pagination
 
 
 bootstrap_jquery_url
 ~~~~~~~~~~~~~~~~~~~~
 
-.. autofunction:: bootstrap4.templatetags.bootstrap4.bootstrap_jquery_url
+.. autofunction:: django_bootstrap4.templatetags.django_bootstrap4.bootstrap_jquery_url
 
 
 bootstrap_javascript_url
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. autofunction:: bootstrap4.templatetags.bootstrap4.bootstrap_javascript_url
+.. autofunction:: django_bootstrap4.templatetags.django_bootstrap4.bootstrap_javascript_url
 
 
 bootstrap_css_url
 ~~~~~~~~~~~~~~~~~
 
-.. autofunction:: bootstrap4.templatetags.bootstrap4.bootstrap_css_url
+.. autofunction:: django_bootstrap4.templatetags.django_bootstrap4.bootstrap_css_url
 
 
 bootstrap_css
 ~~~~~~~~~~~~~
 
-.. autofunction:: bootstrap4.templatetags.bootstrap4.bootstrap_css
+.. autofunction:: django_bootstrap4.templatetags.django_bootstrap4.bootstrap_css
 
 
 bootstrap_javascript
 ~~~~~~~~~~~~~~~~~~~~
 
-.. autofunction:: bootstrap4.templatetags.bootstrap4.bootstrap_javascript
+.. autofunction:: django_bootstrap4.templatetags.django_bootstrap4.bootstrap_javascript
