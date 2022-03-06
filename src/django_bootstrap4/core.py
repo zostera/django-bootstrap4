@@ -51,6 +51,25 @@ def get_bootstrap_setting(name, default=None):
     return bootstrap4_settings.get(name, BOOTSTRAP4_DEFAULTS.get(name, default))
 
 
+def jquery_url():
+    """Return the full url to jQuery library file to use."""
+    return get_bootstrap_setting("jquery_url")
+
+
+def jquery_slim_url():
+    """Return the full url to slim jQuery library file to use."""
+    return get_bootstrap_setting("jquery_slim_url")
+
+
+def include_jquery():
+    """
+    Return whether to include jquery.
+
+    Setting could be False, True|'full', or 'slim'
+    """
+    return get_bootstrap_setting("include_jquery")
+
+
 def javascript_url():
     """Return the full url to the Bootstrap JavaScript file."""
     return get_bootstrap_setting("javascript_url")
