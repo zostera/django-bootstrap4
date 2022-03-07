@@ -1,9 +1,8 @@
-from django import get_version
 from django.template import engines
 
-from .forms import TestForm
+from bootstrap4.utils import DJANGO_VERSION
 
-DJANGO_VERSION = int(get_version()[:1])
+from .forms import TestForm
 
 
 def render_template_with_form(text, context=None, data=None):

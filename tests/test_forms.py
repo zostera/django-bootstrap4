@@ -4,10 +4,11 @@ from django.test import TestCase
 from django.utils.html import escape
 
 from bootstrap4.exceptions import BootstrapError
+from bootstrap4.utils import DJANGO_VERSION
 from tests.utils import html_39x27
 
 from .forms import CharFieldTestForm, TestForm
-from .utils import DJANGO_VERSION, render_field, render_form_field, render_template_with_form
+from .utils import render_field, render_form_field, render_template_with_form
 
 
 class FieldTest(TestCase):
