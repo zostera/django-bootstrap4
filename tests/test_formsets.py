@@ -115,7 +115,10 @@ class BootstrapFormTest(TestCase):
     def test_radio_select_button_group(self):
         form = TestForm()
         res = render_template_with_form("{% bootstrap_form form %}", {"form": form})
-        self.assertIn('input id="id_category5_0_0" name="category5" required="" type="radio"', res)
+        soup = BeautifulSoup(res, features="html.parser")
+        element = soup.find("input", id="id_category5_0_0")
+        self.assertEqual(element.attrs["name"], "category5")
+        self.assertEqual(element.attrs["type"], "radio")
 
     def test_alert_error_type(self):
         form = TestForm({"sender": "sender"})

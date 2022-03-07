@@ -3,7 +3,7 @@ from django.template import engines
 
 from .forms import TestForm
 
-DJANGO3 = get_version() >= "3"
+DJANGO_VERSION = int(get_version()[:1])
 
 
 def render_template_with_form(text, context=None, data=None):
@@ -60,7 +60,7 @@ def html_39x27(html):
 
     See https://docs.djangoproject.com/en/dev/releases/3.0/#miscellaneous
     """
-    if not DJANGO3:
+    if DJANGO_VERSION < 3:
         return html.replace("&#x27;", "&#39;")
     return html
 

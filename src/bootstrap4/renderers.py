@@ -31,7 +31,7 @@ from .forms import (
     render_label,
 )
 from .text import text_value
-from .utils import add_css_class, render_template_file
+from .utils import DJANGO_VERSION, add_css_class, render_template_file
 
 try:
     # If Django is set up without a database, importing this widget gives RuntimeError
@@ -322,19 +322,25 @@ class FieldRenderer(BaseRenderer):
 
     def list_to_class(self, html, klass):
         classes = add_css_class(klass, self.get_size_class())
-        mapping = [
-            ("<ul", '<div class="{classes}"'.format(classes=classes)),
-            ("</ul>", "</div>"),
-            ("<li", '<div class="{form_check_class}"'.format(form_check_class=self.form_check_class)),
-            ("</li>", "</div>"),
-        ]
-        for k, v in mapping:
-            html = html.replace(k, v)
-
+        if DJANGO_VERSION >= 4:
+            soup = BeautifulSoup(html, features="html.parser")
+            enclosing_div = soup.find("div")
+            enclosing_div.attrs["class"] = classes
+            for inner_div in enclosing_div.find_all("div"):
+                inner_div.attrs["class"] = inner_div.attrs.get("class", []) + [self.form_check_class]
+        else:
+            mapping = [
+                ("<ul", '<div class="{classes}"'.format(classes=classes)),
+                ("</ul>", "</div>"),
+                ("<li", '<div class="{form_check_class}"'.format(form_check_class=self.form_check_class)),
+                ("</li>", "</div>"),
+            ]
+            for k, v in mapping:
+                html = html.replace(k, v)
+            soup = BeautifulSoup(html, features="html.parser")
         # Apply bootstrap4 classes to labels and inputs.
         # A simple 'replace' isn't enough as we don't want to have several 'class' attr definition, which would happen
         # if we tried to 'html.replace("input", "input class=...")'
-        soup = BeautifulSoup(html, features="html.parser")
         enclosing_div = soup.find("div", {"class": classes})
         if enclosing_div:
             for label in enclosing_div.find_all("label"):
