@@ -1,6 +1,6 @@
 # Changelog
 
-## 22.1 (in development)
+## 22.1 (2022-03-07)
 
 - Add support for Django 4 (#447).
 - Fix urls in example (#418, #444).
