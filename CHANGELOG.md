@@ -2,7 +2,8 @@
 
 ## 22.1 (in development)
 
-- Fix urls in example (#418, #444)
+- Add support for Django 4 (#447).
+- Fix urls in example (#418, #444).
 
 ## 21.2 (2021-12-27)
 
@@ -26,7 +27,7 @@
 
 - Drop support for Django 3.0, extended support stopped on 2021-04-01).
 - Add support for Django 3.2.
-- Use bundled Bootstrap JavaScript, no need for separate popper.js. 
+- Use bundled Bootstrap JavaScript, no need for separate popper.js.
 - Updated default Bootstrap to 4.6.0.
 - Add Dependabot for updates to dependencies.
 - Rename AUTHORS.md to AUTHORS, remove authors section from documentation.

@@ -13,6 +13,14 @@ MEDIA_CHOICES = (
 )
 
 
+class CharFieldTestForm(forms.Form):
+    subject = forms.CharField(
+        max_length=100,
+        help_text="my_help_text",
+        required=True,
+    )
+
+
 class TestForm(forms.Form):
     """Form with a variety of widgets to test bootstrap4 rendering."""
 

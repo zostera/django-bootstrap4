@@ -4,9 +4,10 @@ from django.test import TestCase
 from django.utils.html import escape
 
 from bootstrap4.exceptions import BootstrapError
+from bootstrap4.utils import DJANGO_VERSION
 from tests.utils import html_39x27
 
-from .forms import TestForm
+from .forms import CharFieldTestForm, TestForm
 from .utils import render_field, render_form_field, render_template_with_form
 
 
@@ -67,30 +68,30 @@ class FieldTest(TestCase):
     def test_radio_select(self):
         """Test RadioSelect rendering, because it is special."""
         res = render_form_field("category1")
-        # strip out newlines and spaces around newlines
-        res = "".join(line.strip() for line in res.split("\n"))
-        res = BeautifulSoup(res, "html.parser")
-        form_group = self._select_one_element(res, ".form-group", "RadioSelect should be rendered inside a .form-group")
-        radio = self._select_one_element(form_group, ".radio", "There should be a .radio inside .form-group")
-        self.assertIn("radio-success", radio["class"], "The radio select should have the class 'radio-success'")
-        elements = radio.find_all("div", class_="form-check")
-        self.assertIsNotNone(elements, "Radio should have at least one div with class 'form-check'")
-        for idx, form_check in enumerate(elements, start=1):
-            label = form_check.next_element
-            self.assertIsNotNone(label, "The label should be rendered after the form-check div")
-            self.assertEqual(label.name, "label", "After the form-check div there should be a label")
-            self.assertIn("form-check-label", label["class"], "The label should have the class 'form-check-label'")
-            self.assertEqual(
-                "Radio {idx}".format(idx=idx), label.text, "The label should have text 'Radio {idx}'".format(idx=idx)
+        expected_html = (
+            '<div class="form-group bootstrap4-req">'
+            '<label for="id_category1_0">Category1</label>'
+            '<div class="radio radio-success" id="id_category1">'
+            '<div class="form-check">'
+            '<label class="form-check-label" for="id_category1_0">'
+            '<input class="form-check-input" id="id_category1_0" name="category1" title="" type="radio" value="1">'
+            "Radio 1"
+            "</label>"
+            "</div>"
+            '<div class="form-check">'
+            '<label class="form-check-label" for="id_category1_1">'
+            '<input class="form-check-input" id="id_category1_1" name="category1" title="" type="radio" value="2">'
+            "Radio 2"
+            "</label>"
+            "</div>"
+            "</div>"
+            "</div>"
+        )
+        if DJANGO_VERSION >= 4:
+            expected_html = expected_html.replace(
+                '<label for="id_category1_0">Category1</label>', "<label>Category1</label>"
             )
-            input_ = label.next_element
-            self.assertIsNotNone(input_, "The input should be rendered after the label")
-            self.assertEqual(input_.name, "input", "After the label there should be an input")
-            self.assertIn("form-check-input", input_["class"], "The input should have the class 'form-check-input'")
-            self.assertEqual(str(idx), input_["value"], "The input should have value '{idx}'".format(idx=idx))
-            self.assertEqual(
-                label["for"], input_["id"], "The for attribute of the label should be the id of the radio input"
-            )
+        self.assertHTMLEqual(res, expected_html)
 
     def test_checkbox(self):
         """Test Checkbox rendering, because it is special."""
@@ -250,22 +251,22 @@ class ComponentsTest(TestCase):
 
 class ShowLabelTest(TestCase):
     def test_show_label_false(self):
-        form = TestForm()
+        form = CharFieldTestForm()
         res = render_template_with_form("{% bootstrap_form form show_label=False %}", {"form": form})
         self.assertIn("sr-only", res)
 
     def test_show_label_sr_only(self):
-        form = TestForm()
+        form = CharFieldTestForm()
         res = render_template_with_form("{% bootstrap_form form show_label='sr-only' %}", {"form": form})
         self.assertIn("sr-only", res)
 
     def test_show_label_skip(self):
-        form = TestForm()
+        form = CharFieldTestForm()
         res = render_template_with_form("{% bootstrap_form form show_label='skip' %}", {"form": form})
         self.assertNotIn("<label>", res)
 
     def test_for_formset(self):
-        TestFormSet = formset_factory(TestForm, extra=1)
+        TestFormSet = formset_factory(CharFieldTestForm, extra=1)
         test_formset = TestFormSet()
         res = render_template_with_form("{% bootstrap_formset formset show_label=False %}", {"formset": test_formset})
         self.assertIn("sr-only", res)
