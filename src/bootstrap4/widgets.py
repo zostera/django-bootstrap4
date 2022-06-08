@@ -1,9 +1,10 @@
-from django.forms import(
+from django.forms import (
     RadioSelect,
     DateInput,
     DateTimeInput,
     TimeInput
 )
+
 
 class RadioSelectButtonGroup(RadioSelect):
     """
@@ -25,6 +26,7 @@ class DateWidget(DateInput):
     def format_value(self, value):
         return str(value or '')
 
+
 class DateTimeWidget(DateTimeInput):
     """
     This widget renders a HML5 datetime-local field type and enables date and time picker.
@@ -32,8 +34,10 @@ class DateTimeWidget(DateTimeInput):
 
     input_type = "datetime-local"
     template_name = "bootstrap4/widgets/datetime_field.html"
+    
     def format_value(self, value):
         return 'T'.join(str(value or '').split())
+
 
 class TimeWidget(TimeInput):
     """
