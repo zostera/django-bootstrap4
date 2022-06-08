@@ -1,14 +1,14 @@
 -r docs/requirements.txt
-django==3.2.9
-black==21.10b0
+django==4.0.5
+black==22.3.0
 isort==5.10.1
 flake8==4.0.1
 pydocstyle==6.1.1
 docformatter==1.4
-coverage==6.1.2
+coverage==6.4
 autoflake==1.4
-tox==3.24.4
-pur==5.4.2
-wheel==0.37.0
-setuptools==58.5.3
-twine==3.6.0
+tox==3.25.0
+pur==6.1.0
+wheel==0.37.1
+setuptools==60.10.0
+twine==3.8.0

@@ -1,5 +1,17 @@
 # Changelog
 
+## 22.1 (2022-03-07)
+
+- Add support for Django 4 (#447).
+- Fix urls in example (#418, #444).
+
+## 21.2 (2021-12-27)
+
+- Drop support for Django 4 (#398).
+- Drop support for Django 3.1 (EOL, #399).
+- Drop support for Python 3.6 (EOL, #399).
+- Fix CI.
+
 ## 21.1 (2021-11-03)
 
 - Switch to a [CalVer](https://calver.org) YY.MINOR versioning scheme. MINOR is the number of the release in the given year. This is the first release in 2021 using this scheme, so its version is 21.1. The next version this year will be 21.2. The first version in 2022 will be 22.1.
@@ -15,7 +27,7 @@
 
 - Drop support for Django 3.0, extended support stopped on 2021-04-01).
 - Add support for Django 3.2.
-- Use bundled Bootstrap JavaScript, no need for separate popper.js. 
+- Use bundled Bootstrap JavaScript, no need for separate popper.js.
 - Updated default Bootstrap to 4.6.0.
 - Add Dependabot for updates to dependencies.
 - Rename AUTHORS.md to AUTHORS, remove authors section from documentation.
