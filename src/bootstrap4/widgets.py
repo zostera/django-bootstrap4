@@ -34,7 +34,7 @@ class DateTimeWidget(DateTimeInput):
 
     input_type = "datetime-local"
     template_name = "bootstrap4/widgets/datetime_field.html"
-    
+
     def format_value(self, value):
         return 'T'.join(str(value or '').split())
 
