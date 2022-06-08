@@ -17,9 +17,7 @@ class RadioSelectButtonGroup(RadioSelect):
 
 
 class DateWidget(DateInput):
-    """
-    This widget renders a HML5 date field type and enables date picker.
-    """
+    """ This widget renders a HML5 date field type and enables date picker. """
 
     input_type = "date"
 
@@ -28,9 +26,7 @@ class DateWidget(DateInput):
 
 
 class DateTimeWidget(DateTimeInput):
-    """
-    This widget renders a HML5 datetime-local field type and enables date and time picker.
-    """
+    """ This widget renders a HML5 datetime-local field type and enables date and time picker. """
 
     input_type = "datetime-local"
     template_name = "bootstrap4/widgets/datetime_field.html"
@@ -40,8 +36,6 @@ class DateTimeWidget(DateTimeInput):
 
 
 class TimeWidget(TimeInput):
-    """
-    This widget renders a HML5 time field type and enables time picker.
-    """
+    """ This widget renders a HML5 time field type and enables time picker. """
 
     input_type = "time"
