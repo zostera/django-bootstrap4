@@ -13,7 +13,7 @@ The goal of this project is to seamlessly blend Django and Bootstrap 4.
 
 ## Requirements
 
-Python 3.7 or newer with Django >= 2.2 or newer.
+Python 3.7 or newer with Django 3.2 or newer.
 
 ## Documentation
 
@@ -26,7 +26,7 @@ The full documentation is at https://django-bootstrap4.readthedocs.io/
 ```bash
 pip install django-bootstrap4
 ```
-   
+
    Alternatively, you can install download or clone this repo and call ``pip install -e .``.
 
 2. Add to `INSTALLED_APPS` in your `settings.py`:
