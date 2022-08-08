@@ -3,6 +3,8 @@
 ## 22.2 (in development)
 
 - Update Bootstrap to 4.6.2 (#499).
+- Drop support for Django 2.2 (EOL).
+- Add support for Django 4.1.
 
 ## 22.1 (2022-03-07)
 
