@@ -1,5 +1,9 @@
 # Changelog
 
+## 22.3 (2022-11-23)
+
+- Add support for Python 3.11 (#554).
+
 ## 22.2 (2022-08-08)
 
 - Update Bootstrap to 4.6.2 (#499).
