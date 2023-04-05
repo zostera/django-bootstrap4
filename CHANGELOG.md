@@ -1,5 +1,11 @@
 # Changelog
 
+## 23.1 (2023-04-05)
+
+- Add support for Django 4.2 (#601).
+- Update requirements and packages (#601).
+- Stop using coveralls (#601).
+
 ## 22.3 (2022-11-23)
 
 - Add support for Python 3.11 (#554).
