@@ -1,5 +1,11 @@
 # Changelog
 
+## 23.2 (in development)
+
+- Fix readthedocs (#603).
+- Remove version restriction on importlib-metadata (#604).
+- Replace m2r2 with sphinx-mdinclude (#605).
+
 ## 23.1 (2023-04-05)
 
 - Add support for Django 4.2 (#601).
