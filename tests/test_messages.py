@@ -8,7 +8,7 @@ from .utils import render_template_with_form
 
 class MessagesTest(TestCase):
     def test_bootstrap_messages(self):
-        class FakeMessage(object):
+        class FakeMessage:
             """Follows the `django.contrib.messages.storage.base.Message` API."""
 
             level = None

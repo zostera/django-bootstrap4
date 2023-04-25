@@ -13,7 +13,7 @@ class PaginatorTest(TestCase):
         self.assertEqual(url_replace_param("/foo/bar#id", "baz", "foo"), "/foo/bar?baz=foo#id")
 
     def bootstrap_pagination(self, page, extra=""):
-        """Helper to test bootstrap_pagination tag."""
+        """Render bootstrap_pagination tag."""
         template = """
             {% load bootstrap4 %}
             {% bootstrap_pagination page {extra} %}
