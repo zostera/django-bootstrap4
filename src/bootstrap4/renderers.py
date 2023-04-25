@@ -40,7 +40,7 @@ except RuntimeError:
     ReadOnlyPasswordHashWidget = None
 
 
-class BaseRenderer(object):
+class BaseRenderer:
     """A content renderer."""
 
     def __init__(self, *args, **kwargs):
@@ -330,9 +330,9 @@ class FieldRenderer(BaseRenderer):
                 inner_div.attrs["class"] = inner_div.attrs.get("class", []) + [self.form_check_class]
         else:
             mapping = [
-                ("<ul", '<div class="{classes}"'.format(classes=classes)),
+                ("<ul", f'<div class="{classes}"'),
                 ("</ul>", "</div>"),
-                ("<li", '<div class="{form_check_class}"'.format(form_check_class=self.form_check_class)),
+                ("<li", f'<div class="{self.form_check_class}"'),
                 ("</li>", "</div>"),
             ]
             for k, v in mapping:
@@ -364,7 +364,7 @@ class FieldRenderer(BaseRenderer):
         div2 = "</div>"
         html = html.replace("<select", div1 + "<select")
         html = html.replace("</select>", "</select>" + div2)
-        return '<div class="row bootstrap4-multi-input">{html}</div>'.format(html=html)
+        return f'<div class="row bootstrap4-multi-input">{html}</div>'
 
     def fix_file_input_label(self, html):
         if self.layout != "horizontal":
@@ -388,15 +388,15 @@ class FieldRenderer(BaseRenderer):
         if isinstance(self.widget, CheckboxInput):
             # Wrap checkboxes
             # Note checkboxes do not get size classes, see #318
-            html = '<div class="form-check">{html}</div>'.format(html=html)
+            html = f'<div class="form-check">{html}</div>'
         return html
 
     def make_input_group_addon(self, inner_class, outer_class, content):
         if not content:
             return ""
         if inner_class:
-            content = '<span class="{inner_class}">{content}</span>'.format(inner_class=inner_class, content=content)
-        return '<div class="{outer_class}">{content}</div>'.format(outer_class=outer_class, content=content)
+            content = f'<span class="{inner_class}">{content}</span>'
+        return f'<div class="{outer_class}">{content}</div>'
 
     @property
     def is_input_group(self):
@@ -407,8 +407,8 @@ class FieldRenderer(BaseRenderer):
         if self.is_input_group:
             before = self.make_input_group_addon(self.addon_before_class, "input-group-prepend", self.addon_before)
             after = self.make_input_group_addon(self.addon_after_class, "input-group-append", self.addon_after)
-            html = self.append_errors("{before}{html}{after}".format(before=before, html=html, after=after))
-            html = '<div class="input-group">{html}</div>'.format(html=html)
+            html = self.append_errors(f"{before}{html}{after}")
+            html = f'<div class="input-group">{html}</div>'
         return html
 
     def append_help(self, html):
@@ -470,7 +470,7 @@ class FieldRenderer(BaseRenderer):
     def wrap_field(self, html):
         field_class = self.get_field_class()
         if field_class:
-            html = '<div class="{field_class}">{html}</div>'.format(field_class=field_class, html=html)
+            html = f'<div class="{field_class}">{html}</div>'
         return html
 
     def get_label_class(self):
