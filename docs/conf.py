@@ -9,7 +9,7 @@ config_parser = ConfigParser()
 config_parser.read("../setup.cfg")
 metadata = config_parser["metadata"]
 
-project = metadata["name"]
+project = "bootstrap4"
 project_with_underscores = project.replace("-", "_")
 
 module = importlib.import_module(f"{project_with_underscores}")
