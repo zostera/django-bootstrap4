@@ -25,10 +25,9 @@ Settings
 You can set defaults for ``django-bootstrap4`` in your settings file. Refer to :doc:`settings` for more information.
 
 
-Demo application
-----------------
+Example application
+-------------------
 
-The demo application provides a number of useful examples.
+The example application provides a number of useful examples.
 
 https://github.com/zostera/django-bootstrap4/tree/main/example
-
