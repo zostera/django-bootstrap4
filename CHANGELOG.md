@@ -2,6 +2,9 @@
 
 ## 23.2 (in development)
 
+- Fix references to example application (#648).
+- Remove support for Python 3.7 (EOL) (#646).
+- Switch to Hatch (#638).
 - Fix readthedocs (#603).
 - Remove version restriction on importlib-metadata (#604).
 - Replace m2r2 with sphinx-mdinclude (#605).
