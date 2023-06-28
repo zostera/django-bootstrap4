@@ -5,7 +5,6 @@ from django.utils.html import escape
 
 from bootstrap4.exceptions import BootstrapError
 from bootstrap4.utils import DJANGO_VERSION
-from tests.utils import html_39x27
 
 from .forms import CharFieldTestForm, TestForm
 from .utils import render_field, render_form_field, render_template_with_form
@@ -48,17 +47,14 @@ class FieldTest(TestCase):
     def test_xss_field(self):
         res = render_form_field("xss_field")
         self.assertIn('type="text"', res)
-
-        expect = html_39x27(
-            '<label for="id_xss_field">'
-            "XSS&quot; onmouseover=&quot;alert(&#x27;Hello, XSS&#x27;)&quot; foo=&quot;</label>"
-        )
         self.assertIn(
-            expect,
+            (
+                '<label for="id_xss_field">'
+                "XSS&quot; onmouseover=&quot;alert(&#x27;Hello, XSS&#x27;)&quot; foo=&quot;</label>"
+            ),
             res,
         )
-        expect = html_39x27('placeholder="XSS&quot; onmouseover=&quot;alert(&#x27;Hello, XSS&#x27;)&quot; foo=&quot;"')
-        self.assertIn(expect, res)
+        self.assertIn(('placeholder="XSS&quot; onmouseover=&quot;alert(&#x27;Hello, XSS&#x27;)&quot; foo=&quot;"'), res)
 
     def test_password(self):
         res = render_form_field("password")
