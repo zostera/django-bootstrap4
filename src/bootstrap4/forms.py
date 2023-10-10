@@ -81,10 +81,8 @@ def render_button(
     if button_type:
         if button_type not in ("submit", "reset", "button", "link"):
             raise BootstrapError(
-                (
-                    'Parameter "button_type" should be "submit", "reset", "button", "link" or empty '
-                    '("{button_type}" given).'
-                ).format(button_type=button_type)
+                'Parameter "button_type" should be "submit", "reset", "button", "link" or empty '
+                f'("{button_type}" given).'
             )
         if button_type != "link":
             attrs["type"] = button_type
