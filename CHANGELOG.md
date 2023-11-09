@@ -1,6 +1,6 @@
 # Changelog
 
-## 23.2 (in development)
+## 23.2 (2023-06-28)
 
 - Fix references to example application (#648).
 - Remove support for Python 3.7 (EOL) (#646).
