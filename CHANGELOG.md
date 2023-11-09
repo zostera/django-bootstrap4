@@ -1,5 +1,9 @@
 # Changelog
 
+## In development
+
+- Use ruff instead of black for formatting ().
+
 ## 23.2 (2023-06-28)
 
 - Fix references to example application (#648).
