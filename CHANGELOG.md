@@ -1,7 +1,12 @@
 # Changelog
 
+## In development
+
+- Use ruff instead of black for formatting ().
+
 ## 23.2 (2023-06-28)
 
+- Use ruff instead of black for formatting ().
 - Fix references to example application (#648).
 - Remove support for Python 3.7 (EOL) (#646).
 - Switch to Hatch (#638).
