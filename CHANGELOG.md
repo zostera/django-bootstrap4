@@ -2,7 +2,7 @@
 
 ## In development
 
-- Use ruff instead of black for formatting ().
+- Use ruff instead of black for formatting (#653).
 
 ## 23.2 (2023-06-28)
 
