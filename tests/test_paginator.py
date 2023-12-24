@@ -17,9 +17,7 @@ class PaginatorTest(TestCase):
         template = """
             {% load bootstrap4 %}
             {% bootstrap_pagination page {extra} %}
-        """.replace(
-            "{extra}", extra
-        )
+        """.replace("{extra}", extra)
 
         return render_template(template, {"page": page})
 

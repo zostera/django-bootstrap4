@@ -1,6 +1,6 @@
 [build-system]
-build-backend = "hatchling.build"
-requires = ["hatchling"]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools"]
 
 [project]
 authors = [
@@ -13,6 +13,7 @@ classifiers = [
   "Framework :: Django :: 3.2",
   "Framework :: Django :: 4.1",
   "Framework :: Django :: 4.2",
+  "Framework :: Django :: 5.0",
   "Intended Audience :: Developers",
   "License :: OSI Approved :: BSD License",
   "Operating System :: OS Independent",
@@ -21,6 +22,7 @@ classifiers = [
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
   "Topic :: Software Development :: Libraries",
   "Topic :: Utilities",
 ]
@@ -28,14 +30,12 @@ dependencies = [
   "Django>=3.2",
   "beautifulsoup4>=4.8.0",
 ]
-description = "Bootstrap 4 for Django"
-dynamic = [
-  "version",
-]
-license = "BSD-3-Clause"
+description = "Django extensions by Zostera"
+license = {file = "LICENSE"}
 name = "django-bootstrap4"
 readme = "README.md"
 requires-python = ">=3.8"
+version = "23.6"
 
 [project.urls]
 Changelog = "https://github.com/zostera/django-bootstrap4/blob/main/CHANGELOG.md"
@@ -43,102 +43,6 @@ Documentation = "https://django-bootstrap4.readthedocs.io/"
 Homepage = "https://github.com/zostera/django-bootstrap4"
 Issues = "https://github.com/zostera/django-bootstrap4/issues"
 Source = "https://github.com/zostera/django-bootstrap4"
-
-[tool.hatch.version]
-path = "src/bootstrap4/__about__.py"
-
-[tool.hatch.build.targets.sdist]
-include = [
-  "/src",
-]
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/bootstrap4"]
-
-[tool.hatch.envs.default]
-dependencies = [
-  "coverage[toml]>=7.2.6",
-]
-matrix-name-format = "dj{value}"
-
-[tool.hatch.envs.default.scripts]
-cov = [
-  "test-cov",
-  "cov-report",
-]
-cov-report = [
-  "- coverage combine",
-  "coverage report",
-]
-test = "python manage.py test {args:tests}"
-test-cov = "coverage run manage.py test {args:tests}"
-
-[[tool.hatch.envs.all.matrix]]
-django = ["3.2", "4.1", "4.2"]
-python = ["3.8", "3.9"]
-
-[[tool.hatch.envs.all.matrix]]
-django = ["3.2", "4.1", "4.2", "main"]
-python = ["3.10"]
-
-[[tool.hatch.envs.all.matrix]]
-django = ["4.1", "4.2", "main"]
-python = ["3.11"]
-
-[tool.hatch.envs.all.overrides]
-matrix.django.dependencies = [
-  {value = "django~=3.2.0", if = ["3.2"]},
-  {value = "django~=4.1.0", if = ["4.1"]},
-  {value = "django~=4.2.0", if = ["4.2"]},
-  {value = "django @ git+https://github.com/django/django.git", if = ["main"]},
-]
-
-[tool.hatch.envs.example]
-dependencies = [
-  "django>=3.2",
-]
-python = "3.11"
-template = "example"
-
-[tool.hatch.envs.example.scripts]
-runserver = [
-  "cd example && python manage.py migrate && python manage.py runserver",
-]
-
-[tool.hatch.envs.docs]
-dependencies = [
-  "sphinx>=7.0.1",
-  "sphinx-mdinclude>=0.5.3",
-  "furo>=2023.05.20",
-]
-python = "3.11"
-template = "docs"
-
-[tool.hatch.envs.docs.scripts]
-build = [
-  "clean",
-  "cd docs && sphinx-build -b html -d _build/doctrees . _build/html",
-]
-clean = "rm -rf docs/_build"
-
-[tool.hatch.envs.lint]
-dependencies = [
-  "ruff>0.1",
-]
-detached = true
-
-[tool.hatch.envs.lint.scripts]
-all = [
-  "style",
-]
-fmt = [
-  "ruff --fix {args:.}",
-  "ruff format {args:.}",
-  "style",
-]
-style = [
-  "ruff {args:.}",
-]
 
 [tool.ruff]
 fix = false
@@ -174,8 +78,7 @@ known-third-party = ["django"]
 
 [tool.coverage.run]
 branch = true
-parallel = true
-source = ["src"]
+source = ["src", "tests"]
 
 [tool.coverage.paths]
 package = ["src/bootstrap4", "*/django_bootstrap4/src/bootstrap4"]
@@ -183,6 +86,3 @@ package = ["src/bootstrap4", "*/django_bootstrap4/src/bootstrap4"]
 [tool.coverage.report]
 show_missing = true
 skip_covered = true
-
-[tool.sphinx.x-conf]
-module = "bootstrap4"
