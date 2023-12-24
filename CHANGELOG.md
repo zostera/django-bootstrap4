@@ -3,6 +3,9 @@
 ## In development
 
 - Use ruff instead of black for formatting (#653).
+- Add support for Python 3.12 (#658).
+- Add support for Django 5.0 (#658).
+- Revert packaging tools to setuptools, build, tox and twine (#658).
 
 ## 23.2 (2023-06-28)
 
