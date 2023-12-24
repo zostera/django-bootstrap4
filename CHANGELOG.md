@@ -1,6 +1,6 @@
 # Changelog
 
-## In development
+## 23.3 (2023-12-24)
 
 - Use ruff instead of black for formatting (#653).
 - Add support for Python 3.12 (#658).
