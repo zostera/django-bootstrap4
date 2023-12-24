@@ -1,1 +1,3 @@
-__version__ = "23.3.dev1"
+import importlib.metadata
+
+__version__ = importlib.metadata.version("django-bootstrap4")
