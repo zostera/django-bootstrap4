@@ -1,5 +1,9 @@
 # Changelog
 
+## In development
+
+- Fix templates folder inside package (#662).
+
 ## 23.3 (2023-12-24)
 
 - Use ruff instead of black for formatting (#653).
