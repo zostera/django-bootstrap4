@@ -372,10 +372,10 @@ class FieldRenderer(BaseRenderer):
         return html
 
     def post_widget_render(self, html):
-        if isinstance(self.widget, RadioSelect):
-            html = self.list_to_class(html, "radio radio-success")
-        elif isinstance(self.widget, CheckboxSelectMultiple):
+        if isinstance(self.widget, CheckboxSelectMultiple):
             html = self.list_to_class(html, "checkbox")
+        elif isinstance(self.widget, RadioSelect):
+            html = self.list_to_class(html, "radio radio-success")
         elif isinstance(self.widget, SelectDateWidget):
             html = self.fix_date_select_input(html)
         elif isinstance(self.widget, CheckboxInput):
