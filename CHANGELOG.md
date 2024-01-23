@@ -1,5 +1,9 @@
 # Changelog
 
+## In development
+
+- Fix CheckboxSelectMultiple on Django>4 (#672, @heso).
+  
 ## 23.4 (2023-12-28)
 
 - Use setuptools-scm to build package (#664).
