@@ -117,17 +117,19 @@ class FieldTest(TestCase):
         res = render_form_field("category2")
         expected_html = (
             '<div class="form-group bootstrap4-req">'
-            '<label>Category2</label>'
+            "<label>Category2</label>"
             '<div class="checkbox" id="id_category2">'
             '<div class="form-check">'
             '<label class="form-check-label" for="id_category2_0">'
-            '<input class="form-check-input" id="id_category2_0" name="category2" title="Check as many as you like." type="checkbox" value="1">'
+            '<input class="form-check-input" id="id_category2_0" name="category2"'
+            ' title="Check as many as you like." type="checkbox" value="1">'
             "Radio 1"
             "</label>"
             "</div>"
             '<div class="form-check">'
             '<label class="form-check-label" for="id_category2_1">'
-            '<input class="form-check-input" id="id_category2_1" name="category2" title="Check as many as you like." type="checkbox" value="2">'
+            '<input class="form-check-input" id="id_category2_1" name="category2"'
+            ' title="Check as many as you like." type="checkbox" value="2">'
             "Radio 2"
             "</label>"
             "</div>"
