@@ -1,5 +1,9 @@
 # Changelog
 
+## In development
+
+- Remove support for Django 3.2 (EOL) (#).
+
 ## 24.1 (2024-01-29)
 
 - Fix CheckboxSelectMultiple on Django>4 (#672, @heso).
