@@ -43,8 +43,6 @@ Homepage = "https://github.com/zostera/django-bootstrap4"
 Issues = "https://github.com/zostera/django-bootstrap4/issues"
 Source = "https://github.com/zostera/django-bootstrap4"
 
-# [tool.setuptools_scm]
-
 [tool.ruff]
 fix = false
 fixable = [
