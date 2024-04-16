@@ -34,7 +34,7 @@ license = {file = "LICENSE"}
 name = "django-bootstrap4"
 readme = "README.md"
 requires-python = ">=3.8"
-version = "24.1"
+version = "24.2"
 
 [project.urls]
 Changelog = "https://github.com/zostera/django-bootstrap4/blob/main/CHANGELOG.md"
