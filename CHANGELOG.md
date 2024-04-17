@@ -1,5 +1,9 @@
 # Changelog
 
+## 24.3 (2024-04-17)
+
+- Reinstate setuptools_scm for build (#707).
+
 ## 24.2 (2024-04-16)
 
 - Remove setuptools_scm (#704).
