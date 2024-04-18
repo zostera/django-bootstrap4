@@ -1,6 +1,6 @@
 [build-system]
 build-backend = "setuptools.build_meta"
-requires = ["setuptools>=64", "setuptools_scm>=8"]
+requires = ["setuptools>=64"]
 
 [project]
 authors = [
@@ -10,7 +10,6 @@ classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Environment :: Web Environment",
   "Framework :: Django",
-  "Framework :: Django :: 4.1",
   "Framework :: Django :: 4.2",
   "Framework :: Django :: 5.0",
   "Intended Audience :: Developers",
@@ -26,10 +25,11 @@ classifiers = [
   "Topic :: Utilities",
 ]
 dependencies = [
-  "Django>=4.1",
+  "Django>=4.2",
   "beautifulsoup4>=4.8.0",
 ]
-description = "Django extensions by Zostera"
+description = "Bootstrap 4 for Django"
+keywords = ["django", "bootstrap", "bootstrap4"]
 license = {file = "LICENSE"}
 name = "django-bootstrap4"
 readme = "README.md"
@@ -45,6 +45,11 @@ Source = "https://github.com/zostera/django-bootstrap4"
 
 [tool.ruff]
 fix = false
+line-length = 120
+src = ["src"]
+target-version = "py38"
+
+[tool.ruff.lint]
 fixable = [
   "I001", # isort (sorting)
   "F", # flake8
@@ -57,7 +62,6 @@ ignore = [
   "D212", # D212: Multi-line docstring summary should start at the first line
   "D301", # D301: Use r”“” if any backslashes in a docstring (unclear how else to handle backslashes in docstrings)
 ]
-line-length = 120
 select = [
   "D", # pydocstyle
   "E", # pycodestyle
@@ -65,14 +69,12 @@ select = [
   "I", # isort
   "UP", # pyupgrade
 ]
-src = ["src"]
-target-version = "py38"
 unfixable = [
   "F8", # names in flake8, such as defined but unused variables
 ]
 
-[tool.ruff.isort]
-known-first-party = ["bootstrap4", "app"]
+[tool.ruff.lint.isort]
+known-first-party = ["bootstrap3", "app"]
 known-third-party = ["django"]
 
 [tool.coverage.run]
