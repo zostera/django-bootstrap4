@@ -39,6 +39,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: Install GDAL binaries
+        run: sudo apt-get install binutils libproj-dev gdal-bin
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
