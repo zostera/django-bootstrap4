@@ -101,13 +101,13 @@ class FieldTest(TestCase):
         )
         checkbox = self._select_one_element(form_check, "input", "The checkbox should be inside the .form-check")
         self.assertIn("form-check-input", checkbox["class"], "The checkbox should have the class 'form-check-input'.")
-        label = checkbox.nextSibling
+        label = checkbox.next_sibling
         self.assertIsNotNone(label, "The label should be rendered after the checkbox.")
         self.assertEqual(label.name, "label", "After the checkbox there should be a label.")
         self.assertEqual(
             label["for"], checkbox["id"], "The for attribute of the label should be the id of the checkbox."
         )
-        help_text = label.nextSibling
+        help_text = label.next_sibling
         self.assertIsNotNone(help_text, "The help text should be rendered after the label.")
         self.assertEqual(help_text.name, "small", "The help text should be rendered as <small> tag.")
         self.assertIn("form-text", help_text["class"], "The help text should have the class 'form-text'.")
