@@ -4,7 +4,6 @@ from django.test import TestCase
 from django.utils.html import escape
 
 from bootstrap4.exceptions import BootstrapError
-from bootstrap4.utils import DJANGO_VERSION
 
 from .forms import CharFieldTestForm, TestForm
 from .utils import render_field, render_form_field, render_template_with_form
@@ -37,7 +36,10 @@ class FieldTest(TestCase):
         res = render_form_field("sender")
         self.assertIn('title="{}"'.format(escape(TestForm.base_fields["sender"].help_text)), res)
         res = render_form_field("cc_myself")
-        self.assertIn('title="{}"'.format(escape(TestForm.base_fields["cc_myself"].help_text)), res)
+        self.assertIn(
+            'title="{}"'.format(escape(TestForm.base_fields["cc_myself"].help_text)),
+            res,
+        )
 
     def test_subject(self):
         res = render_form_field("subject")
@@ -54,7 +56,10 @@ class FieldTest(TestCase):
             ),
             res,
         )
-        self.assertIn(('placeholder="XSS&quot; onmouseover=&quot;alert(&#x27;Hello, XSS&#x27;)&quot; foo=&quot;"'), res)
+        self.assertIn(
+            ('placeholder="XSS&quot; onmouseover=&quot;alert(&#x27;Hello, XSS&#x27;)&quot; foo=&quot;"'),
+            res,
+        )
 
     def test_password(self):
         res = render_form_field("password")
@@ -83,10 +88,9 @@ class FieldTest(TestCase):
             "</div>"
             "</div>"
         )
-        if DJANGO_VERSION >= 4:
-            expected_html = expected_html.replace(
-                '<label for="id_category1_0">Category1</label>', "<label>Category1</label>"
-            )
+        expected_html = expected_html.replace(
+            '<label for="id_category1_0">Category1</label>', "<label>Category1</label>"
+        )
         self.assertHTMLEqual(res, expected_html)
 
     def test_checkbox(self):
@@ -97,21 +101,37 @@ class FieldTest(TestCase):
         res = BeautifulSoup(res, "html.parser")
         form_group = self._select_one_element(res, ".form-group", "Checkbox should be rendered inside a .form-group.")
         form_check = self._select_one_element(
-            form_group, ".form-check", "There should be a .form-check inside .form-group"
+            form_group,
+            ".form-check",
+            "There should be a .form-check inside .form-group",
         )
         checkbox = self._select_one_element(form_check, "input", "The checkbox should be inside the .form-check")
-        self.assertIn("form-check-input", checkbox["class"], "The checkbox should have the class 'form-check-input'.")
+        self.assertIn(
+            "form-check-input",
+            checkbox["class"],
+            "The checkbox should have the class 'form-check-input'.",
+        )
         label = checkbox.next_sibling
         self.assertIsNotNone(label, "The label should be rendered after the checkbox.")
         self.assertEqual(label.name, "label", "After the checkbox there should be a label.")
         self.assertEqual(
-            label["for"], checkbox["id"], "The for attribute of the label should be the id of the checkbox."
+            label["for"],
+            checkbox["id"],
+            "The for attribute of the label should be the id of the checkbox.",
         )
         help_text = label.next_sibling
         self.assertIsNotNone(help_text, "The help text should be rendered after the label.")
         self.assertEqual(help_text.name, "small", "The help text should be rendered as <small> tag.")
-        self.assertIn("form-text", help_text["class"], "The help text should have the class 'form-text'.")
-        self.assertIn("text-muted", help_text["class"], "The help text should have the class 'text-muted'.")
+        self.assertIn(
+            "form-text",
+            help_text["class"],
+            "The help text should have the class 'form-text'.",
+        )
+        self.assertIn(
+            "text-muted",
+            help_text["class"],
+            "The help text should have the class 'text-muted'.",
+        )
 
     def test_checkbox_multiple_select(self):
         res = render_form_field("category2")
@@ -183,7 +203,10 @@ class FieldTest(TestCase):
         res = render_template_with_form('{% bootstrap_field form.subject addon_before=None addon_after="after" %}')  # noqa
         self.assertIn('class="input-group"', res)
         self.assertNotIn("input-group-prepend", res)
-        self.assertIn('<div class="input-group-append"><span class="input-group-text">after</span></div>', res)
+        self.assertIn(
+            '<div class="input-group-append"><span class="input-group-text">after</span></div>',
+            res,
+        )
 
     def test_input_group_addon_validation(self):
         """
@@ -194,7 +217,8 @@ class FieldTest(TestCase):
         # invalid form data:
         data = {"subject": ""}
         res = render_template_with_form(
-            '{% bootstrap_field form.subject addon_before=None addon_after="after" %}', data=data
+            '{% bootstrap_field form.subject addon_before=None addon_after="after" %}',
+            data=data,
         )  # noqa
         res = BeautifulSoup(res, "html.parser")
         self._select_one_element(
@@ -204,7 +228,9 @@ class FieldTest(TestCase):
             "required, must be placed inside the input-group",
         )
         self._select_one_element(
-            res, ".form-group > .form-text", "The form-text message must be placed inside the form-group"
+            res,
+            ".form-group > .form-text",
+            "The form-text message must be placed inside the form-group",
         )
         self.assertEqual(
             len(res.select(".form-group > .invalid-feedback")),
@@ -288,5 +314,8 @@ class ShowLabelTest(TestCase):
     def test_for_formset(self):
         TestFormSet = formset_factory(CharFieldTestForm, extra=1)
         test_formset = TestFormSet()
-        res = render_template_with_form("{% bootstrap_formset formset show_label=False %}", {"formset": test_formset})
+        res = render_template_with_form(
+            "{% bootstrap_formset formset show_label=False %}",
+            {"formset": test_formset},
+        )
         self.assertIn("sr-only", res)
