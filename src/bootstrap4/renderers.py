@@ -31,7 +31,7 @@ from .forms import (
     render_label,
 )
 from .text import text_value
-from .utils import DJANGO_VERSION, add_css_class, render_template_file
+from .utils import add_css_class, render_template_file
 
 try:
     # If Django is set up without a database, importing this widget gives RuntimeError

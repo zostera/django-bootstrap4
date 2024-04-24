@@ -2,7 +2,6 @@ import re
 from collections.abc import Mapping
 from urllib.parse import parse_qs, urlparse, urlunparse
 
-from django import get_version
 from django.forms.utils import flatatt
 from django.template.base import FilterExpression, TemplateSyntaxError, Variable, VariableDoesNotExist, kwarg_re
 from django.template.loader import get_template
@@ -12,8 +11,6 @@ from django.utils.http import urlencode
 from django.utils.safestring import mark_safe
 
 from .text import text_value
-
-DJANGO_VERSION = int(get_version()[:1])
 
 # RegEx for quoted string
 QUOTED_STRING = re.compile(r'^["\'](?P<noquotes>.+)["\']$')
