@@ -26,6 +26,16 @@ docs: clean
 example:
 	cd example && python manage.py runserver
 
+.PHONY: example
+example-docker-build:
+	cd example && docker compose build
+	docker compose run example python manage.py migrate
+	docker compose up
+
+.PHONY: example
+example-docker:
+	cd example && docker compose up
+
 .PHONY: porcelain
 porcelain:
 ifeq ($(shell git status --porcelain),)
