@@ -3,7 +3,7 @@ import re
 from django.contrib.messages import constants as DEFAULT_MESSAGE_LEVELS
 from django.test import TestCase
 
-from .utils import render_template_with_form
+from .utils import render_template_with_form,render_template_with_bootstrap
 
 
 class MessagesTest(TestCase):

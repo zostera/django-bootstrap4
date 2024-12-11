@@ -45,15 +45,15 @@ BOOTSTRAP4_DEFAULTS = {
 def get_bootstrap_setting(name, default=None):
     """Read a setting."""
     # Start with a copy of default settings
-    BOOTSTRAP4 = BOOTSTRAP4_DEFAULTS.copy()
+    bootstrap4 = BOOTSTRAP4_DEFAULTS.copy()
 
     # Override with user settings from settings.py
-    django_bootstrap4.update(getattr(settings, "BOOTSTRAP4", {}))
+    bootstrap4.update(getattr(settings, "BOOTSTRAP4", {}))
 
     # Update use_i18n
-    BOOTSTRAP4["use_i18n"] = i18n_enabled()
+    bootstrap4["use_i18n"] = i18n_enabled()
 
-    return django_bootstrap4.get(name, default)
+    return bootstrap4.get(name, default)
 
 
 def jquery_url():

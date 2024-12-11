@@ -35,7 +35,7 @@ pip install django-bootstrap4
 ```python
 INSTALLED_APPS = (
   # ...
-  "bootstrap4",
+  "django_bootstrap4",
   # ...
 )
 ```

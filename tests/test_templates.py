@@ -14,7 +14,7 @@ class TemplateTest(TestCase):
 
     def test_bootstrap4_html_template_title(self):
         res = render_template(
-            '{% extends "django_bootstrap4/django_bootstrap4.html" %}'
+            '{% extends "django_bootstrap4/bootstrap4.html" %}'
             + "{% block bootstrap4_title %}"
             + "test_bootstrap4_title"
             + "{% endblock %}"
@@ -23,7 +23,7 @@ class TemplateTest(TestCase):
 
     def test_bootstrap4_html_template_content(self):
         res = render_template(
-            '{% extends "django_bootstrap4/django_bootstrap4.html" %}'
+            '{% extends "django_bootstrap4/bootstrap4.html" %}'
             + "{% block bootstrap4_content %}"
             + "test_bootstrap4_content"
             + "{% endblock %}"

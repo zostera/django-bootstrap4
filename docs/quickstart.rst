@@ -4,7 +4,7 @@ Quickstart
 
 After :doc:`installation`, you can use ``django-bootstrap4`` in your templates.:
 
-Load the ``bootstrap4`` library and use the ``bootstrap_*`` tags:
+Load the ``django_bootstrap4`` library and use the ``bootstrap_*`` tags:
 
 
 Example template
