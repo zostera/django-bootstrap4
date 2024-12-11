@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator
 from django.test import TestCase
 
-from django_django_bootstrap4.utils import url_replace_param
+from django_bootstrap4.utils import url_replace_param
 
 from .utils import render_template
 

@@ -8,4 +8,4 @@ class RadioSelectButtonGroup(RadioSelect):
     Much more mobile friendly.
     """
 
-    template_name = "bootstrap4/widgets/radio_select_button_group.html"
+    template_name = "django_bootstrap4/widgets/radio_select_button_group.html"

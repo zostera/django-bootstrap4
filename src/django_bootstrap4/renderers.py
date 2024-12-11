@@ -128,7 +128,7 @@ class FormsetRenderer(BaseRenderer):
         formset_errors = self.get_formset_errors()
         if formset_errors:
             return render_template_file(
-                "bootstrap4/form_errors.html",
+                "django_bootstrap4/form_errors.html",
                 context={"errors": formset_errors, "form": self.formset, "layout": self.layout},
             )
         return ""
@@ -194,7 +194,7 @@ class FormRenderer(BaseRenderer):
 
         if form_errors:
             return render_template_file(
-                "bootstrap4/form_errors.html",
+                "django_bootstrap4/form_errors.html",
                 context={"errors": form_errors, "form": self.form, "layout": self.layout, "type": type},
             )
 
@@ -404,7 +404,7 @@ class FieldRenderer(BaseRenderer):
         field_help = self.field_help or None
         if field_help:
             help_html = render_template_file(
-                "bootstrap4/field_help_text.html",
+                "django_bootstrap4/field_help_text.html",
                 context={
                     "field": self.field,
                     "field_help": field_help,
@@ -419,7 +419,7 @@ class FieldRenderer(BaseRenderer):
         field_errors = self.field_errors
         if field_errors:
             errors_html = render_template_file(
-                "bootstrap4/field_errors.html",
+                "django_bootstrap4/field_errors.html",
                 context={
                     "field": self.field,
                     "field_errors": field_errors,

@@ -1,6 +1,6 @@
 from django.test import TestCase, override_settings
 
-from django_django_bootstrap4.bootstrap import get_bootstrap_setting, include_jquery, jquery_slim_url, jquery_url
+from django_bootstrap4.bootstrap import get_bootstrap_setting, include_jquery, jquery_slim_url, jquery_url
 
 
 class SettingsTest(TestCase):

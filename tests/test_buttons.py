@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from django_django_bootstrap4.exceptions import BootstrapError
-from django_django_bootstrap4.forms import render_button
+from django_bootstrap4.exceptions import BootstrapError
+from django_bootstrap4.forms import render_button
 
 from .utils import render_template_with_form
 
