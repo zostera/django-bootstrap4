@@ -75,7 +75,7 @@ unfixable = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["bootstrap4", "app"]
+known-first-party = ["django_bootstrap4", "app"]
 known-third-party = ["django"]
 
 [tool.coverage.run]
@@ -83,7 +83,7 @@ branch = true
 source = ["src", "tests"]
 
 [tool.coverage.paths]
-package = ["src/bootstrap4", "*/django_bootstrap4/src/bootstrap4"]
+package = ["src/django_bootstrap4", "*/django_bootstrap4/src/bootstrap4"]
 
 [tool.coverage.report]
 show_missing = true
@@ -104,6 +104,3 @@ docs = [
   "myst-parser>=3.0.1",
   "sphinx>=7.1.2",
 ]
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/bootstrap4"]

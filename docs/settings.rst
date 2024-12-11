@@ -75,13 +75,13 @@ The ``BOOTSTRAP4`` dict variable contains these settings and defaults:
 
         # Renderers (only set these if you have studied the source and understand the inner workings)
         'formset_renderers':{
-            'default': 'bootstrap4.renderers.FormsetRenderer',
+            'default': 'django_bootstrap4.renderers.FormsetRenderer',
         },
         'form_renderers': {
-            'default': 'bootstrap4.renderers.FormRenderer',
+            'default': 'django_bootstrap4.renderers.FormRenderer',
         },
         'field_renderers': {
-            'default': 'bootstrap4.renderers.FieldRenderer',
-            'inline': 'bootstrap4.renderers.InlineFieldRenderer',
+            'default': 'django_bootstrap4.renderers.FieldRenderer',
+            'inline': 'django_bootstrap4.renderers.InlineFieldRenderer',
         },
     }

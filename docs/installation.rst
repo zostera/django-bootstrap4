@@ -16,6 +16,6 @@ Be sure to use ``virtualenv`` if you develop python projects.
 
 Add to INSTALLED_APPS in your ``settings.py``:
 
-   ``'bootstrap4',``
+   ``'django_bootstrap4',``
 
 After installation, the :doc:`quickstart` will get you on your way to using ``django-bootstrap4``.

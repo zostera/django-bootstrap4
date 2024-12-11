@@ -35,7 +35,7 @@ pip install django-bootstrap4
 ```python
 INSTALLED_APPS = (
   # ...
-  "bootstrap4",
+  "django_bootstrap4",
   # ...
 )
 ```
@@ -45,7 +45,7 @@ INSTALLED_APPS = (
 ## Example template
 
 ```jinja
-{% load bootstrap4 %}
+{% load django_bootstrap4 %}
 
 {# Display a form #}
 

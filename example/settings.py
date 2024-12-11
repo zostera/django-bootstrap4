@@ -4,7 +4,7 @@ import sys
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ""))
 
 # Include BOOTSTRAP4_FOLDER in path
-BOOTSTRAP4_FOLDER = os.path.abspath(os.path.join(BASE_DIR, "..", "bootstrap4"))
+BOOTSTRAP4_FOLDER = os.path.abspath(os.path.join(BASE_DIR, "..", "django_bootstrap4"))
 if BOOTSTRAP4_FOLDER not in sys.path:
     sys.path.insert(0, BOOTSTRAP4_FOLDER)
 
@@ -121,7 +121,7 @@ INSTALLED_APPS = (
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.admin",
-    "bootstrap4",
+    "django_bootstrap4",
     "app",
 )
 

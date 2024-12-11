@@ -5,7 +5,7 @@ from .forms import TestForm
 
 def render_template_with_form(text, context=None, data=None):
     """
-    Create a template ``text`` that first loads bootstrap4.
+    Create a template ``text`` that first loads django_bootstrap4.
 
     When ``data`` is given, the form will be initialized with data and
     form.is_valid() will be called in order to enable validations.
@@ -52,7 +52,7 @@ def render_field(field, context=None):
 
 
 def render_template(text, context=None):
-    """Create a template ``text`` that first loads bootstrap4."""
+    """Create a template ``text`` that first loads django_bootstrap4."""
     template = engines["django"].from_string(text)
     if not context:
         context = {}
@@ -60,7 +60,7 @@ def render_template(text, context=None):
 
 
 def render_template_with_bootstrap(text, context=None):
-    """Create a template ``text`` that first loads bootstrap4."""
+    """Create a template ``text`` that first loads django_bootstrap4."""
     if not context:
         context = {}
-    return render_template("{% load bootstrap4 %}" + text, context)
+    return render_template("{% load django_bootstrap4 %}" + text, context)
