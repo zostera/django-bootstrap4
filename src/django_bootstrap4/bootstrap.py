@@ -33,11 +33,11 @@ BOOTSTRAP4_DEFAULTS = {
     "required_css_class": "",
     "error_css_class": "is-invalid",
     "success_css_class": "is-valid",
-    "formset_renderers": {"default": "bootstrap4.renderers.FormsetRenderer"},
-    "form_renderers": {"default": "bootstrap4.renderers.FormRenderer"},
+    "formset_renderers": {"default": "django_bootstrap4.renderers.FormsetRenderer"},
+    "form_renderers": {"default": "django_bootstrap4.renderers.FormRenderer"},
     "field_renderers": {
-        "default": "bootstrap4.renderers.FieldRenderer",
-        "inline": "bootstrap4.renderers.InlineFieldRenderer",
+        "default": "django_bootstrap4.renderers.FieldRenderer",
+        "inline": "django_bootstrap4.renderers.InlineFieldRenderer",
     },
 }
 
@@ -48,12 +48,12 @@ def get_bootstrap_setting(name, default=None):
     BOOTSTRAP4 = BOOTSTRAP4_DEFAULTS.copy()
 
     # Override with user settings from settings.py
-    BOOTSTRAP4.update(getattr(settings, "BOOTSTRAP4", {}))
+    django_bootstrap4.update(getattr(settings, "BOOTSTRAP4", {}))
 
     # Update use_i18n
     BOOTSTRAP4["use_i18n"] = i18n_enabled()
 
-    return BOOTSTRAP4.get(name, default)
+    return django_bootstrap4.get(name, default)
 
 
 def jquery_url():

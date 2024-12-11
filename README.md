@@ -45,7 +45,7 @@ INSTALLED_APPS = (
 ## Example template
 
 ```jinja
-{% load bootstrap4 %}
+{% load django_bootstrap4 %}
 
 {# Display a form #}
 
