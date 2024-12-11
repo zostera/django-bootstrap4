@@ -1,6 +1,6 @@
 [build-system]
-build-backend = "setuptools.build_meta"
-requires = ["setuptools>=64"]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
 
 [project]
 authors = [
@@ -17,7 +17,6 @@ classifiers = [
   "License :: OSI Approved :: BSD License",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
@@ -48,7 +47,7 @@ Source = "https://github.com/zostera/django-bootstrap4"
 fix = false
 line-length = 120
 src = ["src"]
-target-version = "py38"
+target-version = "py39"
 
 [tool.ruff.lint]
 fixable = [
@@ -88,3 +87,22 @@ package = ["src/bootstrap4", "*/django_bootstrap4/src/bootstrap4"]
 [tool.coverage.report]
 show_missing = true
 skip_covered = true
+
+[dependency-groups]
+dev = [
+  "check-manifest>=0.50",
+  "check-wheel-contents>=0.6.0",
+  "coverage[toml]>=7.6.1",
+  "pyroma>=4.2",
+  "ruff>=0.7.1",
+  "tox-uv>=1.13.1",
+  "twine>=5.1.1",
+]
+docs = [
+  "furo>=2024.8.6",
+  "myst-parser>=3.0.1",
+  "sphinx>=7.1.2",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/bootstrap4"]
