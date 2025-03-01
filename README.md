@@ -10,6 +10,12 @@ Bootstrap 4 for Django.
 
 The goal of this project is to seamlessly blend Django and Bootstrap 4.
 
+## Roadmap
+
+Bootstrap 4 has been superseded by Bootstrap 5. As a result, this package is now in maintenance mode and will only receive bug fixes and security updates. No new features or enhancements will be added. We recommend that new projects use Bootstrap 5 and encourage existing projects to consider migrating when feasible.
+
+For Bootstrap 5, please refer to our dedicated package: [django-bootstrap5](https://github.com/zostera/django-bootstrap5).
+
 ## Requirements
 
 This package requires a combination of Python and Django that is currently supported.
