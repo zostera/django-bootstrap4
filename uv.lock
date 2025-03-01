@@ -465,7 +465,7 @@ wheels = [
 
 [[package]]
 name = "django-bootstrap4"
-version = "24.4"
+version = "25.1"
 source = { editable = "." }
 dependencies = [
     { name = "beautifulsoup4" },
