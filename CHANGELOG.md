@@ -1,5 +1,11 @@
 # Changelog
 
+## 25.1 (2025-03-01)
+
+- Announce maintenance mode (#808).
+- Switch to just and uv (#805).
+- Remove Python 3.8, add Python 3.13 (#805).
+
 ## 24.4 (2024-09-19)
 
 - Add support for Django 5.1 (#758).
