@@ -1,5 +1,9 @@
 # Changelog
 
+## In development
+
+- Symlink CHANGELOG.md into docs for Sphinx (#812).
+
 ## 25.1 (2025-03-01)
 
 - Announce maintenance mode (#808).
