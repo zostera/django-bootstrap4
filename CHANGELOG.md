@@ -3,6 +3,7 @@
 ## In development
 
 - Symlink CHANGELOG.md into docs for Sphinx (#812).
+- Drop support for Dajngo 5.0 (EOL) (#814).
 
 ## 25.1 (2025-03-01)
 
