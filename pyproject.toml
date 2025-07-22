@@ -14,7 +14,6 @@ classifiers = [
   "Framework :: Django :: 5.1",
   "Framework :: Django :: 5.2",
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: BSD License",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.9",
@@ -31,7 +30,7 @@ dependencies = [
 ]
 description = "Bootstrap 4 for Django"
 keywords = ["django", "bootstrap", "bootstrap4"]
-license = {file = "LICENSE"}
+license = "BSD-3-Clause"
 name = "django-bootstrap4"
 readme = "README.md"
 requires-python = ">=3.9"
