@@ -31,6 +31,7 @@ dependencies = [
 description = "Bootstrap 4 for Django"
 keywords = ["django", "bootstrap", "bootstrap4"]
 license = "BSD-3-Clause"
+license-files = ["LICENSE", "AUTHORS"]
 name = "django-bootstrap4"
 readme = "README.md"
 requires-python = ">=3.9"
