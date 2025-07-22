@@ -88,12 +88,11 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Python with uv
-        uses: drivendataorg/setup-python-uv-action@main
+        uses: astral-sh/setup-uv@v6
         with:
           python-version: 3.12
-          cache: packages
-          cache-dependency-path: >-
-            pyproject.toml
+          enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
 
       - name: Set up just
         uses: extractions/setup-just@v3
@@ -108,12 +107,11 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Python with uv
-        uses: drivendataorg/setup-python-uv-action@main
+        uses: astral-sh/setup-uv@v6
         with:
           python-version: 3.12
-          cache: packages
-          cache-dependency-path: >-
-            pyproject.toml
+          enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
 
       - name: Set up just
         uses: extractions/setup-just@v3
