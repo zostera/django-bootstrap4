@@ -5,7 +5,7 @@
 - Symlink CHANGELOG.md into docs for Sphinx (#812).
 - Drop support for Django 5.0 (EOL) (#814).
 - Add support for Django 5.2 (#815).
-- Use astral-sh/setup-uv in GitHub Actions (#820).
+- Use astral-sh/setup-uv in GitHub Actions (#820, #821).
 
 ## 25.1 (2025-03-01)
 
