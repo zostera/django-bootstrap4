@@ -1,6 +1,6 @@
 # Changelog
 
-## In development
+## 25.2 (2025-07-31)
 
 - Symlink CHANGELOG.md into docs for Sphinx (#812).
 - Drop support for Django 5.0 (EOL) (#814).
