@@ -7,6 +7,7 @@
 - Add support for Django 5.2 (#815).
 - Use astral-sh/setup-uv in GitHub Actions (#820, #821).
 - Use `uv build` (#822).
+- Use `uv.lock` in GitHub Actions (#823).
 
 ## 25.1 (2025-03-01)
 
