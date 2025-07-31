@@ -1,5 +1,5 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = ">=3.9"
 resolution-markers = [
     "python_full_version >= '3.11'",
@@ -549,7 +549,7 @@ wheels = [
 
 [[package]]
 name = "django-bootstrap4"
-version = "25.1"
+version = "25.2"
 source = { editable = "." }
 dependencies = [
     { name = "beautifulsoup4" },
