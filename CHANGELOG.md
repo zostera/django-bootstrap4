@@ -1,5 +1,10 @@
 # Changelog
 
+## In development
+
+- Add support for Python 3.14 (#831).
+- Add support for Django 6.0 (#830).
+
 ## 25.2 (2025-07-31)
 
 - Symlink CHANGELOG.md into docs for Sphinx (#812).
