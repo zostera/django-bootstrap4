@@ -1,5 +1,9 @@
 # Changelog
 
+## In development
+
+- Remove support for Python 3.9 (EOL) (#833).
+
 ## 25.2 (2025-07-31)
 
 - Symlink CHANGELOG.md into docs for Sphinx (#812).
