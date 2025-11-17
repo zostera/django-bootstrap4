@@ -235,12 +235,12 @@ class FieldTest(TestCase):
         self.assertEqual(
             len(res.select(".form-group > .invalid-feedback")),
             0,
-            "The invalid-feedback message must be placed inside the " "input-group and not inside the form-group",
+            "The invalid-feedback message must be placed inside the input-group and not inside the form-group",
         )
         self.assertEqual(
             len(res.select(".input-group > .form-text")),
             0,
-            "The form-text message must be placed inside the form-group and " "not inside the input-group",
+            "The form-text message must be placed inside the form-group and not inside the input-group",
         )
 
     def test_size(self):
