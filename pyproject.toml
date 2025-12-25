@@ -11,7 +11,6 @@ classifiers = [
   "Environment :: Web Environment",
   "Framework :: Django",
   "Framework :: Django :: 4.2",
-  "Framework :: Django :: 5.1",
   "Framework :: Django :: 5.2",
   "Framework :: Django :: 6.0",
   "Intended Audience :: Developers",
@@ -26,7 +25,7 @@ classifiers = [
   "Topic :: Utilities",
 ]
 dependencies = [
-  "Django>=4.2",
+  "Django>=4.2,<7.0",
   "beautifulsoup4>=4.10.0",
 ]
 description = "Bootstrap 4 for Django"
@@ -91,13 +90,16 @@ skip_covered = true
 
 [dependency-groups]
 dev = [
-  "coverage[toml]>=7.6.1",
-  "tox-uv>=1.13.1",
+  {include-group = "test"},
+  {include-group = "docs"},
 ]
 docs = [
   "furo>=2024.8.6",
   "myst-parser>=3.0.1",
   "sphinx>=7.1.2",
+]
+test = [
+  "coverage[toml]>=7.6.1",
 ]
 
 [tool.uv.build-backend]
