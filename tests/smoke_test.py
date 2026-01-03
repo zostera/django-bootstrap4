@@ -3,7 +3,7 @@ Minimal smoke test.
 
 This test verifies that the package can be installed and that
 its most basic public API is usable. It intentionally avoids
-pytest and any optional dependencies.
+test frameworks and any optional dependencies.
 """
 
 
