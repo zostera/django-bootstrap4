@@ -1,5 +1,10 @@
 # Changelog
 
+## 26.1 (2026-01-03)
+
+- Refactor release workflow to tag-based publishing via GitHub Actions (#843).
+- Remove support for Django 5.1 (EOL) (#840).
+
 ## 25.3 (2025-11-14)
 
 - Remove support for Python 3.9 (EOL) (#833, #835).
