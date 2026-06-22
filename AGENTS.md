@@ -6,7 +6,7 @@ Bootstrap 4 template tags and filters for Django, by [Zostera](https://github.co
 
 This package is in **maintenance mode** — Bootstrap 4 has been superseded by Bootstrap 5. Only bug fixes and security updates are accepted. Do not add new features or enhancements. Suggest Bootstrap 5 (`django-bootstrap5`) for new work.
 
-Bootstrap 4 docs: https://getbootstrap.com/docs/4.6/
+Bootstrap 4 is EOL — no new releases are expected, but if they occur we will evaluate supporting them. Bootstrap 4 docs: https://getbootstrap.com/docs/4.6/
 
 ## Related packages
 
