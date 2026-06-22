@@ -119,7 +119,7 @@ def url_replace_param(url, name, value):
     params = parse_qs(url_components.query)
 
     if value is None:
-        del params[name]
+        params.pop(name, None)
     else:
         params[name] = value
 
