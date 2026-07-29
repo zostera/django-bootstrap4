@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Regenerate `uv.lock` (stale Django `>=4.2` constraint in the lockfile's own metadata after the `pyproject.toml` floor moved to `>=5.2`).
 - Add support for Django 6.1.
 - Drop support for Django 4.2 (EOL).
 - Add MAINTAINING.md (version-support policy, release process); add scope statement and PR-review checklist to CONTRIBUTING.md.
