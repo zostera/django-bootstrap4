@@ -1,4 +1,4 @@
-# django-bootstrap 4
+# django-bootstrap4
 
 [![CI](https://github.com/zostera/django-bootstrap4/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/zostera/django-bootstrap4/actions/workflows/ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/zostera/django-bootstrap4/badge.svg?branch=main)](https://coveralls.io/github/zostera/django-bootstrap4?branch=main)
@@ -64,9 +64,13 @@ INSTALLED_APPS = (
 </form>
 ```
 
-## Example
+## Example app
 
-An example application app is provided in `example`. You can run it with `make example`.
+An example app is provided in the folder `example`. You can run the example app with this command:
+
+```console
+just example
+```
 
 ## Bugs and suggestions
 
