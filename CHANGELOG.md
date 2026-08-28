@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Remove the `<7.0` upper bound on the `Django` dependency.
+
 ## 26.2 (2026-08-28)
 
 - Drop support for Django 4.2 (EOL).
