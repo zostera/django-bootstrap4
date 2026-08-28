@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add `typos` spell checking to `just lint`.
+- Fix typos in `CHANGELOG.md`.
 - Regenerate `uv.lock` (stale Django `>=4.2` constraint in the lockfile's own metadata after the `pyproject.toml` floor moved to `>=5.2`).
 - Add support for Django 6.1.
 - Drop support for Django 4.2 (EOL).
@@ -241,7 +243,7 @@
 
 ## 0.0.5 (2018-01-03)
 
-- Drop develop branch, work with master and feature branche.
+- Drop develop branch, work with master and feature branches.
 - Clean up `HISTORY.rst`.
 - Upgrade Bootstrap to 4.0.0-beta.3.
 - Use `col-4` rather than `col-xs-4` (#54).
@@ -265,7 +267,7 @@
 
 ## 0.0.1 (2017-06-04)
 
-- First releas.
+- First release.
 - Remove `bootstrap_icon`, BS4 no longer has default icons.
 - Various changes to get from 3 to 4, started MIGRATE.rst.
 - Started `django-bootstrap4` based on `django-bootstrap3`.
