@@ -25,7 +25,7 @@ classifiers = [
   "Topic :: Utilities",
 ]
 dependencies = [
-  "Django>=5.2,<7.0",
+  "Django>=5.2",
   "beautifulsoup4>=4.10.0",
 ]
 description = "Bootstrap 4 for Django"
