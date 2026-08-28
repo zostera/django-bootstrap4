@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add a 15-minute `timeout-minutes` to every CI job.
 - Add `typos` spell checking to `just lint`.
 - Fix typos in `CHANGELOG.md`.
 - Regenerate `uv.lock` (stale Django `>=4.2` constraint in the lockfile's own metadata after the `pyproject.toml` floor moved to `>=5.2`).
