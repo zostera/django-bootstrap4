@@ -1,15 +1,17 @@
 # Changelog
 
-## Unreleased
+## 26.2 (2026-08-28)
 
+- Drop support for Django 4.2 (EOL).
+- Add support for Django 6.1.
+- Fix `KeyError` in `url_replace_param` when clearing a parameter that is not present in the URL (#862).
 - Add a maintenance-round section and release-note ordering convention to MAINTAINING.md.
 - Add a 15-minute `timeout-minutes` to every CI job.
 - Add `typos` spell checking to `just lint`.
-- Fix typos in `CHANGELOG.md`.
 - Regenerate `uv.lock` (stale Django `>=4.2` constraint in the lockfile's own metadata after the `pyproject.toml` floor moved to `>=5.2`).
-- Add support for Django 6.1.
-- Drop support for Django 4.2 (EOL).
 - Add MAINTAINING.md (version-support policy, release process); add scope statement and PR-review checklist to CONTRIBUTING.md.
+- Add AGENTS.md (#862).
+- Fix typos in `CHANGELOG.md`.
 
 ## 26.1 (2026-01-03)
 
