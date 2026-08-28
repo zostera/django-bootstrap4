@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add a maintenance-round section and release-note ordering convention to MAINTAINING.md.
 - Add a 15-minute `timeout-minutes` to every CI job.
 - Add `typos` spell checking to `just lint`.
 - Fix typos in `CHANGELOG.md`.
