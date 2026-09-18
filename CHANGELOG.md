@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add a system check that warns about keys in the `BOOTSTRAP4` setting that the package does not read, such as `base_url`, dropped in 0.0.8 (`bootstrap4.W001`, #883). Silence it with `SILENCED_SYSTEM_CHECKS` if you keep extra keys deliberately.
+- Document that `use_i18n` in `BOOTSTRAP4` is always overwritten by Django's `USE_I18N`.
 - Add `just release-check` to list `src/` changes against changelog entries before a release.
 - Remove the `<7.0` upper bound on the `Django` dependency.
 
