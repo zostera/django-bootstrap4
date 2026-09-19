@@ -85,3 +85,27 @@ The ``BOOTSTRAP4`` dict variable contains these settings and defaults:
             'inline': 'bootstrap4.renderers.InlineFieldRenderer',
         },
     }
+
+Unused settings
+---------------
+
+A key in ``BOOTSTRAP4`` that this package does not read is ignored. That is a problem
+when a setting used to exist and was removed: the key goes on looking effective while
+doing nothing.
+
+A system check reports those keys, so they show up in ``manage.py check``, in
+``runserver`` and in CI:
+
+.. code:: text
+
+    ?: (bootstrap4.W001) BOOTSTRAP4['base_url'] has no effect: dropped in 0.0.8,
+    use `css_url` and `javascript_url`.
+
+If you deliberately keep extra keys in the dict, silence it with::
+
+    SILENCED_SYSTEM_CHECKS = ["bootstrap4.W001"]
+
+``use_i18n`` fails in a different way and the check cannot report it. It is a real key,
+so it is accepted, but ``get_bootstrap_setting`` overwrites it with Django's own
+``USE_I18N`` on every read. Setting it in ``BOOTSTRAP4`` has no effect either. Set
+``USE_I18N`` instead.
