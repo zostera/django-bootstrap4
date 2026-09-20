@@ -340,12 +340,22 @@ class FieldRenderer(BaseRenderer):
                     pass
         return str(soup)
 
+    def get_checkbox_label_class(self):
+        """Return the class for the label that sits next to a checkbox inside the form-check div."""
+        # form-check-label is structural Bootstrap markup, so label_class extends it instead of replacing it.
+        label_class = add_css_class(self.label_class, "form-check-label", prepend=True)
+        if not self.show_label or self.show_label == "sr-only":
+            label_class = add_css_class(label_class, "sr-only")
+        return label_class
+
     def add_checkbox_label(self, html):
+        if self.show_label == "skip":
+            return html
         return html + render_label(
             content=self.field.label,
             label_for=self.field.id_for_label,
             label_title=escape(strip_tags(self.field_help)),
-            label_class="form-check-label",
+            label_class=self.get_checkbox_label_class(),
         )
 
     def fix_date_select_input(self, html):

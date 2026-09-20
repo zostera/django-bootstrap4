@@ -317,6 +317,21 @@ class ShowLabelTest(TestCase):
         res = render_template_with_form("{% bootstrap_form form show_label='skip' %}", {"form": form})
         self.assertNotIn("<label>", res)
 
+    def test_show_label_false_for_checkbox(self):
+        """show_label=False should hide the checkbox label, not be ignored (#127)."""
+        res = render_template_with_form("{% bootstrap_field form.cc_myself show_label=False %}")
+        self.assertIn('class="form-check-label sr-only"', res)
+
+    def test_show_label_skip_for_checkbox(self):
+        """show_label='skip' should drop the checkbox label entirely (#127)."""
+        res = render_template_with_form("{% bootstrap_field form.cc_myself show_label='skip' %}")
+        self.assertNotIn("<label", res)
+
+    def test_label_class_for_checkbox(self):
+        """label_class should extend form-check-label rather than be dropped (#127)."""
+        res = render_template_with_form("{% bootstrap_field form.cc_myself label_class='my-label' %}")
+        self.assertIn('class="form-check-label my-label"', res)
+
     def test_for_formset(self):
         TestFormSet = formset_factory(CharFieldTestForm, extra=1)
         test_formset = TestFormSet()
