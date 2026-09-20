@@ -139,6 +139,20 @@ class FieldTest(TestCase):
         self.assertIn('<div class="custom-control">', res)
         self.assertNotIn('<div class="form-check">', res)
 
+    def test_radio_select_button_group_label_ids(self):
+        """Each button group label must point at its own input, with no duplicate ids (#309)."""
+        res = render_form_field("category5")
+        soup = BeautifulSoup(res, "html.parser")
+        ids = [element["id"] for element in soup.find_all(id=True)]
+        self.assertEqual(len(ids), len(set(ids)), f"Duplicate id attributes in rendered widget: {ids}")
+        labels = soup.select("label[for]")
+        self.assertEqual(len(labels), 5, "Every option should have a label with a for attribute.")
+        for label in labels:
+            self.assertIsNotNone(
+                soup.find("input", id=label["for"]),
+                f"Label for={label['for']!r} does not point at an input.",
+            )
+
     def test_checkbox_multiple_select(self):
         res = render_form_field("category2")
         expected_html = (
