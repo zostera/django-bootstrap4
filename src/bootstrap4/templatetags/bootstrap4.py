@@ -484,7 +484,8 @@ def bootstrap_field(*args, **kwargs):
             CSS class of the ``div`` that wraps the field.
 
         label_class
-            CSS class of the ``label`` element. Will always have ``control-label`` as the last CSS class.
+            CSS class of the ``label`` element. In ``horizontal`` layout, ``col-form-label`` is added as the
+            last CSS class.
 
         form_check_class
             CSS class of the ``div`` element wrapping the label and input when rendering checkboxes and radio buttons.
@@ -567,7 +568,7 @@ def bootstrap_field(*args, **kwargs):
         error_css_class
             CSS class used when the field has an error
 
-            :default: ``'has-error'``. Can be changed :doc:`settings`
+            :default: ``'is-invalid'``. Can be changed :doc:`settings`
 
         required_css_class
             CSS class used on the ``div.form-group`` to indicate a field is required
@@ -577,7 +578,7 @@ def bootstrap_field(*args, **kwargs):
         bound_css_class
             CSS class used when the field is bound
 
-            :default: ``'has-success'``. Can be changed :doc:`settings`
+            :default: ``'is-valid'``. Can be changed :doc:`settings`
 
     **Usage**::
 
