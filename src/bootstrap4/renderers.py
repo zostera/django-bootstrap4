@@ -377,7 +377,7 @@ class FieldRenderer(BaseRenderer):
         if isinstance(self.widget, CheckboxInput):
             # Wrap checkboxes
             # Note checkboxes do not get size classes, see #318
-            html = f'<div class="form-check">{html}</div>'
+            html = f'<div class="{self.form_check_class}">{html}</div>'
         return html
 
     def make_input_group_addon(self, inner_class, outer_class, content):

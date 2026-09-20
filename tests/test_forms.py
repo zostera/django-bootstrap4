@@ -133,6 +133,12 @@ class FieldTest(TestCase):
             "The help text should have the class 'text-muted'.",
         )
 
+    def test_checkbox_form_check_class(self):
+        """The form_check_class parameter should set the class of the div wrapping a single checkbox (#290)."""
+        res = render_template_with_form("{% bootstrap_field form.cc_myself form_check_class='custom-control' %}")
+        self.assertIn('<div class="custom-control">', res)
+        self.assertNotIn('<div class="form-check">', res)
+
     def test_checkbox_multiple_select(self):
         res = render_form_field("category2")
         expected_html = (
