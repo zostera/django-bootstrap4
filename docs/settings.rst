@@ -109,3 +109,26 @@ If you deliberately keep extra keys in the dict, silence it with::
 so it is accepted, but ``get_bootstrap_setting`` overwrites it with Django's own
 ``USE_I18N`` on every read. Setting it in ``BOOTSTRAP4`` has no effect either. Set
 ``USE_I18N`` instead.
+
+Validation classes on bound forms
+---------------------------------
+
+``success_css_class`` defaults to ``is-valid``, and it is applied to every field of a
+bound form that has no errors. A form is bound as soon as it is given data, so a GET
+filter form rendered straight after a page load shows a green tick on every field,
+before the user has entered anything.
+
+That is the intended default, and Bootstrap 4 itself
+`advises against server side validation state <https://getbootstrap.com/docs/4.6/components/forms/#validation>`_.
+Turn it off per tag::
+
+    {% bootstrap_form filter.form bound_css_class='' %}
+
+Or project wide::
+
+    BOOTSTRAP4 = {
+        'success_css_class': '',
+    }
+
+``bound_css_class`` is the template tag parameter, ``success_css_class`` the setting it
+reads. The same applies to ``error_css_class``, which defaults to ``is-invalid``.

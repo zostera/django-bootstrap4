@@ -6,6 +6,8 @@
 - Document that `use_i18n` in `BOOTSTRAP4` is always overwritten by Django's `USE_I18N`.
 - Add `just release-check` to list `src/` changes against changelog entries before a release.
 - Remove the `<7.0` upper bound on the `Django` dependency.
+- Fix stale Bootstrap 3 class names in the `bootstrap_field` docs: `error_css_class` defaults to `is-invalid` and `bound_css_class` to `is-valid`, and the label gets `col-form-label` in horizontal layout, not `control-label`.
+- Document why bound forms, including GET filter forms, render `is-valid` on every field, and how to switch that off (#276).
 
 ## 26.2 (2026-08-28)
 
