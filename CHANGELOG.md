@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Test on Python 3.15 (release candidate) against Django 6.1 and `main`. The job is non-blocking and 3.15 is not yet advertised as supported.
+- Fail the CI gate when any job fails, not only the test matrix. A failing docs or packaging build could previously be merged.
+
 ## 26.3 (2026-09-21)
 
 - Fix `{% buttons layout="horizontal" %}` emitting Bootstrap 3 markup: the label carried `control-label` instead of `col-form-label`, and the wrapper had no `row` for the `col-*` classes to divide, so the button did not line up with the fields above it (#895).
