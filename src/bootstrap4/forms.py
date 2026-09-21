@@ -120,7 +120,7 @@ def render_field_and_label(field, label, field_class="", label_for=None, label_c
             field_class = get_bootstrap_setting("horizontal_field_class")
         if not label:
             label = mark_safe("&#160;")
-        label_class = add_css_class(label_class, "control-label")
+        label_class = add_css_class(label_class, "col-form-label")
     html = field
     if field_class:
         html = f'<div class="{field_class}">{html}</div>'
