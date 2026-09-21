@@ -324,20 +324,23 @@ class FieldRenderer(BaseRenderer):
         classes = add_css_class(klass, self.get_size_class())
         soup = BeautifulSoup(html, features="html.parser")
         enclosing_div = soup.find("div")
-        enclosing_div.attrs["class"] = classes
+        # Add to the widget's own classes rather than replacing them. Django's RadioSelect and
+        # CheckboxSelectMultiple templates put no class here, so this is a no-op for them, but a
+        # custom widget template may depend on its classes, as RadioSelectButtonGroup does on
+        # btn-group to be a button group at all.
+        widget_classes = " ".join(enclosing_div.attrs.get("class", []))
+        enclosing_div.attrs["class"] = add_css_class(widget_classes, classes)
         for inner_div in enclosing_div.find_all("div"):
             inner_div.attrs["class"] = inner_div.attrs.get("class", []) + [self.form_check_class]
         # Apply bootstrap4 classes to labels and inputs.
         # A simple 'replace' isn't enough as we don't want to have several 'class' attr definition, which would happen
         # if we tried to 'html.replace("input", "input class=...")'
-        enclosing_div = soup.find("div", {"class": classes})
-        if enclosing_div:
-            for label in enclosing_div.find_all("label"):
-                label.attrs["class"] = label.attrs.get("class", []) + ["form-check-label"]
-                try:
-                    label.input.attrs["class"] = label.input.attrs.get("class", []) + ["form-check-input"]
-                except AttributeError:
-                    pass
+        for label in enclosing_div.find_all("label"):
+            label.attrs["class"] = label.attrs.get("class", []) + ["form-check-label"]
+            try:
+                label.input.attrs["class"] = label.input.attrs.get("class", []) + ["form-check-input"]
+            except AttributeError:
+                pass
         return str(soup)
 
     def get_checkbox_label_class(self):

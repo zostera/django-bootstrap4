@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Fix `RadioSelectButtonGroup` not rendering as a button group. The renderer replaced the class attribute of a widget's enclosing element instead of adding to it, discarding `btn-group btn-group-toggle`. Django's own `RadioSelect` and `CheckboxSelectMultiple` set no class there, so their output is unchanged (#894).
 - Fix `{% buttons layout="horizontal" %}` emitting Bootstrap 3 markup: the label carried `control-label` instead of `col-form-label`, and the wrapper had no `row` for the `col-*` classes to divide, so the button did not line up with the fields above it (#895).
 - **Breaking:** Fix invalid HTML in `RadioSelectButtonGroup`. Every option label carried the widget's own `id`, so a group of N options rendered N+1 identical `id` attributes and no label was associated with its input. Labels now carry `for` pointing at their own input and no `id` (#309).
 - Fix `form_check_class` being ignored for single checkboxes; it was only applied to `RadioSelect` and `CheckboxSelectMultiple` (#290).
