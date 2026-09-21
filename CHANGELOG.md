@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 26.3 (2026-09-21)
 
 - Test on Python 3.15 (release candidate) against Django 6.1 and `main`. The job is non-blocking and 3.15 is not yet advertised as supported.
 - Fail the CI gate when any job fails, not only the test matrix. A failing docs or packaging build could previously be merged.
