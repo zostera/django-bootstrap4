@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 26.3 (2026-09-21)
 
 - Fix `{% buttons layout="horizontal" %}` emitting Bootstrap 3 markup: the label carried `control-label` instead of `col-form-label`, and the wrapper had no `row` for the `col-*` classes to divide, so the button did not line up with the fields above it (#895).
 - **Breaking:** Fix invalid HTML in `RadioSelectButtonGroup`. Every option label carried the widget's own `id`, so a group of N options rendered N+1 identical `id` attributes and no label was associated with its input. Labels now carry `for` pointing at their own input and no `id` (#309).
@@ -8,11 +8,11 @@
 - Fix `show_label` and `label_class` being ignored for the label next to a checkbox. `show_label=False` and `show_label='sr-only'` now add `sr-only`, `show_label='skip'` omits the label, and `label_class` extends `form-check-label` instead of being dropped (#127).
 - Fix `size` not being applied to the input group wrapper when a field has an addon, so `input-group-sm` and `input-group-lg` were missing and the addon rendered at the wrong height (#128).
 - Add a system check that warns about keys in the `BOOTSTRAP4` setting that the package does not read, such as `base_url`, dropped in 0.0.8 (`bootstrap4.W001`, #883). Silence it with `SILENCED_SYSTEM_CHECKS` if you keep extra keys deliberately.
-- Document that `use_i18n` in `BOOTSTRAP4` is always overwritten by Django's `USE_I18N`.
-- Add `just release-check` to list `src/` changes against changelog entries before a release.
 - Remove the `<7.0` upper bound on the `Django` dependency.
+- Add `just release-check` to list `src/` changes against changelog entries before a release.
 - Fix stale Bootstrap 3 class names in the `bootstrap_field` docs: `error_css_class` defaults to `is-invalid` and `bound_css_class` to `is-valid`, and the label gets `col-form-label` in horizontal layout, not `control-label`.
 - Document why bound forms, including GET filter forms, render `is-valid` on every field, and how to switch that off (#276).
+- Document that `use_i18n` in `BOOTSTRAP4` is always overwritten by Django's `USE_I18N`.
 
 ## 26.2 (2026-08-28)
 
