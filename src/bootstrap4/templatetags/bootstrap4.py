@@ -21,6 +21,7 @@ from ..forms import (
     render_label,
 )
 from ..utils import (
+    add_css_class,
     handle_var,
     parse_token_contents,
     render_link_tag,
@@ -781,6 +782,9 @@ class ButtonsNode(template.Node):
         buttons = " ".join(buttons) + self.nodelist.render(context)
         output_kwargs.update({"label": None, "field": buttons})
         css_class = output_kwargs.pop("form_group_class", "form-group")
+        if output_kwargs.get("layout") == "horizontal":
+            # The col-* classes inside need a row to divide, same as FieldRenderer.get_form_group_class does.
+            css_class = add_css_class(css_class, "row")
         output = render_form_group(render_field_and_label(**output_kwargs), css_class=css_class)
         if self.asvar:
             context[self.asvar] = output
