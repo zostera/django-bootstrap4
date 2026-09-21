@@ -194,6 +194,15 @@ class FieldTest(TestCase):
         self.assertIn('class="input-group-prepend"><span class="input-group-text">$', res)
         self.assertIn('class="input-group-append"><span class="input-group-text">.00', res)
 
+    def test_input_group_size(self):
+        """The size parameter should also size the input group wrapper, not just the input (#128)."""
+        res = render_template_with_form('{% bootstrap_field form.subject addon_before="$" size="small" %}')
+        self.assertIn('class="input-group input-group-sm"', res)
+        res = render_template_with_form('{% bootstrap_field form.subject addon_before="$" size="large" %}')
+        self.assertIn('class="input-group input-group-lg"', res)
+        res = render_template_with_form('{% bootstrap_field form.subject addon_before="$" %}')
+        self.assertIn('class="input-group"', res)
+
     def test_input_group_addon_button(self):
         res = render_template_with_form(
             # Jumping through hoops to keep flake8 and black happy here

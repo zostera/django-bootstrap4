@@ -407,7 +407,8 @@ class FieldRenderer(BaseRenderer):
             before = self.make_input_group_addon(self.addon_before_class, "input-group-prepend", self.addon_before)
             after = self.make_input_group_addon(self.addon_after_class, "input-group-append", self.addon_after)
             html = self.append_errors(f"{before}{html}{after}")
-            html = f'<div class="input-group">{html}</div>'
+            input_group_class = add_css_class("input-group", self.get_size_class("input-group"))
+            html = f'<div class="{input_group_class}">{html}</div>'
         return html
 
     def append_help(self, html):
