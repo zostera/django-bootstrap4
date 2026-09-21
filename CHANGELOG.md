@@ -4,6 +4,7 @@
 
 - **Breaking:** Fix invalid HTML in `RadioSelectButtonGroup`. Every option label carried the widget's own `id`, so a group of N options rendered N+1 identical `id` attributes and no label was associated with its input. Labels now carry `for` pointing at their own input and no `id` (#309).
 - Fix `form_check_class` being ignored for single checkboxes; it was only applied to `RadioSelect` and `CheckboxSelectMultiple` (#290).
+- Fix `show_label` and `label_class` being ignored for the label next to a checkbox. `show_label=False` and `show_label='sr-only'` now add `sr-only`, `show_label='skip'` omits the label, and `label_class` extends `form-check-label` instead of being dropped (#127).
 - Fix `size` not being applied to the input group wrapper when a field has an addon, so `input-group-sm` and `input-group-lg` were missing and the addon rendered at the wrong height (#128).
 - Add a system check that warns about keys in the `BOOTSTRAP4` setting that the package does not read, such as `base_url`, dropped in 0.0.8 (`bootstrap4.W001`, #883). Silence it with `SILENCED_SYSTEM_CHECKS` if you keep extra keys deliberately.
 - Document that `use_i18n` in `BOOTSTRAP4` is always overwritten by Django's `USE_I18N`.
