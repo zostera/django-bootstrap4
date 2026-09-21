@@ -33,3 +33,16 @@ class ButtonsTest(TestCase):
         self.assertIn(res.strip(), link_button)
         with self.assertRaises(BootstrapError):
             res = render_template_with_form("{% bootstrap_button 'button' button_type='button' href='#' %}")
+
+    def test_buttons_tag_horizontal_layout(self):
+        """Horizontal buttons need a row and the Bootstrap 4 label class, matching a horizontal field (#895)."""
+        res = render_template_with_form("{% buttons layout='horizontal' submit='OK' %}{% endbuttons %}")
+        self.assertIn('<div class="form-group row">', res)
+        self.assertIn('<label class="col-md-3 col-form-label">', res)
+        self.assertNotIn("control-label", res)
+
+    def test_buttons_tag_default_layout(self):
+        """Without a horizontal layout there is no row and no label (#895)."""
+        res = render_template_with_form("{% buttons submit='OK' %}{% endbuttons %}")
+        self.assertIn('<div class="form-group">', res)
+        self.assertNotIn("row", res)
