@@ -139,6 +139,22 @@ class FieldTest(TestCase):
         self.assertIn('<div class="custom-control">', res)
         self.assertNotIn('<div class="form-check">', res)
 
+    def test_radio_select_button_group_keeps_widget_classes(self):
+        """The renderer must not strip the classes a custom widget template sets (#894)."""
+        res = render_form_field("category5")
+        soup = BeautifulSoup(res, "html.parser")
+        enclosing_div = soup.select_one(".form-group > div")
+        self.assertIn("btn-group", enclosing_div["class"])
+        self.assertIn("btn-group-toggle", enclosing_div["class"])
+
+    def test_radio_select_keeps_default_classes(self):
+        """Django's own widgets set no class here, so their output is unchanged (#894)."""
+        for field in ("category1", "category2"):
+            with self.subTest(field=field):
+                soup = BeautifulSoup(render_form_field(field), "html.parser")
+                enclosing_div = soup.select_one(".form-group > div")
+                self.assertNotIn("btn-group", enclosing_div["class"])
+
     def test_radio_select_button_group_label_ids(self):
         """Each button group label must point at its own input, with no duplicate ids (#309)."""
         res = render_form_field("category5")
