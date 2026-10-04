@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Cover `utils.py`, `forms.py` and `text.py` with tests. `handle_var`, `parse_token_contents`, `remove_css_class`, `render_link_tag`, every `render_button` size and optional attribute, the standalone error renderers, `render_field_and_label` in horizontal layout, and `text_concat` had no tests.
 - Remove an unreachable guard in `get_pagination_context`: `pages_to_show` is already an integer of at least one by that point, so the half window cannot be negative.
 - Cover pagination with tests. `get_pagination_context` and the `bootstrap_pagination` and `bootstrap_url_replace_param` tags had no tests at all.
 - **Breaking:** Fix invalid HTML in `RadioSelectButtonGroup`. Every option label carried the widget's own `id`, so a group of N options rendered N+1 identical `id` attributes and no label was associated with its input. Labels now carry `for` pointing at their own input and no `id` (#309).
