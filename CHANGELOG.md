@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Cover `renderers.py`, `components.py` and the template tags with tests, and hold the line at 100%. `InlineFieldRenderer` had no tests at all, nor did the `SelectDateWidget`, file input and `ReadOnlyPasswordHashWidget` markup fixes, the non-dismissible alert, formset-level errors, `{% buttons reset=... %}`, or the asset tags with a URL set to `None`. `coverage report` now fails below 100%, matching django-marina, django-bootstrap5, django-icons and django-bootstrap3.
 - Cover `utils.py`, `forms.py` and `text.py` with tests. `handle_var`, `parse_token_contents`, `remove_css_class`, `render_link_tag`, every `render_button` size and optional attribute, the standalone error renderers, `render_field_and_label` in horizontal layout, and `text_concat` had no tests.
 - Remove an unreachable guard in `get_pagination_context`: `pages_to_show` is already an integer of at least one by that point, so the half window cannot be negative.
 - Cover pagination with tests. `get_pagination_context` and the `bootstrap_pagination` and `bootstrap_url_replace_param` tags had no tests at all.

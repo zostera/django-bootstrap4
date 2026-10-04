@@ -47,3 +47,8 @@ class AlertsTest(TestCase):
                 "</div>"
             ),
         )
+
+    def test_render_alert_that_is_not_dismissible(self):
+        html = render_alert("content", dismissible=False)
+        self.assertEqual(html, '<div class="alert alert-info" role="alert">content</div>')
+        self.assertNotIn("data-dismiss", html)
