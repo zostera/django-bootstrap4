@@ -22,6 +22,8 @@
 - Document why bound forms, including GET filter forms, render `is-valid` on every field, and how to switch that off (#276).
 - Document that `use_i18n` in `BOOTSTRAP4` is always overwritten by Django's `USE_I18N`.
 
+- Show commits that touch nothing in `src/` in `just release-check` as a second group, instead of hiding them. Tooling, CI and documentation changes belong in the release notes too, and the old output read as a complete list while being a filtered one.
+- Fail `just build` when `uv.lock` does not name the version in `pyproject.toml`, and add `just relock` to fix it. `uv sync --frozen` does not check the project's own version, so a stale lock passed every packaging check.
 ## 26.2 (2026-08-28)
 
 - Drop support for Django 4.2 (EOL).
