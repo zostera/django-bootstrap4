@@ -1,12 +1,8 @@
 # Changelog
 
-## Unreleased
+## 26.3 (2026-10-11)
 
 - **Breaking:** Drop support for Python 3.10, end of life since 2026-10-01. The floor is now Python 3.11.
-- Cover `renderers.py`, `components.py` and the template tags with tests, and hold the line at 100%. `InlineFieldRenderer` had no tests at all, nor did the `SelectDateWidget`, file input and `ReadOnlyPasswordHashWidget` markup fixes, the non-dismissible alert, formset-level errors, `{% buttons reset=... %}`, or the asset tags with a URL set to `None`. `coverage report` now fails below 100%, matching django-marina, django-bootstrap5, django-icons and django-bootstrap3.
-- Cover `utils.py`, `forms.py` and `text.py` with tests. `handle_var`, `parse_token_contents`, `remove_css_class`, `render_link_tag`, every `render_button` size and optional attribute, the standalone error renderers, `render_field_and_label` in horizontal layout, and `text_concat` had no tests.
-- Remove an unreachable guard in `get_pagination_context`: `pages_to_show` is already an integer of at least one by that point, so the half window cannot be negative.
-- Cover pagination with tests. `get_pagination_context` and the `bootstrap_pagination` and `bootstrap_url_replace_param` tags had no tests at all.
 - **Breaking:** Fix invalid HTML in `RadioSelectButtonGroup`. Every option label carried the widget's own `id`, so a group of N options rendered N+1 identical `id` attributes and no label was associated with its input. Labels now carry `for` pointing at their own input and no `id` (#309).
 - Fix `RadioSelectButtonGroup` not rendering as a button group. The renderer replaced the class attribute of a widget's enclosing element instead of adding to it, discarding `btn-group btn-group-toggle`. Django's own `RadioSelect` and `CheckboxSelectMultiple` set no class there, so their output is unchanged (#894).
 - Fix `{% buttons layout="horizontal" %}` emitting Bootstrap 3 markup: the label carried `control-label` instead of `col-form-label`, and the wrapper had no `row` for the `col-*` classes to divide, so the button did not line up with the fields above it (#895).
@@ -17,13 +13,21 @@
 - Remove the `<7.0` upper bound on the `Django` dependency.
 - Test on Python 3.15 (release candidate) against Django 6.1 and `main`. The job is non-blocking and 3.15 is not yet advertised as supported.
 - Fail the CI gate when any job fails, not only the test matrix. A failing docs or packaging build could previously be merged.
-- Add `just release-check` to list `src/` changes against changelog entries before a release.
+- Cover `renderers.py`, `components.py` and the template tags with tests, and hold the line at 100%. `InlineFieldRenderer` had no tests at all, nor did the `SelectDateWidget`, file input and `ReadOnlyPasswordHashWidget` markup fixes, the non-dismissible alert, formset-level errors, `{% buttons reset=... %}`, or the asset tags with a URL set to `None`. `coverage report` now fails below 100%, matching django-marina, django-bootstrap5, django-icons and django-bootstrap3.
+- Cover `utils.py`, `forms.py` and `text.py` with tests. `handle_var`, `parse_token_contents`, `remove_css_class`, `render_link_tag`, every `render_button` size and optional attribute, the standalone error renderers, `render_field_and_label` in horizontal layout, and `text_concat` had no tests.
+- Cover pagination with tests. `get_pagination_context` and the `bootstrap_pagination` and `bootstrap_url_replace_param` tags had no tests at all.
+- Remove an unreachable guard in `get_pagination_context`: `pages_to_show` is already an integer of at least one by that point, so the half window cannot be negative.
+- Add `just release-check`, which lists the commits since the last tag next to the current `Unreleased` entries, in two groups: those touching `src/`, and those touching nothing in `src/`. Tooling, CI and documentation changes ship too, and a list filtered to `src/` read as a complete one.
+- Fail `just build` when `uv.lock` does not name the version in `pyproject.toml`, and add `just relock` to fix it. `uv sync --frozen` does not check the project's own version, so a stale lock passed every packaging check.
+- Run `coverage report` in CI, so the 100% floor can actually fail a build rather than only a local run (#904).
+- Harden the workflows against the findings of a `zizmor` audit: the Dependabot job gates on the pull request author rather than `github.actor`, `ci.yml` declares `contents: read` instead of inheriting a write-capable token, and the publishing job no longer restores a shared cache. Restore the `timeout-minutes` the Dependabot and release jobs had lost (#900).
+- Fail `just lint` on invisible and bidirectional control characters, which do not render in a diff and can therefore hide code (Trojan Source, CVE-2021-42574). Two were removed from `docs/settings.rst` (#888).
 - Fix stale Bootstrap 3 class names in the `bootstrap_field` docs: `error_css_class` defaults to `is-invalid` and `bound_css_class` to `is-valid`, and the label gets `col-form-label` in horizontal layout, not `control-label`.
 - Document why bound forms, including GET filter forms, render `is-valid` on every field, and how to switch that off (#276).
 - Document that `use_i18n` in `BOOTSTRAP4` is always overwritten by Django's `USE_I18N`.
+- Add the shared AI assistance policy to `CONTRIBUTING.md`, and the dependency update policy to `MAINTAINING.md` (#887, #900).
+- Add a `CLAUDE.md` shim so Claude Code loads `AGENTS.md`, and trim `AGENTS.md` to what a session cannot read from the repo itself (#885).
 
-- Show commits that touch nothing in `src/` in `just release-check` as a second group, instead of hiding them. Tooling, CI and documentation changes belong in the release notes too, and the old output read as a complete list while being a filtered one.
-- Fail `just build` when `uv.lock` does not name the version in `pyproject.toml`, and add `just relock` to fix it. `uv sync --frozen` does not check the project's own version, so a stale lock passed every packaging check.
 ## 26.2 (2026-08-28)
 
 - Drop support for Django 4.2 (EOL).
